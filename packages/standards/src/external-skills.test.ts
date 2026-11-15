@@ -59,7 +59,9 @@ describe("parseList", () => {
   it("reads the shipped list", () => {
     const entries = parseList(readFileSync(EXTERNAL_SKILLS_LIST, "utf8"));
     expect(entries.length).toBeGreaterThan(0);
-    expect(entries.find((entry) => entry.path === ".")?.name).toBe("task-observer");
+    expect(
+      entries.find((entry) => entry.repo === "rebelytics/one-skill-to-rule-them-all")?.path,
+    ).toBe("skills/task-observer");
   });
 
   it("refuses a whole-repo entry without a name", () => {
