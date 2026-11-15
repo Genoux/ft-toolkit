@@ -28,4 +28,4 @@ planetscale/database-skills            skills/postgres
 mattpocock/skills                      skills/productivity/grill-me
 mattpocock/skills                      skills/productivity/handoff
 affaan-m/everything-claude-code        skills/strategic-compact
-rebelytics/one-skill-to-rule-them-all  .  task-observer
+rebelytics/one-skill-to-rule-them-all  skills/task-observer
