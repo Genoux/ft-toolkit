@@ -95,6 +95,10 @@ describe("installExternalSkills", () => {
     expect(existsSync(join(dir, "whole", ".github"))).toBe(false);
     for (const name of report.installed) {
       expect(readFileSync(join(dir, name, ".gitignore"), "utf8")).toBe("*\n");
+      expect(JSON.parse(readFileSync(join(dir, name, "biome.json"), "utf8"))).toEqual({
+        root: false,
+        files: { includes: ["!**"] },
+      });
       expect(readFileSync(join(dir, name, MARKER), "utf8")).toContain(repo);
     }
   });

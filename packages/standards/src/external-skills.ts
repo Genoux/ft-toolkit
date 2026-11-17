@@ -25,6 +25,7 @@ export const SKILLS_DIR = join(".agents", "skills");
 export const CLAUDE_SKILLS_DIR = join(".claude", "skills");
 // Present in every folder this installer wrote; a folder without it is the app's own.
 export const MARKER = ".toolkit-source";
+const BIOME_SKIP = { root: false, files: { includes: ["!**"] } };
 const CLAUDE_IGNORE_HEADER = "# Written by ib sync: links to the shared skills in .agents/skills.";
 
 export type ExternalSkill = { repo: string; path: string; name?: string };
@@ -110,6 +111,9 @@ function place(skillsDir: string, source: Source, provenance: string): "installe
     });
   }
   writeFileSync(join(dest, ".gitignore"), "*\n");
+  // Biome ignores .gitignore unless the app turns on vcs, so the app's lint would check
+  // third-party code (2751 errors in ugc-hub); a nested config that includes nothing stops it.
+  writeFileSync(join(dest, "biome.json"), `${JSON.stringify(BIOME_SKIP)}\n`);
   writeFileSync(join(dest, MARKER), `${provenance}\n`);
   return "installed";
 }
