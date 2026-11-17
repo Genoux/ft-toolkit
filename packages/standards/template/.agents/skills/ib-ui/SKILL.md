@@ -88,8 +88,9 @@ the default; a page that needs something else is recorded under **Deliberate dev
   No data at all: `EmptyState` replaces the section, its action the same as the header's. Use
   `size="full"` when the table needs the width.
 - **Detail**: `Page` > `PageHeader` (the record's name, a one-line summary, edit and `dots`
-  actions) > optional `Tabs` > one `PageSection` per group: key facts in a `Card` of
-  `LabeledField`s in a grid, related lists as tables.
+  actions) > optional `Tabs` > one `PageSection` per group: key facts as a grid of
+  `Card`s, one `LabeledField` each (`grid gap-4 sm:grid-cols-3`, the same grid as overview
+  stats), related lists as tables.
 - **Form and settings**: `Page size="narrow"` > `PageHeader` > one `PageSection` per topic, each
   holding a `Card` with a `FieldGroup`; the save `Button` ends its card. Destructive settings go in
   a last section and open `DestructiveActionDialog`.

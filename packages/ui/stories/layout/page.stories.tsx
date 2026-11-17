@@ -125,11 +125,17 @@ export const DetailPage: Story = {
         />
         <TabsContent value="overview" className="flex flex-col gap-8">
           <PageSection title="Profile">
-            <Card className="grid gap-4 sm:grid-cols-3">
-              <LabeledField label="Email" value="alex@example.com" />
-              <LabeledField label="Country" value="Canada" />
-              <LabeledField label="Rate" value="$450 per video" />
-            </Card>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                ["Email", "alex@example.com"],
+                ["Country", "Canada"],
+                ["Rate", "$450 per video"],
+              ].map(([label, value]) => (
+                <Card key={label}>
+                  <LabeledField label={label} value={value} />
+                </Card>
+              ))}
+            </div>
           </PageSection>
           <PageSection title="Recent collaborations">
             <PeopleTable />
