@@ -1,6 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Field, FieldDescription, FieldError, FieldLabel } from "../../src/components/field";
+import { Search } from "lucide-react";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "../../src/components/field";
 import { Input } from "../../src/components/input";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "../../src/components/input-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../src/components/select";
+import { Textarea } from "../../src/components/textarea";
+import { OPTIONS } from "../lib/fixtures";
 
 type FieldStoryArgs = { label: string; description: string; error: string };
 
@@ -32,3 +49,43 @@ export const Default: Story = {
 };
 
 export const WithError: Story = { ...Default, args: { error: "Error message" } };
+
+// Every control in one form shares one corner radius.
+export const Form: Story = {
+  render: () => (
+    <FieldGroup>
+      <Field>
+        <FieldLabel htmlFor="form-name">Name</FieldLabel>
+        <Input id="form-name" placeholder="Placeholder" />
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="form-option">Option</FieldLabel>
+        <Select>
+          <SelectTrigger id="form-option" className="w-full">
+            <SelectValue placeholder="Pick one" />
+          </SelectTrigger>
+          <SelectContent>
+            {OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="form-search">Search</FieldLabel>
+        <InputGroup>
+          <InputGroupAddon>
+            <Search />
+          </InputGroupAddon>
+          <InputGroupInput id="form-search" placeholder="Search" />
+        </InputGroup>
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="form-note">Note</FieldLabel>
+        <Textarea id="form-note" />
+      </Field>
+    </FieldGroup>
+  ),
+};
