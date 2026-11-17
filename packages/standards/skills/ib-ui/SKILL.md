@@ -86,6 +86,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/input-group`: Input or Textarea with inline addons, buttons and text.
 - `components/search-input`: controlled search Input with a loading state.
 - `components/calendar`: date Calendar (react-day-picker) in the toolkit style.
+- `components/date-picker`: DatePicker, a pill trigger showing "Apr 30, 2027" that opens the Calendar; `value` and `onChange` use ISO dates ("2027-04-30", "" when empty).
 
 ### Display
 - `components/avatar`: Avatar, AvatarImage, AvatarFallback, AvatarGroup and AvatarGroupCount.
