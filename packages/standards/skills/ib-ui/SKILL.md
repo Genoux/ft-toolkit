@@ -100,7 +100,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/collapsible-section`: animated CollapsibleSection with trigger and content.
 
 ### Feedback
-- `components/alert`: Alert, AlertTitle and AlertDescription (default, destructive).
+- `components/alert`: Alert, AlertTitle and AlertDescription (default, destructive); the title wraps, `className="line-clamp-1"` keeps it to one line.
 - `components/sonner`: Toaster for `sonner` toasts; mount once in the root layout.
 - `components/spinner`: Spinner and SectionSpinner for loading states.
 - `components/skeleton`: Skeleton placeholder.
