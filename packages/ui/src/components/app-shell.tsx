@@ -70,11 +70,10 @@ function AppShell({
         {sidebarFooter ? <SidebarFooter>{sidebarFooter}</SidebarFooter> : null}
       </Sidebar>
       <SidebarInset
-        className={
-          variant === "inset"
-            ? "max-h-[calc(100svh-1rem)] min-h-0 overflow-hidden"
-            : "max-h-svh min-h-0 overflow-hidden"
-        }
+        className={cn(
+          "max-h-svh min-h-0 overflow-hidden",
+          variant === "inset" && "md:max-h-[calc(100svh-1rem)]",
+        )}
       >
         <header className={cn("flex shrink-0 items-center gap-2", headerStyle.header)}>
           <div className={cn("flex w-full items-center gap-1", headerStyle.bar)}>
