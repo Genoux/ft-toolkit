@@ -39,3 +39,17 @@ export const Default: Story = {};
 export const WithoutAction: Story = { args: { showAction: false } };
 
 export const Minimal: Story = { args: { description: "", showIcon: false, showAction: false } };
+
+// An href action renders a link, so a Server Component can pass one; renderLink takes the router Link.
+export const LinkAction: Story = {
+  render: ({ title, description }) => (
+    <div className="flex h-64 w-md">
+      <EmptyState
+        title={title}
+        description={description || undefined}
+        icon={Inbox}
+        action={{ label: "Create item", href: "#create" }}
+      />
+    </div>
+  ),
+};

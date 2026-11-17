@@ -94,7 +94,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/badge`: Badge chip.
 - `components/number-dot`: small count pill, renders nothing at zero.
 - `components/labeled-field`: read-only label and value pair.
-- `components/empty-state`: EmptyState with icon, title, description and an optional labelled action.
+- `components/empty-state`: EmptyState with icon, title, description and an optional labelled action: `onClick`, or `href` so a Server Component can link (pass `renderLink` for the router Link; it must forward props and ref, which `next/link` does).
 - `components/separator`: horizontal or vertical Separator.
 - `components/carousel`: Embla Carousel, CarouselContent and CarouselItem.
 - `components/collapsible-section`: animated CollapsibleSection with trigger and content.
