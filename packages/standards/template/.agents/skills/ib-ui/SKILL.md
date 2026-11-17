@@ -43,8 +43,9 @@ agreement, use a workaround and mark it `// toolkit-gap: <what is missing>` so i
 - Tabs: `Tabs` + `TabsList tabs={[{ value, label, count? }]}` + `TabsContent`; drop
   `TabsContent` for a filter bar.
 - Destructive flows open `DestructiveActionDialog` (owns the confirm step; `variant="typed"`
-  makes the user type `DELETE <name>`). Confirm never closes it: call `onOpenChange(false)` on
-  success, so a pending or failed action keeps it open.
+  makes the user type `DELETE <name>`). Fields the action needs, such as a required reason, go in
+  as children with `confirmDisabled` until they are valid. Confirm never closes it: call
+  `onOpenChange(false)` on success, so a pending or failed action keeps it open.
 - Action menus: `Button variant="dots"` + `DropdownMenu`. Inside an element with `data-row` it
   reveals on row hover; elsewhere it stays visible.
 - Icon-only buttons are `IconButton` (required `label` = tooltip + `aria-label`), except `dots`.
@@ -77,7 +78,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/label`: accessible form Label.
 - `components/input`: text Input.
 - `components/textarea`: multi-line Textarea.
-- `components/checkbox`: Checkbox.
+- `components/checkbox`: Checkbox; `checked="indeterminate"` shows a dash for a partial select-all.
 - `components/select`: single-choice Select.
 - `components/combobox`: searchable Combobox with chips for multiple values.
 - `components/multi-select-popover`: popover multi-select over a list of options; `disabled` on an option locks that row; `renderLabel(selectedOptions)` sets the trigger text; takes every `MultiSelectOptionList` prop (`searchable`, `isPending`, …).
@@ -85,6 +86,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/input-group`: Input or Textarea with inline addons, buttons and text.
 - `components/search-input`: controlled search Input with a loading state.
 - `components/calendar`: date Calendar (react-day-picker) in the toolkit style.
+- `components/date-picker`: DatePicker, a pill trigger showing "Apr 30, 2027" that opens the Calendar; `value` and `onChange` use ISO dates ("2027-04-30", "" when empty).
 
 ### Display
 - `components/avatar`: Avatar, AvatarImage, AvatarFallback, AvatarGroup and AvatarGroupCount.
@@ -93,13 +95,13 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/badge`: Badge chip.
 - `components/number-dot`: small count pill, renders nothing at zero.
 - `components/labeled-field`: read-only label and value pair.
-- `components/empty-state`: EmptyState with icon, title, description and an optional labelled action.
+- `components/empty-state`: EmptyState with icon, title, description and an optional labelled action: `onClick`, or `href` so a Server Component can link (pass `renderLink` for the router Link; it must forward props and ref, which `next/link` does).
 - `components/separator`: horizontal or vertical Separator.
 - `components/carousel`: Embla Carousel, CarouselContent and CarouselItem.
 - `components/collapsible-section`: animated CollapsibleSection with trigger and content.
 
 ### Feedback
-- `components/alert`: Alert, AlertTitle and AlertDescription (default, destructive).
+- `components/alert`: Alert, AlertTitle and AlertDescription (default, destructive); the title wraps, `className="line-clamp-1"` keeps it to one line.
 - `components/sonner`: Toaster for `sonner` toasts; mount once in the root layout.
 - `components/spinner`: Spinner and SectionSpinner for loading states.
 - `components/skeleton`: Skeleton placeholder.
@@ -116,7 +118,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 ### Overlays
 - `components/dialog`: modal Dialog.
 - `components/alert-dialog`: AlertDialog for interrupting confirmations.
-- `components/destructive-action-dialog`: confirm step for destructive actions, optionally typed.
+- `components/destructive-action-dialog`: confirm step for destructive actions in the Dialog look, optionally typed; children add fields (a required reason) and `confirmDisabled` holds confirm until they are valid.
 - `components/sheet`: side Sheet panel.
 - `components/popover`: Popover.
 - `components/dropdown-menu`: DropdownMenu.
