@@ -43,8 +43,9 @@ agreement, use a workaround and mark it `// toolkit-gap: <what is missing>` so i
 - Tabs: `Tabs` + `TabsList tabs={[{ value, label, count? }]}` + `TabsContent`; drop
   `TabsContent` for a filter bar.
 - Destructive flows open `DestructiveActionDialog` (owns the confirm step; `variant="typed"`
-  makes the user type `DELETE <name>`). Confirm never closes it: call `onOpenChange(false)` on
-  success, so a pending or failed action keeps it open.
+  makes the user type `DELETE <name>`). Fields the action needs, such as a required reason, go in
+  as children with `confirmDisabled` until they are valid. Confirm never closes it: call
+  `onOpenChange(false)` on success, so a pending or failed action keeps it open.
 - Action menus: `Button variant="dots"` + `DropdownMenu`. Inside an element with `data-row` it
   reveals on row hover; elsewhere it stays visible.
 - Icon-only buttons are `IconButton` (required `label` = tooltip + `aria-label`), except `dots`.
@@ -116,7 +117,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 ### Overlays
 - `components/dialog`: modal Dialog.
 - `components/alert-dialog`: AlertDialog for interrupting confirmations.
-- `components/destructive-action-dialog`: confirm step for destructive actions, optionally typed.
+- `components/destructive-action-dialog`: confirm step for destructive actions in the Dialog look, optionally typed; children add fields (a required reason) and `confirmDisabled` holds confirm until they are valid.
 - `components/sheet`: side Sheet panel.
 - `components/popover`: Popover.
 - `components/dropdown-menu`: DropdownMenu.
