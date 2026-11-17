@@ -7,7 +7,12 @@ import { Textarea } from "../../src/components/textarea";
 
 type DemoArgs = { typed: boolean; isPending: boolean; withReason: boolean; startOpen?: boolean };
 
-function DestructiveActionDialogDemo({ typed, isPending, withReason, startOpen = false }: DemoArgs) {
+function DestructiveActionDialogDemo({
+  typed,
+  isPending,
+  withReason,
+  startOpen = false,
+}: DemoArgs) {
   const [open, setOpen] = useState(startOpen);
   const [reason, setReason] = useState("");
   const shared = {
@@ -30,7 +35,9 @@ function DestructiveActionDialogDemo({ typed, isPending, withReason, startOpen =
           onChange={(event) => setReason(event.target.value)}
           aria-describedby="destructive-reason-hint"
         />
-        <FieldDescription id="destructive-reason-hint">Required. Only your team sees it.</FieldDescription>
+        <FieldDescription id="destructive-reason-hint">
+          Required. Only your team sees it.
+        </FieldDescription>
       </Field>
     ) : null,
   };
