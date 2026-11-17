@@ -88,6 +88,12 @@ export const Floating: Story = { args: { variant: "floating", headerVariant: "pl
 
 export const Inset: Story = { args: { variant: "inset" } };
 
+// The inset margin only exists from md; on a phone the shell fills the screen to the bottom edge.
+export const InsetMobile: Story = {
+  args: { variant: "inset" },
+  globals: { viewport: { value: "mobile2", isRotated: false } },
+};
+
 export const WithBreadcrumb: Story = {
   render: ({ variant = "sidebar", headerVariant = "bordered", collapsible = "offcanvas" }) => (
     <AppShellPreview

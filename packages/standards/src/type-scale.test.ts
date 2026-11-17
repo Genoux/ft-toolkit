@@ -44,6 +44,13 @@ describe("typeScaleProblems", () => {
     ]);
   });
 
+  it("keeps @inbeat/ui itself to the weights apps may use", () => {
+    const uiDir = join(import.meta.dirname, "..", "..", "ui");
+    const weightProblems = typeScaleProblems(uiDir).filter((problem) => problem.includes("weight"));
+
+    expect(weightProblems).toEqual([]);
+  });
+
   it("ignores files that are not components and apps without a src folder", () => {
     expect(typeScaleProblems(appWith({ "src/notes.md": "text-[13px]" }))).toEqual([]);
     expect(typeScaleProblems(appWith({ "README.md": "x" }))).toEqual([]);

@@ -108,7 +108,7 @@ function DialogContent({
               <PortalContainerProvider container={portalContainer}>
                 <div
                   data-slot="dialog-body"
-                  className="flex h-full min-h-0 w-full min-w-0 flex-col gap-4"
+                  className="flex h-full min-h-0 w-full min-w-0 flex-col gap-6 *:data-[slot=field-group]:gap-6"
                 >
                   {children}
                 </div>
@@ -135,7 +135,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
+      className={cn("flex flex-col gap-2 text-left", className)}
       {...props}
     />
   );
