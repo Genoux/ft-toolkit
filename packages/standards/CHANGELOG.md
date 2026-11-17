@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.17.0](https://github.com/Genoux/ib-toolkit/compare/standards-v0.16.0...standards-v0.17.0) (2026-11-17)
+
+
+### Features
+
+* **ui:** date picker, dialog fields, empty state links ([#80](https://github.com/Genoux/ib-toolkit/issues/80)) ([10d5fa7](https://github.com/Genoux/ib-toolkit/commit/10d5fa70b575eb7b7c413dd8a9b60a9925f614af))
+
+
+### Bug Fixes
+
+* point task-observer at its new folder in the skills list ([#78](https://github.com/Genoux/ib-toolkit/issues/78)) ([290761a](https://github.com/Genoux/ib-toolkit/commit/290761ab8ce9430d21bbc02d741374ab76f3145d))
+
 ## [0.16.0](https://github.com/Genoux/ib-toolkit/compare/standards-v0.15.0...standards-v0.16.0) (2026-11-14)
 
 

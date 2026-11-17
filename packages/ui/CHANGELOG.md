@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.16.0...ui-v0.17.0) (2026-11-17)
+
+
+### Features
+
+* **ui:** date picker, dialog fields, empty state links ([#80](https://github.com/Genoux/ib-toolkit/issues/80)) ([10d5fa7](https://github.com/Genoux/ib-toolkit/commit/10d5fa70b575eb7b7c413dd8a9b60a9925f614af))
+
 ## [0.16.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.15.0...ui-v0.16.0) (2026-11-14)
 
 
