@@ -7,16 +7,24 @@ description: Build UI in an inBeat app with @inbeat/ui primitives and tokens. Us
 
 ## Before writing any UI
 
-Check the [Catalog](#catalog). Build pages and domain compositions only from catalog components
-and tokens. Icons are always `lucide-react`.
+1. Read "Look" under "This app" in `AGENTS.md`. If it is empty, settle it with the user first
+   (see [Look](#look-neutral-fieldtrip-or-product-specific)).
+2. Name the layer of what you are about to build (the table is in the "UI" section of the
+   standard):
+   - **Plumbing** (controls, forms, dialogs, menus, tables, tabs, toasts, shell, page frame):
+     only from the [Catalog](#catalog), laid out with a [page pattern](#page-patterns).
+   - **Signature surface** (what makes this product itself: a game board, a canvas, a hero, a
+     custom card): build it in the feature's `components/` on the tokens, with catalog pieces
+     inside it where they fit. Design and taste skills are welcome here.
+3. Pick the page pattern. A page that needs another layout is fine; add a line under
+   **Deliberate deviations** saying which page and why.
 
-**Allowed in the app**: page layouts and domain compositions (a `CreatorCard` from `Avatar` +
-`Badge`) in `src/shared/components/blocks` or the feature's `components/`. Different apps may
-compose different layouts.
+Icons are always `lucide-react`.
 
 **Not allowed**: new generic primitives or variants (a local button, modal, select, table or
 toast), copying or restyling a toolkit component, faking a variant with override classes,
-installing another UI library, running `shadcn add`.
+installing another UI library, running `shadcn add`. `ib check` fails on other UI, icon and
+animation libraries, hand-set colours, spacing lengths and type sizes.
 
 **Missing component**: stop. Tell the user which component or variant is missing and why, and
 propose adding it to ib-toolkit (`packages/ui` plus its story). Only with the user's explicit
@@ -53,6 +61,7 @@ agreement, use a workaround and mark it `// toolkit-gap: <what is missing>` so i
   toggles: `label="Show filters" pressedLabel="Hide filters" pressed={isOpen}`; `pressed` owns the
   look. Menu and popover triggers are not toggles: static label, no `pressed`.
 - Labels are one to three words, no ids or emails.
+- People in a table are avatars only (`MemberAvatarStack`); it names them in a tooltip.
 - Lists: `DataTableShell` + `DataTable`. With no data render `EmptyState` instead of the table;
   DataTable's "No results." is only for an empty filter result.
 - Forms (client leaf): `schema.safeParse(values)` with the schema shared with the action; on
@@ -64,6 +73,31 @@ agreement, use a workaround and mark it `// toolkit-gap: <what is missing>` so i
 - Animation: `motion/react` only, respecting `prefers-reduced-motion`.
 - `page.tsx` stays a Server Component (title, layout, data loading); only the stateful leaf (a
   table with dialogs, a form) is `"use client"`.
+
+## Page patterns
+
+Every page body is `Page` > `PageHeader` > content. Stories: Storybook "Layout/Page". These are
+the default; a page that needs something else is recorded under **Deliberate deviations**.
+
+- **Frame.** Inside `AppShell`, the shell header holds the `Breadcrumb` (where you are) and the
+  page body starts with `PageHeader` (what this page is, its actions). A top-level page with no
+  trail leaves the shell header empty. Actions sit in `PageHeader actions`: at most one primary
+  `Button`, the rest `secondary`, `IconButton` or a `dots` menu.
+- **List**: `Page` > `PageHeader` (title, description, the create action) > `PageSection` with the
+  filter bar (`SearchInput`, `TabsList` or `TogglePills`) above `DataTableShell` + `DataTable`.
+  No data at all: `EmptyState` replaces the section, its action the same as the header's. Use
+  `size="full"` when the table needs the width.
+- **Detail**: `Page` > `PageHeader` (the record's name, a one-line summary, edit and `dots`
+  actions) > optional `Tabs` > one `PageSection` per group: key facts in a `Card` of
+  `LabeledField`s in a grid, related lists as tables.
+- **Form and settings**: `Page size="narrow"` > `PageHeader` > one `PageSection` per topic, each
+  holding a `Card` with a `FieldGroup`; the save `Button` ends its card. Destructive settings go in
+  a last section and open `DestructiveActionDialog`.
+- **Overview**: `Page` > `PageHeader` > a grid of stat `Card`s (`grid gap-4 sm:grid-cols-3`) >
+  `PageSection`s for what needs attention.
+- **Spacing** comes from these components: `Page` spaces its children with `gap-8`, sections use
+  `gap-4`, cards `p-5 gap-4`. Add spacing only inside your own compositions, one gap step per
+  level.
 
 ## Catalog
 
@@ -96,6 +130,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/number-dot`: small count pill, renders nothing at zero.
 - `components/labeled-field`: read-only label and value pair.
 - `components/empty-state`: EmptyState with icon, title, description and an optional labelled action: `onClick`, or `href` so a Server Component can link (pass `renderLink` for the router Link; it must forward props and ref, which `next/link` does).
+- `components/card`: Card, the bordered surface for a group of content (a form, key facts, a stat); padding and gap built in.
 - `components/separator`: horizontal or vertical Separator.
 - `components/carousel`: Embla Carousel, CarouselContent and CarouselItem.
 - `components/collapsible-section`: animated CollapsibleSection with trigger and content.
@@ -134,6 +169,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 
 ### Layout
 - `components/app-shell`: AppShell page frame with sidebar and header, and AppShellLogo.
+- `components/page`: Page (centred body column; `size` default, narrow or full), PageHeader (`title`, `description`, `actions`) and PageSection (optional `title`, `description`, `actions`, then content).
 
 ### Hooks and lib
 - `hooks/use-mobile`: `useIsMobile()` breakpoint hook.
@@ -156,8 +192,10 @@ The template installs every peer the catalog needs.
 
 ## Look: neutral, Fieldtrip, or product-specific
 
-Decide this when the app starts and record it in the app's `AGENTS.md`. The components are the
-same in all three; only tokens and app-owned components change.
+Decide this when the app starts and record it under "Look" in the app's `AGENTS.md`, one line:
+the choice plus, for product-specific, which tokens it overrides and why (`product-specific:
+--primary, --radius and font-sans for a playful game feel`). The components are the same in all
+three; only tokens and signature surfaces change.
 
 - **Neutral** (default; dashboards and internal tools): `theme.css` alone.
 - **Fieldtrip brand**: add `@import "@inbeat/ui/fieldtrip.css";` after `theme.css`. It gives the
@@ -166,10 +204,25 @@ same in all three; only tokens and app-owned components change.
   `font-sans` to SwissNow and `font-serif` to Diplomat. The font files are licensed and stay in
   the app: load them with `next/font/local` and put `--font-swiss-now` and `--font-diplomat` on
   `<html>`.
-- **Product-specific**: override tokens (`--primary`, `--radius`, ...) in the app's `globals.css`
-  after the imports, and build components only that product needs (a game card, a custom
-  dropdown) in the app, on the same tokens. They are not toolkit gaps and stay in the app until a
-  second app needs them. Never copy a toolkit component into the app to edit it.
+- **Product-specific**: override tokens in the app's `globals.css` after the imports: colours and
+  `--radius` in `:root` (and `.dark`), fonts as `--font-sans` in `@theme inline`, the way
+  `fieldtrip.css` does. Every toolkit component follows, so the plumbing takes
+  the product's look without a single override class. Colours the product adds get their own
+  tokens there (`--color-board: ...` in `@theme`), never hex in components. Signature surfaces
+  (a game card, a player) are built in the app on these tokens; they are not toolkit gaps and stay
+  in the app until a second app needs them. Never copy a toolkit component into the app to edit it.
+
+## Before you say it is done
+
+Look at what you built, the way a user will:
+
+1. Run the app (`bun dev`) and open each page you changed at 1440px and 390px wide, in light and
+   dark when the app has both. Use your browser tool, or a Playwright screenshot.
+2. Compare it with its [page pattern](#page-patterns) and check: content never touches a border
+   or edge; one gap step per level; one primary action per page; text takes the type roles;
+   nothing overflows or wraps a title at 390px; empty, loading and error states render.
+3. Fix what is off before reporting. Say in the report which pages and widths you looked at; if
+   you could not run the app, say so.
 
 ## Adding or changing a component
 

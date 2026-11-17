@@ -119,4 +119,4 @@ Merging to `main` keeps a release PR up to date with the next version and change
 
 - UI conventions live in `packages/standards/skills/ib-ui/SKILL.md`. Read it before adding a component.
 - One story per component in `packages/ui/stories`. What Storybook shows is what apps get.
-- Apps change the look only through component props, never by restyling toolkit components.
+- Apps change the look through tokens (see "Look" in the `ib-ui` skill) and component props, never by restyling toolkit components.
