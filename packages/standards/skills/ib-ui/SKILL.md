@@ -78,7 +78,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/label`: accessible form Label.
 - `components/input`: text Input.
 - `components/textarea`: multi-line Textarea.
-- `components/checkbox`: Checkbox.
+- `components/checkbox`: Checkbox; `checked="indeterminate"` shows a dash for a partial select-all.
 - `components/select`: single-choice Select.
 - `components/combobox`: searchable Combobox with chips for multiple values.
 - `components/multi-select-popover`: popover multi-select over a list of options; `disabled` on an option locks that row; `renderLabel(selectedOptions)` sets the trigger text; takes every `MultiSelectOptionList` prop (`searchable`, `isPending`, …).

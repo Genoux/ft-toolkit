@@ -21,4 +21,7 @@ export const Default: Story = {};
 
 export const Checked: Story = { args: { defaultChecked: true } };
 
+// Select-all over a partial selection.
+export const Indeterminate: Story = { args: { checked: "indeterminate" } };
+
 export const Disabled: Story = { args: { disabled: true } };
