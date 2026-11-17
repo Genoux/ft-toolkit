@@ -145,6 +145,17 @@ describe("claudeFilesIgnoringAgents", () => {
   });
 });
 
+describe("template AGENTS.md", () => {
+  it("has every heading a new app section has", () => {
+    const headings = (path: string) =>
+      readFileSync(join(PACKAGE_ROOT, path), "utf8").match(/^###? .+$/gm) ?? [];
+    const template = headings("template/AGENTS.md");
+    for (const heading of headings("agents/app-section.md")) {
+      expect(template).toContain(heading);
+    }
+  });
+});
+
 describe("standard guide pointers", () => {
   it("points only at skills the package ships", () => {
     const standard = readFileSync(join(PACKAGE_ROOT, "agents", "standard.md"), "utf8");

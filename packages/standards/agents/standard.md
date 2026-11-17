@@ -8,6 +8,8 @@ file into the app; change it in ib-toolkit.
 
 - If "Product brief" under "This app" is empty, write the user's brief there first (problem,
   users, core flows), then build.
+- Before any UI, "Look" under "This app" names one of neutral, Fieldtrip or product-specific
+  (see "Look" in the `ib-ui` skill). If the heading is missing or empty, ask the user, then add it.
 - Read the matching guide before the work, whatever tool you are: `.agents/skills/ib-ui/SKILL.md`
   (component catalog, UI rules) before any UI, `.agents/skills/ib-feature/SKILL.md` for a new
   feature, `.agents/skills/ib-toolkit/SKILL.md` for actions, routes, auth, env and rate limits.
@@ -86,15 +88,21 @@ Server actions are queued per client; never use them for reads.
 
 ### UI
 
-- UI comes only from `@inbeat/ui` (catalog in the `ib-ui` skill) plus layouts composed from it. If a
-  component or variant is missing, stop and flag it for ib-toolkit; never invent, copy or patch
-  one (a workaround needs the user's OK and a `// toolkit-gap:` comment).
-- Primitives and generic blocks from `@inbeat/ui/components/*`; tokens from
-  `@inbeat/ui/theme.css`, plus the opt-in Fieldtrip brand layer `@inbeat/ui/fieldtrip.css` (see
-  "Look" in the `ib-ui` skill). A block moves to the toolkit only once an app actually uses it.
-- Buttons are `rounded-full` with no destructive variant; destructive flows use
-  `DestructiveActionDialog` from `@inbeat/ui`. Icon-only buttons get a tooltip. Lists use
-  `DataTableShell` + `DataTable`; empty lists use `EmptyState`.
+Every app shares one foundation and is free to derive its own product on top of it. Each piece of
+UI is in exactly one of three layers:
+
+| Layer | What | Rule |
+|---|---|---|
+| Plumbing | buttons, inputs, forms, dialogs, menus, tables, toasts, tabs, the app shell, page frame, type scale, spacing | Only from `@inbeat/ui`. Missing piece: stop and flag it for ib-toolkit; never invent, copy or patch one (a workaround needs the user's OK and a `// toolkit-gap:` comment). |
+| Look | colours, fonts, radius, shadows | Tokens only, chosen under "Look": neutral `theme.css`, the Fieldtrip layer, or the app's own token overrides in `globals.css`. Never hex or one-off values in components. |
+| Signature surfaces | what makes this product itself: a game board, a canvas, a hero, a custom card or player | Free, built in the app on the tokens and plumbing. They stay in the app until a second app needs them. |
+
+- Pages follow the page patterns in the `ib-ui` skill (list, detail, form, overview). A page that
+  needs a different layout is allowed; record it under **Deliberate deviations**.
+- Design and taste skills (`frontend-design`, `taste-skill`, `emil-design-eng`,
+  `make-interfaces-feel-better`, `stageshow` and the like) apply to signature surfaces and to a
+  product-specific look only. For plumbing and page layout, `ib-ui` wins over any skill that asks
+  for a distinctive or bolder look.
 - Type scale: every text takes one of these roles and nothing sets a size or weight of its own
   (`ib check` fails on `text-[13px]`, `font-[510]`, `font-bold`). Body `text-sm` (14px): inputs,
   menu items, detail values, person names. Table cells are 13.5px, set by `Table`, and column
@@ -105,7 +113,6 @@ Server actions are queued per client; never use them for reads.
   `text-xl font-semibold`. Secondary information is `text-muted-foreground`, never smaller.
   Weights are regular, medium and semibold. Larger named sizes are for display text on public
   and onboarding screens. To change the scale, change it in ib-toolkit.
-- People in a table are avatars only (`MemberAvatarStack`); it names them in a tooltip.
 - Radix via `radix-ui`; animation via `motion` only.
 
 ### Simplicity
