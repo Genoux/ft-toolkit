@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.18.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.17.0...ui-v0.18.0) (2026-11-18)
+
+
+### Features
+
+* page layout, look layers and ui rules in ib check ([#81](https://github.com/Genoux/ib-toolkit/issues/81)) ([0bb464e](https://github.com/Genoux/ib-toolkit/commit/0bb464e262595d75c37ea4b39af6306599571ebc))
+
+
+### Bug Fixes
+
+* **ui:** keep single-digit counts a perfect circle ([#86](https://github.com/Genoux/ib-toolkit/issues/86)) ([bf12156](https://github.com/Genoux/ib-toolkit/commit/bf1215651dd0af8928850e37807800b6c8e17666))
+* **ui:** show a record's key facts as one card each ([#83](https://github.com/Genoux/ib-toolkit/issues/83)) ([b7b02c1](https://github.com/Genoux/ib-toolkit/commit/b7b02c177c1a8bf495748304b1b7ded0153a3d11))
+
 ## [0.17.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.16.0...ui-v0.17.0) (2026-11-17)
 
 
