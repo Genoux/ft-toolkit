@@ -1,4 +1,4 @@
-import { type ClassifiedError, classifyError } from "@inbeat/core/errors";
+import { type ClassifiedError, classifyError, isAppError } from "@inbeat/core/errors";
 import { createLogger } from "@inbeat/core/logger";
 import * as Sentry from "@sentry/nextjs";
 
@@ -29,6 +29,16 @@ export function captureAppError(
     fingerprint: classified.fingerprint,
   });
   const errorId = toErrorId(eventId);
-  logger.error("Unexpected error", exception, { errorId, ...context.tags });
+  // Foreign messages (Postgres, Clerk, fetch) can carry emails and query values; stdout goes
+  // to every log drain, so only our own AppError text is logged. Sentry has the full error.
+  if (isAppError(exception)) {
+    logger.error("Unexpected error", exception, { errorId, ...context.tags });
+  } else {
+    logger.error("Unexpected error", undefined, {
+      errorId,
+      ...context.tags,
+      error: { name: exception.name },
+    });
+  }
   return { ...classified, errorId };
 }

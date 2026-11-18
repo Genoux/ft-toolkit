@@ -97,7 +97,7 @@ describe("action", () => {
       level: "error",
       errorId: "ERR_ABCDEF12",
       action: "broken",
-      error: { message: "database unreachable" },
+      error: { name: "Error" },
     });
     consoleError.mockRestore();
   });
