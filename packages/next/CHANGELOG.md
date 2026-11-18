@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.1](https://github.com/Genoux/ib-toolkit/compare/next-v0.18.0...next-v0.18.1) (2026-11-18)
+
+
+### Bug Fixes
+
+* **next:** keep foreign error messages out of the logs ([#87](https://github.com/Genoux/ib-toolkit/issues/87)) ([1d0ee28](https://github.com/Genoux/ib-toolkit/commit/1d0ee28d285211ddae999044b90fa4ec4cb381a8))
+
 ## [0.18.0](https://github.com/Genoux/ib-toolkit/compare/next-v0.17.0...next-v0.18.0) (2026-11-18)
 
 
