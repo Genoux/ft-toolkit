@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.18.1...ui-v0.19.0) (2026-11-19)
+
+
+### Features
+
+* **ui:** calmer platform disclaimer with a got it button ([#89](https://github.com/Genoux/ib-toolkit/issues/89)) ([7332258](https://github.com/Genoux/ib-toolkit/commit/7332258509893ff702a159db9c558706db5eec1d))
+
 ## [0.18.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.18.0...ui-v0.18.1) (2026-11-18)
 
 
