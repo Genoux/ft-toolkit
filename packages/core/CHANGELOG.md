@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/Genoux/ib-toolkit/compare/core-v0.18.1...core-v0.19.0) (2026-11-19)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize inbeat versions
+
 ## [0.18.1](https://github.com/Genoux/ib-toolkit/compare/core-v0.18.0...core-v0.18.1) (2026-11-18)
 
 
