@@ -1,11 +1,9 @@
 "use client";
 
-import { X } from "lucide-react";
 import { motion } from "motion/react";
 import { useLayoutEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "./alert";
 import { Button } from "./button";
-import { Tooltip } from "./tooltip";
 
 const DISMISS_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
 
@@ -34,33 +32,30 @@ function PlatformDisclaimer({ title, description, cookieName }: PlatformDisclaim
   if (dismissed !== false) return null;
 
   return (
-    <div className="pointer-events-none fixed right-6 bottom-6 z-40">
+    <div className="pointer-events-none fixed inset-x-4 bottom-4 z-40 sm:inset-x-auto sm:right-6 sm:bottom-6">
       <motion.div
-        className="pointer-events-auto max-w-sm"
+        className="pointer-events-auto sm:max-w-lg"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 2 }}
       >
-        <Alert className="shadow-elevated flex items-start gap-3 rounded-xl p-4">
-          <div className="min-w-0 flex-1">
+        <Alert className="flex items-center justify-between gap-6 rounded-xl py-4 pr-4 pl-5 shadow-elevated">
+          <div className="flex min-w-0 flex-col gap-0.5">
             <AlertTitle>{title}</AlertTitle>
-            <AlertDescription className="text-foreground/80">{description}</AlertDescription>
+            <AlertDescription className="text-[13px]">{description}</AlertDescription>
           </div>
-          <Tooltip content="Dismiss">
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-sm"
-              aria-label="Dismiss"
-              className="shrink-0 text-muted-foreground hover:text-foreground"
-              onClick={() => {
-                persistDismissed(cookieName);
-                setDismissed(true);
-              }}
-            >
-              <X />
-            </Button>
-          </Tooltip>
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="shrink-0"
+            onClick={() => {
+              persistDismissed(cookieName);
+              setDismissed(true);
+            }}
+          >
+            Got it
+          </Button>
         </Alert>
       </motion.div>
     </div>
