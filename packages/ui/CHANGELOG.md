@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.19.0...ui-v0.19.1) (2026-11-20)
+
+
+### Bug Fixes
+
+* **ui:** center the calendar month arrows ([#91](https://github.com/Genoux/ib-toolkit/issues/91)) ([1a54f20](https://github.com/Genoux/ib-toolkit/commit/1a54f20f0fb09a4402c3fcb0ecf7e07b28f20f6f))
+
 ## [0.19.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.18.1...ui-v0.19.0) (2026-11-19)
 
 
