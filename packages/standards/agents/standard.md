@@ -93,16 +93,14 @@ UI is in exactly one of three layers:
 
 | Layer | What | Rule |
 |---|---|---|
-| Plumbing | buttons, inputs, forms, dialogs, menus, tables, toasts, tabs, the app shell, page frame, type scale, spacing | Only from `@inbeat/ui`. Missing piece: stop and flag it for ib-toolkit; never invent, copy or patch one (a workaround needs the user's OK and a `// toolkit-gap:` comment). |
+| Plumbing | buttons, inputs, forms, dialogs, menus, tables, toasts, tabs, the app shell, page frame, type scale, spacing | From `@inbeat/ui` when it has the piece. Missing piece or variant: compose it in the app from `@inbeat/ui` primitives and tokens, mark it `// toolkit-gap: <what is missing>`, and tell the user; it moves to ib-toolkit once a second app needs it. Never copy, fork or patch a toolkit file. |
 | Look | colours, fonts, radius, shadows | Tokens only, chosen under "Look": neutral `theme.css`, the Fieldtrip layer, or the app's own token overrides in `globals.css`. Never hex or one-off values in components. |
 | Signature surfaces | what makes this product itself: a game board, a canvas, a hero, a custom card or player | Free, built in the app on the tokens and plumbing. They stay in the app until a second app needs them. |
 
 - Pages follow the page patterns in the `ib-ui` skill (list, detail, form, overview). A page that
   needs a different layout is allowed; record it under **Deliberate deviations**.
-- Design and taste skills (`frontend-design`, `taste-skill`, `emil-design-eng`,
-  `make-interfaces-feel-better`, `stageshow` and the like) apply to signature surfaces and to a
-  product-specific look only. For plumbing and page layout, `ib-ui` wins over any skill that asks
-  for a distinctive or bolder look.
+- The toolkit ships no taste skills; each developer picks their own. Whatever they say, the
+  rules here and in `ib-ui` win for plumbing and page layout.
 - Type scale: every text takes one of these roles and nothing sets a size or weight of its own
   (`ib check` fails on `text-[13px]`, `font-[510]`, `font-bold`). Body `text-sm` (14px): inputs,
   menu items, detail values, person names. Table cells are 13.5px, set by `Table`, and column
