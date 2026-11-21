@@ -2,30 +2,20 @@
 # of each from GitHub into the project's .agents/skills/, linked into
 # .claude/skills/ for Claude Code (never committed).
 #
+# Only pattern references and checklists that every app must follow belong
+# here. Taste, workflow and code-style skills (frontend-design, taste-skill,
+# emil-design-eng, code-simplifier, grill-me, ...) are each developer's choice:
+# install them in your own ~/.claude/skills, never through the toolkit.
+#
 # <owner/repo>  <folder in the repo>  [installed name]
 #   folder/*    every skill folder inside folder
 #   file.md     a single-file agent or skill, installed as <name>/SKILL.md
 #   .           the whole repo is one skill (give the name)
 
-# Design and UI
-emilkowalski/skills                    skills/*
-anthropics/skills                      skills/frontend-design
-leonxlnx/taste-skill                   skills/taste-skill
-jakubkrehel/make-interfaces-feel-better  skills/make-interfaces-feel-better
-ibelick/ui-skills                      skills/baseline-ui
+# UI checklists
 ibelick/ui-skills                      skills/fixing-accessibility
 ibelick/ui-skills                      skills/fixing-metadata
-benjitaylor/skills                     stageshow
 
-# React and rendering patterns
+# Stack patterns
 PatternsDev/skills                     react/*
-
-# Code
-anthropics/claude-plugins-official     plugins/code-simplifier/agents/code-simplifier.md
 planetscale/database-skills            skills/postgres
-
-# Workflow
-mattpocock/skills                      skills/productivity/grill-me
-mattpocock/skills                      skills/productivity/handoff
-affaan-m/everything-claude-code        skills/strategic-compact
-rebelytics/one-skill-to-rule-them-all  skills/task-observer

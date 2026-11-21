@@ -12,23 +12,24 @@ description: Build UI in an inBeat app with @inbeat/ui primitives and tokens. Us
 2. Name the layer of what you are about to build (the table is in the "UI" section of the
    standard):
    - **Plumbing** (controls, forms, dialogs, menus, tables, tabs, toasts, shell, page frame):
-     only from the [Catalog](#catalog), laid out with a [page pattern](#page-patterns).
+     from the [Catalog](#catalog), laid out with a [page pattern](#page-patterns). A missing piece
+     follows **Missing component or variant** below.
    - **Signature surface** (what makes this product itself: a game board, a canvas, a hero, a
      custom card): build it in the feature's `components/` on the tokens, with catalog pieces
-     inside it where they fit. Design and taste skills are welcome here.
+     inside it where they fit.
 3. Pick the page pattern. A page that needs another layout is fine; add a line under
    **Deliberate deviations** saying which page and why.
 
 Icons are always `lucide-react`.
 
-**Not allowed**: new generic primitives or variants (a local button, modal, select, table or
-toast), copying or restyling a toolkit component, faking a variant with override classes,
-installing another UI library, running `shadcn add`. `ib check` fails on other UI, icon and
-animation libraries, hand-set colours, spacing lengths and type sizes.
+**Not allowed**: copying, forking or restyling a toolkit component, faking a variant with
+override classes on it, installing another UI library, running `shadcn add`. `ib check` fails on
+other UI, icon and animation libraries, hand-set colours, spacing lengths and type sizes.
 
-**Missing component**: stop. Tell the user which component or variant is missing and why, and
-propose adding it to ib-toolkit (`packages/ui` plus its story). Only with the user's explicit
-agreement, use a workaround and mark it `// toolkit-gap: <what is missing>` so it is greppable.
+**Missing component or variant**: do not stop. Compose it in the feature's `components/` from
+catalog primitives and tokens, mark it `// toolkit-gap: <what is missing>` so it is greppable,
+and tell the user which piece is missing. It moves to ib-toolkit (`packages/ui` plus its story)
+once a second app needs it.
 
 ## Rules
 
