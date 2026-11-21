@@ -6,12 +6,18 @@ import { formatReport, installExternalSkills } from "./external-skills";
 import { foundationProblems } from "./foundation";
 import { runMcp } from "./mcp";
 import { claudeFilesIgnoringAgents, staleFiles, write } from "./sync";
-import { uiRuleProblems } from "./ui-rules";
+import {
+  SPACING_BASELINE,
+  spacingProblems,
+  uiRuleProblems,
+  writeSpacingBaseline,
+} from "./ui-rules";
 
 const USAGE = [
-  "usage: ib <create <dir> [--local] | sync [app-dir] | check [app-dir] | mcp>",
+  "usage: ib <create <dir> [--local] | sync [app-dir] | check [app-dir] [--baseline] | mcp>",
   "  create <dir>   start a new app",
   "  mcp            write MCP server config for your AI tools; run `ib mcp` for the picker",
+  "  --baseline     with check: allow the hand-picked spacing there is today, fail only new spacing",
   "  --local        write absolute file: paths to ib-toolkit tarballs; for toolkit development and CI only,",
   "                 never commit that package.json",
 ].join("\n");
@@ -64,6 +70,17 @@ const commands: Record<string, () => number | Promise<number>> = {
     const ignoring = claudeFilesIgnoringAgents(appDir);
     const problems = foundationProblems(appDir);
     const offRules = uiRuleProblems(appDir);
+    if (args.includes("--baseline")) {
+      const allowed = writeSpacingBaseline(appDir);
+      console.info(`wrote ${SPACING_BASELINE}: ${allowed} hand-picked spacing utilities allowed`);
+    }
+    const spacing = spacingProblems(appDir);
+    if (!spacing.enforced && spacing.total > 0) {
+      console.warn(
+        `${spacing.total} hand-picked paddings, margins and gaps in src; ` +
+          "`ib check --baseline` allows these and fails new ones",
+      );
+    }
     if (stale.length > 0) {
       console.error(
         `out of date with @inbeat/standards, run \`ib sync\`:\n  ${stale.join("\n  ")}`,
@@ -84,7 +101,14 @@ const commands: Record<string, () => number | Promise<number>> = {
           `ib-toolkit):\n  ${offRules.join("\n  ")}`,
       );
     }
-    return stale.length + ignoring.length + problems.length + offRules.length === 0 ? 0 : 1;
+    if (spacing.problems.length > 0) {
+      console.error(
+        "hand-picked spacing (use Stack, Inline, Grid or Item from @inbeat/ui, or mark the file " +
+          `\`// signature-surface: <what>\`):\n  ${spacing.problems.join("\n  ")}`,
+      );
+    }
+    const failures = [stale, ignoring, problems, offRules, spacing.problems];
+    return failures.every((list) => list.length === 0) ? 0 : 1;
   },
   mcp: () =>
     runMcp(args, {

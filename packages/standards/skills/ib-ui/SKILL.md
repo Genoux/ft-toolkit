@@ -35,14 +35,17 @@ once a second app needs it.
 
 - Import `@inbeat/ui/components/<name>`; `cn` from `@inbeat/ui/lib/utils`.
 - Tokens only: `bg-background`, `text-muted-foreground`, `border-border`, `bg-primary`, radius
-  scale `rounded-{sm..4xl}`, shadows `shadow-hairline|subtle|elevated`. No hex colors, no
-  arbitrary spacing unless no token fits.
-- Spacing: nothing touches a border, divider or container edge. A row with a `border-b` gets
-  bottom padding at least as large as the gap between its items (`pb-3` minimum), and a bordered
-  box pads every bordered side. Space siblings with `gap-*` on the parent, not margins. Use one
-  step of the spacing scale per level: tighter inside a group (`gap-2`), looser between groups
-  (`gap-4`/`gap-6`). Before finishing, check every bordered or separated region for flush
-  content.
+  scale `rounded-{sm..4xl}`, shadows `shadow-hairline|subtle|elevated`. No hex colors.
+- Spacing: never write `p-*`, `m-*`, `gap-*` or `space-*` yourself; `ib check` fails on them.
+  Components own it: `Page`, `PageSection`, `Card` and `Item` pad themselves, and children are
+  spaced by `Stack` (one under the other), `Inline` (side by side, wraps) or `Grid` (equal
+  columns that reflow). Pick the gap by role, not by size: `xs` a label and its hint, `sm` an
+  icon and its text or a group of buttons, `md` items of a list, `lg` blocks inside a card or
+  form, `xl` groups of blocks. Rows in a bordered list are `Item`s in an `ItemGroup`, never a
+  `div` with padding and `border-b`. A signature surface (a game board, a canvas, a hero) may
+  space itself: mark its file `// signature-surface: <what>`. Density is the app's choice, made
+  once in `globals.css` by overriding `--gap-xs` … `--gap-xl`, `--card-padding` and
+  `--item-padding-x|y`.
 - App shells: `AppShell` + `AppNav`, never Sidebar primitives. Links come in via `renderLink`;
   app sidebar content goes in the `sidebar` slot. Products differ only through `AppShell` props
   (`variant`, `collapsible`, `sidebarWidth`, `headerVariant`), never classes or local shell markup.
@@ -90,16 +93,16 @@ the default; a page that needs something else is recorded under **Deliberate dev
   `size="full"` when the table needs the width.
 - **Detail**: `Page` > `PageHeader` (the record's name, a one-line summary, edit and `dots`
   actions) > optional `Tabs` > one `PageSection` per group: key facts as a grid of
-  `Card`s, one `LabeledField` each (`grid gap-4 sm:grid-cols-3`, the same grid as overview
-  stats), related lists as tables.
+  `Card`s, one `LabeledField` each (`<Grid min="sm">`, the same grid as overview stats), related
+  lists as tables, or as `Item`s in an `ItemGroup` when they are short.
 - **Form and settings**: `Page size="narrow"` > `PageHeader` > one `PageSection` per topic, each
   holding a `Card` with a `FieldGroup`; the save `Button` ends its card. Destructive settings go in
   a last section and open `DestructiveActionDialog`.
-- **Overview**: `Page` > `PageHeader` > a grid of stat `Card`s (`grid gap-4 sm:grid-cols-3`) >
+- **Overview**: `Page` > `PageHeader` > a grid of stat `Card`s (`<Grid min="sm">`) >
   `PageSection`s for what needs attention.
-- **Spacing** comes from these components: `Page` spaces its children with `gap-8`, sections use
-  `gap-4`, cards `p-5 gap-4`. Add spacing only inside your own compositions, one gap step per
-  level.
+- **Spacing** comes from these components: `Page` spaces its sections, `PageSection` its header
+  and content, `Card` and `Item` pad themselves. Inside them, compose with `Stack`, `Inline` and
+  `Grid`.
 
 ## Catalog
 
@@ -133,6 +136,7 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 - `components/labeled-field`: read-only label and value pair.
 - `components/empty-state`: EmptyState with icon, title, description and an optional labelled action: `onClick`, or `href` so a Server Component can link (pass `renderLink` for the router Link; it must forward props and ref, which `next/link` does).
 - `components/card`: Card, the bordered surface for a group of content (a form, key facts, a stat); padding and gap built in.
+- `components/item`: Item rows (ItemMedia, ItemContent with ItemTitle and ItemDescription, ItemActions) inside an ItemGroup frame with dividers, for lists of people, files or settings; padding built in, `asChild` makes a row a link or an `li`.
 - `components/separator`: horizontal or vertical Separator.
 - `components/carousel`: Embla Carousel, CarouselContent and CarouselItem.
 - `components/collapsible-section`: animated CollapsibleSection with trigger and content.
@@ -171,7 +175,8 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 
 ### Layout
 - `components/app-shell`: AppShell page frame with sidebar and header, and AppShellLogo.
-- `components/page`: Page (centred body column; `size` default, narrow or full), PageHeader (`title`, `description`, `actions`) and PageSection (optional `title`, `description`, `actions`, then content).
+- `components/page`: Page (centred body column; `size` default, narrow or full; `asChild` to render `main`), PageHeader (`title`, `description`, `actions`) and PageSection (optional `title`, `description`, `actions`, then content).
+- `components/layout`: Stack (one under the other), Inline (side by side, wraps; `justify="between"` for a toolbar) and Grid (equal columns that reflow; `min` sm, md or lg), each with `gap` xs, sm, md, lg or xl and `asChild`.
 
 ### Hooks and lib
 - `hooks/use-mobile`: `useIsMobile()` breakpoint hook.

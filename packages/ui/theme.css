@@ -68,6 +68,15 @@
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --radius: 0.625rem;
+  /* Spacing roles. Layout components read these; an app changes its density by overriding them. */
+  --gap-xs: 0.25rem;
+  --gap-sm: 0.5rem;
+  --gap-md: 0.75rem;
+  --gap-lg: 1rem;
+  --gap-xl: 1.5rem;
+  --card-padding: 1.25rem;
+  --item-padding-x: 1rem;
+  --item-padding-y: 0.75rem;
   --cream: #f3f3f3;
   --sidebar: hsl(0 0% 98%);
   --sidebar-foreground: hsl(240 5.3% 26.1%);

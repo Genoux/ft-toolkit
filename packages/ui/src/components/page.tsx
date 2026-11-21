@@ -1,3 +1,4 @@
+import { Slot } from "radix-ui";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "../lib/utils";
 
@@ -10,11 +11,14 @@ const PAGE_WIDTH = {
 type PageProps = ComponentProps<"div"> & {
   /** `default` for lists, details and overviews; `narrow` for forms and settings; `full` for wide tables and workspaces. */
   size?: keyof typeof PAGE_WIDTH;
+  /** Renders the child element, usually `main`, instead of a div. */
+  asChild?: boolean;
 };
 
-function Page({ size = "default", className, ...props }: PageProps) {
+function Page({ size = "default", asChild = false, className, ...props }: PageProps) {
+  const Comp = asChild ? Slot.Root : "div";
   return (
-    <div
+    <Comp
       data-slot="page"
       data-size={size}
       className={cn(
@@ -38,15 +42,15 @@ function PageHeader({ title, description, actions, className }: PageHeaderProps)
   return (
     <header
       data-slot="page-header"
-      className={cn("flex flex-wrap items-end justify-between gap-x-8 gap-y-4", className)}
+      className={cn("flex flex-wrap items-end justify-between gap-x-8 gap-y-(--gap-lg)", className)}
     >
-      <div className="flex min-w-0 flex-col gap-1">
+      <div className="flex min-w-0 flex-col gap-(--gap-xs)">
         <h1 className="text-xl font-semibold text-balance">{title}</h1>
         {description ? (
           <p className="max-w-prose text-sm text-pretty text-muted-foreground">{description}</p>
         ) : null}
       </div>
-      {actions ? <div className="flex shrink-0 items-center gap-2">{actions}</div> : null}
+      {actions ? <div className="flex shrink-0 items-center gap-(--gap-sm)">{actions}</div> : null}
     </header>
   );
 }
@@ -60,16 +64,16 @@ type PageSectionProps = Omit<ComponentProps<"section">, "title"> & {
 function PageSection({ title, description, actions, className, children, ...props }: PageSectionProps) {
   const hasHeader = title || description || actions;
   return (
-    <section data-slot="page-section" className={cn("flex min-w-0 flex-col gap-4", className)} {...props}>
+    <section data-slot="page-section" className={cn("flex min-w-0 flex-col gap-(--gap-lg)", className)} {...props}>
       {hasHeader ? (
-        <div className="flex items-end justify-between gap-6">
-          <div className="flex min-w-0 flex-col gap-1">
+        <div className="flex items-end justify-between gap-(--gap-xl)">
+          <div className="flex min-w-0 flex-col gap-(--gap-xs)">
             {title ? <h2 className="text-base font-semibold">{title}</h2> : null}
             {description ? (
               <p className="text-sm text-pretty text-muted-foreground">{description}</p>
             ) : null}
           </div>
-          {actions ? <div className="flex shrink-0 items-center gap-2">{actions}</div> : null}
+          {actions ? <div className="flex shrink-0 items-center gap-(--gap-sm)">{actions}</div> : null}
         </div>
       ) : null}
       {children}

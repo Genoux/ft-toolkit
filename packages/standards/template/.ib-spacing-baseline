@@ -1,0 +1,2 @@
+# Hand-picked spacing allowed per file while it moves to Stack, Inline, Grid and Item.
+# `ib check` fails when a file gains more. Rewrite it with `ib check --baseline` after removing some.
