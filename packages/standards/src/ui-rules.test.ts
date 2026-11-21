@@ -1,8 +1,13 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { uiRuleProblems } from "./ui-rules";
+import {
+  SPACING_BASELINE,
+  spacingProblems,
+  uiRuleProblems,
+  writeSpacingBaseline,
+} from "./ui-rules";
 
 const appDirs: string[] = [];
 
@@ -94,5 +99,54 @@ describe("uiRuleProblems", () => {
   it("ignores files that are not code and apps without a src folder", () => {
     expect(uiRuleProblems(appWith({ "src/notes.md": "text-[13px]" }))).toEqual([]);
     expect(uiRuleProblems(appWith({ "README.md": "x" }))).toEqual([]);
+  });
+});
+
+describe("spacingProblems", () => {
+  const list =
+    '<div className="flex gap-4 px-3 md:py-2 -mt-1">\n<Stack gap="md" className="p-0 mx-auto top-4">';
+
+  it("only counts hand-picked spacing until the app has a baseline", () => {
+    const appDir = appWith({ "src/features/list.tsx": list });
+
+    expect(spacingProblems(appDir)).toEqual({ enforced: false, total: 4, problems: [] });
+  });
+
+  it("fails each line of a file that has more hand-picked spacing than its baseline allows", () => {
+    const appDir = appWith({
+      "src/features/list.tsx": list,
+      "src/features/old.tsx": '<div className="gap-2">',
+      [SPACING_BASELINE]: "1 src/features/old.tsx\n",
+    });
+
+    expect(spacingProblems(appDir)).toEqual({
+      enforced: true,
+      total: 5,
+      problems: [
+        "src/features/list.tsx:1 gap-4 (hand-picked spacing; use Stack, Inline, Grid or Item)",
+        "src/features/list.tsx:1 px-3 (hand-picked spacing; use Stack, Inline, Grid or Item)",
+        "src/features/list.tsx:1 md:py-2 (hand-picked spacing; use Stack, Inline, Grid or Item)",
+        "src/features/list.tsx:1 -mt-1 (hand-picked spacing; use Stack, Inline, Grid or Item)",
+      ],
+    });
+  });
+
+  it("leaves signature surfaces free", () => {
+    const appDir = appWith({
+      "src/features/board.tsx": `// signature-surface: the game board\n${list}`,
+      [SPACING_BASELINE]: "",
+    });
+
+    expect(spacingProblems(appDir).problems).toEqual([]);
+  });
+
+  it("writes today's counts as the baseline, which then passes", () => {
+    const appDir = appWith({ "src/features/list.tsx": list, "src/page.tsx": "<Page />" });
+
+    expect(writeSpacingBaseline(appDir)).toBe(4);
+    expect(readFileSync(join(appDir, SPACING_BASELINE), "utf8")).toContain(
+      "4 src/features/list.tsx\n",
+    );
+    expect(spacingProblems(appDir)).toEqual({ enforced: true, total: 4, problems: [] });
   });
 });

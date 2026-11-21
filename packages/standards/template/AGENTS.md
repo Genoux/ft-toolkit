@@ -97,11 +97,18 @@ UI is in exactly one of three layers:
 | Layer | What | Rule |
 |---|---|---|
 | Plumbing | buttons, inputs, forms, dialogs, menus, tables, toasts, tabs, the app shell, page frame, type scale, spacing | From `@inbeat/ui` when it has the piece. Missing piece or variant: compose it in the app from `@inbeat/ui` primitives and tokens, mark it `// toolkit-gap: <what is missing>`, and tell the user; it moves to ib-toolkit once a second app needs it. Never copy, fork or patch a toolkit file. |
-| Look | colours, fonts, radius, shadows | Tokens only, chosen under "Look": neutral `theme.css`, the Fieldtrip layer, or the app's own token overrides in `globals.css`. Never hex or one-off values in components. |
-| Signature surfaces | what makes this product itself: a game board, a canvas, a hero, a custom card or player | Free, built in the app on the tokens and plumbing. They stay in the app until a second app needs them. |
+| Look | colours, fonts, radius, shadows, density | Tokens only, chosen under "Look": neutral `theme.css`, the Fieldtrip layer, or the app's own token overrides in `globals.css`. Never hex or one-off values in components. |
+| Signature surfaces | what makes this product itself: a game board, a canvas, a hero, a custom card or player | Free, built in the app on the tokens and plumbing; mark the file `// signature-surface: <what>` so it may space itself. They stay in the app until a second app needs them. |
 
 - Pages follow the page patterns in the `ib-ui` skill (list, detail, form, overview). A page that
   needs a different layout is allowed; record it under **Deliberate deviations**.
+- Spacing is never picked by hand: `Page`, `PageSection`, `Card` and `Item` pad themselves and
+  `Stack`, `Inline` and `Grid` space their children by role (`xs` … `xl`). `ib check` fails on
+  `p-*`, `m-*`, `gap-*` and `space-*` in app code; an app that has them already runs
+  `ib check --baseline` once, which allows today's and fails new ones. Density is a Look choice:
+  override `--gap-*`, `--card-padding` and `--item-padding-*` in `globals.css`. An app that is
+  mostly signature surfaces (an album, a game) deletes `.ib-spacing-baseline`; the rule then
+  only counts.
 - The toolkit ships no taste skills; each developer picks their own. Whatever they say, the
   rules here and in `ib-ui` win for plumbing and page layout.
 - Type scale: every text takes one of these roles and nothing sets a size or weight of its own
