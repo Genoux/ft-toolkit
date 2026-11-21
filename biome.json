@@ -12,7 +12,8 @@
       "!!**/dist",
       "!**/next-env.d.ts",
       "!!packages/ui/src/components",
-      "!packages/standards/template"
+      "!packages/standards/template",
+      "!**/.demo"
     ]
   }
 }
