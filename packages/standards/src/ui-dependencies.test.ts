@@ -26,7 +26,7 @@ function importedPackages(): Map<string, string[]> {
   return importers;
 }
 
-describe("@inbeat/ui dependencies", () => {
+describe("@fieldtripagency/ui dependencies", () => {
   const uiManifest = JSON.parse(readFileSync(join(UI_DIR, "package.json"), "utf8"));
   const templateManifest = JSON.parse(readFileSync(TEMPLATE_MANIFEST, "utf8"));
   const installedInTemplate = new Set([
@@ -42,7 +42,7 @@ describe("@inbeat/ui dependencies", () => {
     expect(missing).toEqual([]);
   });
 
-  it("declares every imported package as a peer or dependency of @inbeat/ui", () => {
+  it("declares every imported package as a peer or dependency of @fieldtripagency/ui", () => {
     const declared = new Set([
       ...Object.keys(uiManifest.dependencies),
       ...Object.keys(uiManifest.peerDependencies),

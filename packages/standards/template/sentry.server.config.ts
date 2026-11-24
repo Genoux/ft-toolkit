@@ -1,4 +1,4 @@
-import { sentryServerOptions } from "@inbeat/next/sentry";
+import { sentryServerOptions } from "@fieldtripagency/next/sentry";
 import * as Sentry from "@sentry/nextjs";
 import { env } from "@/shared/config/env";
 

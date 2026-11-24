@@ -9,23 +9,23 @@
   "packages": {
     "packages/config": {
       "component": "config",
-      "package-name": "@inbeat/config"
+      "package-name": "@fieldtripagency/config"
     },
     "packages/core": {
       "component": "core",
-      "package-name": "@inbeat/core"
+      "package-name": "@fieldtripagency/core"
     },
     "packages/next": {
       "component": "next",
-      "package-name": "@inbeat/next"
+      "package-name": "@fieldtripagency/next"
     },
     "packages/ui": {
       "component": "ui",
-      "package-name": "@inbeat/ui"
+      "package-name": "@fieldtripagency/ui"
     },
     "packages/standards": {
       "component": "standards",
-      "package-name": "@inbeat/standards"
+      "package-name": "@fieldtripagency/standards"
     }
   },
   "plugins": [

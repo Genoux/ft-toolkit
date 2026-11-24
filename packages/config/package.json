@@ -1,5 +1,5 @@
 {
-  "name": "@inbeat/config",
+  "name": "@fieldtripagency/config",
   "version": "0.19.1",
   "description": "Shared tsconfig, Biome, dependency-cruiser, Vitest and commitlint presets for inBeat apps",
   "type": "module",

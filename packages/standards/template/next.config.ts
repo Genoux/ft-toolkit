@@ -1,10 +1,10 @@
-import { clerkFrontendApi, securityHeaders } from "@inbeat/next/security-headers";
+import { clerkFrontendApi, securityHeaders } from "@fieldtripagency/next/security-headers";
 import { withSentryConfig } from "@sentry/nextjs/config";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
-  transpilePackages: ["@inbeat/ui"],
+  transpilePackages: ["@fieldtripagency/ui"],
   headers: async () => [
     {
       source: "/(.*)",

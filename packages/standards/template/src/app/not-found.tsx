@@ -1,5 +1,5 @@
-import { EmptyState } from "@inbeat/ui/components/empty-state";
-import { Page } from "@inbeat/ui/components/page";
+import { EmptyState } from "@fieldtripagency/ui/components/empty-state";
+import { Page } from "@fieldtripagency/ui/components/page";
 import Link from "next/link";
 import { ROUTES } from "@/shared/config/routes";
 

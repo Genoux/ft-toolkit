@@ -1,5 +1,5 @@
 {
-  "name": "@inbeat/standards",
+  "name": "@fieldtripagency/standards",
   "version": "0.19.1",
   "description": "Agent standards for inBeat apps: managed AGENTS.md block, skills under .agents/skills, shared third-party skills, ib CLI",
   "type": "module",
@@ -32,7 +32,7 @@
     "test": "bun --bun vitest run"
   },
   "devDependencies": {
-    "@inbeat/config": "workspace:^",
+    "@fieldtripagency/config": "workspace:^",
     "vitest": "^4.1.1"
   },
   "repository": {

@@ -1,4 +1,4 @@
-import { normalizeEmail } from "@inbeat/core/email";
+import { normalizeEmail } from "@fieldtripagency/core/email";
 
 export type MaintenanceConfig = {
   enabled: boolean;

@@ -39,7 +39,7 @@ const RULES = [
   {
     pattern:
       /from "(?:@mui\/|@chakra-ui\/|antd|@mantine\/|@headlessui\/|react-bootstrap|@nextui-org\/|@heroui\/|react-icons|@heroicons\/|@tabler\/icons|@phosphor-icons|framer-motion|@radix-ui\/)/g,
-    reason: "another UI library; use @inbeat/ui, lucide-react, radix-ui and motion",
+    reason: "another UI library; use @fieldtripagency/ui, lucide-react, radix-ui and motion",
   },
 ];
 

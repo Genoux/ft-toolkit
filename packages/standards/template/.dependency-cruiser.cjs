@@ -1,1 +1,1 @@
-module.exports = require("@inbeat/config/dependency-cruiser");
+module.exports = require("@fieldtripagency/config/dependency-cruiser");

@@ -5,7 +5,7 @@ import { chromium } from "playwright";
 import { PNG } from "pngjs";
 import { openStory, ROOT, storybook, storyIds } from "./storybook";
 
-// Visual regression for @inbeat/ui: screenshots every Storybook story at desktop and phone width and
+// Visual regression for @fieldtripagency/ui: screenshots every Storybook story at desktop and phone width and
 // compares them with the last approved run. Screenshots stay local in .visual/ (gitignored).
 //   bun run visual            build Storybook, snapshot, diff against .visual/baseline
 //   bun run visual:approve    accept the current snapshot as the new baseline

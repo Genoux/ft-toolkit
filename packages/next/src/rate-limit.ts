@@ -1,5 +1,5 @@
 import { isIP } from "node:net";
-import { AppError } from "@inbeat/core/errors";
+import { AppError } from "@fieldtripagency/core/errors";
 import { type Duration, Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 

@@ -23,7 +23,7 @@ function cataloguedModules(): string[] {
 }
 
 describe("ib-ui catalog", () => {
-  it("lists every @inbeat/ui module exactly once", () => {
+  it("lists every @fieldtripagency/ui module exactly once", () => {
     const catalogued = cataloguedModules();
     expect(new Set(catalogued).size).toBe(catalogued.length);
     const modules = exportedModules();

@@ -1,5 +1,5 @@
-import { type ClassifiedError, classifyError, isAppError } from "@inbeat/core/errors";
-import { createLogger } from "@inbeat/core/logger";
+import { type ClassifiedError, classifyError, isAppError } from "@fieldtripagency/core/errors";
+import { createLogger } from "@fieldtripagency/core/logger";
 import * as Sentry from "@sentry/nextjs";
 
 export type CapturedError = ClassifiedError & { errorId?: string };

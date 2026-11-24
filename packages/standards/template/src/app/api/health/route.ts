@@ -1,4 +1,4 @@
-import { route } from "@inbeat/next/route";
+import { route } from "@fieldtripagency/next/route";
 
 export const GET = route({
   name: "health",

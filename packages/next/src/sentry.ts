@@ -1,4 +1,4 @@
-import { isTransientUncaughtException } from "@inbeat/core/errors";
+import { isTransientUncaughtException } from "@fieldtripagency/core/errors";
 import type * as Sentry from "@sentry/nextjs";
 
 type ErrorEvent = Sentry.ErrorEvent;
@@ -42,7 +42,7 @@ function createBeforeSend(ignore?: (hint: EventHint) => boolean) {
 }
 
 /**
- * Server and edge options. Browser options live in `@inbeat/next/sentry-client`: Replay only
+ * Server and edge options. Browser options live in `@fieldtripagency/next/sentry-client`: Replay only
  * exists in the browser build of `@sentry/nextjs`, and Turbopack fails the edge bundle on it.
  */
 export function sentryServerOptions({

@@ -21,11 +21,11 @@ import {
 import { restoreDotfileName } from "./template";
 
 const manifest = {
-  name: "@inbeat/template",
+  name: "@fieldtripagency/template",
   version: "0.0.0",
   private: true,
-  dependencies: { "@inbeat/core": "workspace:^", next: "16.1.6" },
-  devDependencies: { "@inbeat/standards": "workspace:^", vitest: "^4.1.1" },
+  dependencies: { "@fieldtripagency/core": "workspace:^", next: "16.1.6" },
+  devDependencies: { "@fieldtripagency/standards": "workspace:^", vitest: "^4.1.1" },
 };
 
 describe("projectName", () => {
@@ -75,8 +75,11 @@ describe("rewriteManifest", () => {
   it("names the project and pins workspace ranges to the standards version", () => {
     const rewritten = rewriteManifest(manifest, { name: "acme", version: "0.1.2" });
     expect(rewritten.name).toBe("acme");
-    expect(rewritten.dependencies).toEqual({ "@inbeat/core": "^0.1.2", next: "16.1.6" });
-    expect(rewritten.devDependencies).toEqual({ "@inbeat/standards": "^0.1.2", vitest: "^4.1.1" });
+    expect(rewritten.dependencies).toEqual({ "@fieldtripagency/core": "^0.1.2", next: "16.1.6" });
+    expect(rewritten.devDependencies).toEqual({
+      "@fieldtripagency/standards": "^0.1.2",
+      vitest: "^4.1.1",
+    });
     expect(rewritten).not.toHaveProperty("overrides");
   });
 
@@ -90,21 +93,25 @@ describe("rewriteManifest", () => {
 
   it("points workspace deps at local tarballs and overrides every package", () => {
     const tarballs = {
-      "@inbeat/core": "file:/toolkit/.packs/inbeat-core.tgz",
-      "@inbeat/next": "file:/toolkit/.packs/inbeat-next.tgz",
-      "@inbeat/standards": "file:/toolkit/.packs/inbeat-standards.tgz",
+      "@fieldtripagency/core": "file:/toolkit/.packs/fieldtripagency-core.tgz",
+      "@fieldtripagency/next": "file:/toolkit/.packs/fieldtripagency-next.tgz",
+      "@fieldtripagency/standards": "file:/toolkit/.packs/fieldtripagency-standards.tgz",
     };
     const rewritten = rewriteManifest(manifest, { name: "acme", version: "0.1.2", tarballs });
-    expect(rewritten.dependencies?.["@inbeat/core"]).toBe(tarballs["@inbeat/core"]);
+    expect(rewritten.dependencies?.["@fieldtripagency/core"]).toBe(
+      tarballs["@fieldtripagency/core"],
+    );
     expect(rewritten.dependencies?.next).toBe("16.1.6");
-    expect(rewritten.devDependencies?.["@inbeat/standards"]).toBe(tarballs["@inbeat/standards"]);
+    expect(rewritten.devDependencies?.["@fieldtripagency/standards"]).toBe(
+      tarballs["@fieldtripagency/standards"],
+    );
     expect(rewritten.overrides).toEqual(tarballs);
   });
 
   it("does not mutate the input", () => {
     rewriteManifest(manifest, { name: "acme", version: "0.1.2" });
-    expect(manifest.name).toBe("@inbeat/template");
-    expect(manifest.dependencies["@inbeat/core"]).toBe("workspace:^");
+    expect(manifest.name).toBe("@fieldtripagency/template");
+    expect(manifest.dependencies["@fieldtripagency/core"]).toBe("workspace:^");
   });
 });
 
@@ -150,7 +157,10 @@ describe("create", () => {
     writeFileSync(join(template, ".env.example"), "KEY=");
     writeFileSync(
       join(template, "package.json"),
-      JSON.stringify({ name: "@inbeat/template", dependencies: { "@inbeat/core": "workspace:^" } }),
+      JSON.stringify({
+        name: "@fieldtripagency/template",
+        dependencies: { "@fieldtripagency/core": "workspace:^" },
+      }),
     );
     return template;
   }
@@ -168,7 +178,7 @@ describe("create", () => {
     expect(readFileSync(join(target, ".env.local"), "utf8")).toBe("KEY=");
     const manifest = JSON.parse(readFileSync(join(target, "package.json"), "utf8"));
     expect(manifest.name).toBe("my-app");
-    expect(manifest.dependencies["@inbeat/core"]).toMatch(/^\^\d/);
+    expect(manifest.dependencies["@fieldtripagency/core"]).toMatch(/^\^\d/);
   });
 
   it("leaves dev output and secrets of a checkout's template folder behind", async () => {

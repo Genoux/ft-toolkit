@@ -14,23 +14,23 @@ const mentionsPreset = (preset: string) => (contents: string) => contents.includ
 const REQUIREMENTS: Requirement[] = [
   {
     files: ["biome.json", "biome.jsonc"],
-    message: "biome.json (or biome.jsonc) must extend @inbeat/config/biome",
-    satisfiedBy: mentionsPreset("@inbeat/config/biome"),
+    message: "biome.json (or biome.jsonc) must extend @fieldtripagency/config/biome",
+    satisfiedBy: mentionsPreset("@fieldtripagency/config/biome"),
   },
   {
     files: ["tsconfig.json"],
-    message: "tsconfig.json must extend @inbeat/config/tsconfig/nextjs.json",
-    satisfiedBy: mentionsPreset("@inbeat/config/tsconfig/nextjs.json"),
+    message: "tsconfig.json must extend @fieldtripagency/config/tsconfig/nextjs.json",
+    satisfiedBy: mentionsPreset("@fieldtripagency/config/tsconfig/nextjs.json"),
   },
   {
     files: [".dependency-cruiser.cjs"],
-    message: ".dependency-cruiser.cjs must use @inbeat/config/dependency-cruiser",
-    satisfiedBy: mentionsPreset("@inbeat/config/dependency-cruiser"),
+    message: ".dependency-cruiser.cjs must use @fieldtripagency/config/dependency-cruiser",
+    satisfiedBy: mentionsPreset("@fieldtripagency/config/dependency-cruiser"),
   },
   {
     files: ["vitest.config.ts"],
-    message: "vitest.config.ts must import from @inbeat/config/vitest",
-    satisfiedBy: mentionsPreset("@inbeat/config/vitest"),
+    message: "vitest.config.ts must import from @fieldtripagency/config/vitest",
+    satisfiedBy: mentionsPreset("@fieldtripagency/config/vitest"),
   },
 ];
 

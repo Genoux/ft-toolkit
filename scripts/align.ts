@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 import { openStory, storybook, storyIds } from "./storybook";
 
-// Alignment check for @inbeat/ui: opens every Storybook story at 1440 wide and measures the DOM for
+// Alignment check for @fieldtripagency/ui: opens every Storybook story at 1440 wide and measures the DOM for
 // the misalignments a reviewer otherwise catches by eye. Exits 1 when it finds one.
 //   bun run align                      build Storybook and check every story
 //   --url http://localhost:6006        check a running Storybook instead of building one

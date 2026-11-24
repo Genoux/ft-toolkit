@@ -1,6 +1,6 @@
 ---
 name: ib-toolkit
-description: Use the inBeat toolkit (@inbeat/core, @inbeat/next, @inbeat/config) correctly in an inBeat app. Use when writing server actions, route handlers, auth checks, env, rate limits, webhooks, Sentry or logging, or when the user mentions ib-toolkit or @ib-toolkit.
+description: Use the inBeat toolkit (@fieldtripagency/core, @fieldtripagency/next, @fieldtripagency/config) correctly in an inBeat app. Use when writing server actions, route handlers, auth checks, env, rate limits, webhooks, Sentry or logging, or when the user mentions ib-toolkit or @ib-toolkit.
 ---
 
 # ib-toolkit
@@ -11,8 +11,8 @@ Read the "inBeat toolkit standard" block in `AGENTS.md` first. This skill is the
 
 ```ts
 "use server";
-import { ok } from "@inbeat/core/result";
-import { action } from "@inbeat/next/action";
+import { ok } from "@fieldtripagency/core/result";
+import { action } from "@fieldtripagency/next/action";
 import { authorizeStaff } from "@/shared/lib/auth";
 import { createClientSchema } from "../schemas";
 import { createClientRecord } from "../server/create-client-record";
@@ -32,7 +32,7 @@ Public action: `authorize: publicAccess`, then first thing in `run`:
 `await rateLimiter.enforce(\`apply:${clientIp(await headers())}\`, { limit: 5, window: "10 m" })`.
 The limiter is one shared instance in `src/shared/lib/rate-limit.ts` (`createRateLimiter({ prefix, upstash })`
 with the `upstashEnv` values) imported by every action and route. Get the IP only from `clientIp` in
-`@inbeat/next/rate-limit` (routes pass `request.headers`); never write your own header parsing.
+`@fieldtripagency/next/rate-limit` (routes pass `request.headers`); never write your own header parsing.
 `clientIp` is reliable on Vercel only; self-hosted apps behind a proxy pass `{ trustedProxyHops: n }`,
 otherwise it returns `"unknown"`. Public forms using Turnstile without Clerk must add its hosts via
 `securityHeaders({ sources: { script: ["https://challenges.cloudflare.com"], frame: ["https://challenges.cloudflare.com"] } })`.
@@ -40,7 +40,7 @@ otherwise it returns `"unknown"`. Public forms using Turnstile without Clerk mus
 ## Route handler
 
 ```ts
-import { route } from "@inbeat/next/route";
+import { route } from "@fieldtripagency/next/route";
 export const GET = route({
   name: "clients.list",
   authorize: authorizeStaff,
@@ -54,7 +54,7 @@ export const GET = route({
 - Deny: `throw new AppError("forbidden", "reason for logs")`. The user sees safe default copy.
 - Expected business failure: `return fail("That handle is taken", "conflict")`.
 - Anything else: let it throw. The wrapper classifies, reports to Sentry and returns `ERR_xxxx`.
-- Postgres: `isUniqueViolation(err)` from `@inbeat/core/errors`, never string matching.
+- Postgres: `isUniqueViolation(err)` from `@fieldtripagency/core/errors`, never string matching.
 
 ## Authorization
 
@@ -71,7 +71,7 @@ Run `ib mcp` to give your AI tool access to Vercel, Sentry, Neon, Clerk, Cloudfl
 1. Run `npx -y clerk@latest init` (works with `bunx`). It detects Next.js and applies Clerk's setup; `npx -y clerk@latest doctor` verifies it.
 2. In `proxy.ts`, exclude `/monitoring` (the Sentry tunnel) from the matcher, and keep `/api/health` and `/robots.txt` public.
 3. Pass `clerkFrontendApi(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY)` to `securityHeaders` (the base `next.config.ts` already does).
-4. Add `clerkServerEnv` and `clerkClientEnv` from `@inbeat/core/env` to `src/shared/config/env.ts` (see Env below).
+4. Add `clerkServerEnv` and `clerkClientEnv` from `@fieldtripagency/core/env` to `src/shared/config/env.ts` (see Env below).
 
 Access pattern. Clerk's development and production instances are configured separately: apply every
 dashboard step to both.
@@ -101,7 +101,7 @@ dashboard step to both.
 
 ```ts
 import { createEnv } from "@t3-oss/env-nextjs";
-import { clerkClientEnv, clerkServerEnv, dbEnv, upstashEnv } from "@inbeat/core/env";
+import { clerkClientEnv, clerkServerEnv, dbEnv, upstashEnv } from "@fieldtripagency/core/env";
 export const env = createEnv({
   server: { ...dbEnv, ...clerkServerEnv, ...upstashEnv },
   client: { ...clerkClientEnv },
@@ -114,13 +114,13 @@ export const env = createEnv({
 
 | Need | Import |
 |---|---|
-| Neon pool | `createDb` from `@inbeat/next/db` |
-| Clerk webhook | `createClerkWebhookHandler` from `@inbeat/next/clerk-webhook` |
-| Headers/CSP | `securityHeaders`, `clerkFrontendApi` from `@inbeat/next/security-headers` |
-| Sentry | `sentryServerOptions` from `@inbeat/next/sentry` (server, edge); `sentryClientOptions` from `@inbeat/next/sentry-client` (browser only) |
-| Redirect param | `safeRedirectPath` from `@inbeat/next/safe-redirect` |
+| Neon pool | `createDb` from `@fieldtripagency/next/db` |
+| Clerk webhook | `createClerkWebhookHandler` from `@fieldtripagency/next/clerk-webhook` |
+| Headers/CSP | `securityHeaders`, `clerkFrontendApi` from `@fieldtripagency/next/security-headers` |
+| Sentry | `sentryServerOptions` from `@fieldtripagency/next/sentry` (server, edge); `sentryClientOptions` from `@fieldtripagency/next/sentry-client` (browser only) |
+| Redirect param | `safeRedirectPath` from `@fieldtripagency/next/safe-redirect` |
 
 ## Changing the toolkit
 
-Edit `~/Desktop/@inbeat/ib-toolkit`, run its tests, then `bun run sync <app-dir>` there to copy
-the sources into the app's `node_modules/@inbeat/*` (use `--watch` while iterating).
+Edit your ib-toolkit checkout, run its tests, then `bun run sync <app-dir>` there to copy
+the sources into the app's `node_modules/@fieldtripagency/*` (use `--watch` while iterating).

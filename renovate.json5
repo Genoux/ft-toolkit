@@ -9,7 +9,7 @@
   packageRules: [
     {
       groupName: "inbeat toolkit",
-      matchPackageNames: ["@inbeat/**"],
+      matchPackageNames: ["@fieldtripagency/**"],
       schedule: ["at any time"],
       automerge: true,
       matchUpdateTypes: ["minor", "patch"],

@@ -1,7 +1,7 @@
 /*
  * Opt-in Fieldtrip brand layer. Import after theme.css in the app's globals.css:
- *   @import "@inbeat/ui/theme.css";
- *   @import "@inbeat/ui/fieldtrip.css";
+ *   @import "@fieldtripagency/ui/theme.css";
+ *   @import "@fieldtripagency/ui/fieldtrip.css";
  * Brand colours; the faces come from fonts.css, imported here, so an app needs no font setup.
  */
 @import "./fonts.css";

@@ -40,7 +40,7 @@ function isPublished(root: string, path: string): boolean {
 // differ; only third-party ranges signal that the app needs a real reinstall.
 function externalDependencies(manifest: { dependencies?: Record<string, string> }): string {
   const entries = Object.entries(manifest.dependencies ?? {}).filter(
-    ([name]) => !name.startsWith("@inbeat/"),
+    ([name]) => !name.startsWith("@fieldtripagency/"),
   );
   return JSON.stringify(Object.fromEntries(entries));
 }

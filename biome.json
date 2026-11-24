@@ -13,7 +13,8 @@
       "!**/next-env.d.ts",
       "!!packages/ui/src/components",
       "!packages/standards/template",
-      "!**/.demo"
+      "!**/.demo",
+      "!**/.impeccable"
     ]
   }
 }

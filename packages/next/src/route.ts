@@ -1,4 +1,4 @@
-import { APP_ERROR_STATUS, AppError } from "@inbeat/core/errors";
+import { APP_ERROR_STATUS, AppError } from "@fieldtripagency/core/errors";
 import { NextResponse } from "next/server.js";
 import type { z } from "zod";
 import { captureAppError } from "./capture.js";

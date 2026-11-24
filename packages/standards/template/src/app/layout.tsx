@@ -1,6 +1,6 @@
-import { fontVariables } from "@inbeat/next/fonts";
-import { Toaster } from "@inbeat/ui/components/sonner";
-import { TooltipProvider } from "@inbeat/ui/components/tooltip";
+import { fontVariables } from "@fieldtripagency/next/fonts";
+import { Toaster } from "@fieldtripagency/ui/components/sonner";
+import { TooltipProvider } from "@fieldtripagency/ui/components/tooltip";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";

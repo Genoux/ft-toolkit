@@ -1,5 +1,5 @@
 /**
- * Layer model shared by every inBeat app (see @inbeat/standards AGENTS block).
+ * Layer model shared by every inBeat app (see @fieldtripagency/standards AGENTS block).
  * Apps extend this file and may add or relax rules by redefining a rule with the same name.
  * @type {import('dependency-cruiser').IConfiguration}
  */

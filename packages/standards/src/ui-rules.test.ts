@@ -98,13 +98,13 @@ describe("uiRuleProblems", () => {
     });
 
     expect(uiRuleProblems(appDir).sort()).toEqual([
-      'src/icons.ts:1 from "react-icons (another UI library; use @inbeat/ui, lucide-react, radix-ui and motion)',
-      'src/menu.tsx:1 from "@radix-ui/ (another UI library; use @inbeat/ui, lucide-react, radix-ui and motion)',
-      'src/menu.tsx:2 from "framer-motion (another UI library; use @inbeat/ui, lucide-react, radix-ui and motion)',
+      'src/icons.ts:1 from "react-icons (another UI library; use @fieldtripagency/ui, lucide-react, radix-ui and motion)',
+      'src/menu.tsx:1 from "@radix-ui/ (another UI library; use @fieldtripagency/ui, lucide-react, radix-ui and motion)',
+      'src/menu.tsx:2 from "framer-motion (another UI library; use @fieldtripagency/ui, lucide-react, radix-ui and motion)',
     ]);
   });
 
-  it("keeps @inbeat/ui itself to the weights apps may use", () => {
+  it("keeps @fieldtripagency/ui itself to the weights apps may use", () => {
     const uiDir = join(import.meta.dirname, "..", "..", "ui");
     const weightProblems = uiRuleProblems(uiDir).filter((problem) => problem.includes("weight"));
 

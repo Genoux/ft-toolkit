@@ -1,4 +1,4 @@
-import { AppError } from "@inbeat/core/errors";
+import { AppError } from "@fieldtripagency/core/errors";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const captureException = vi.fn(() => "abcdef1234567890");

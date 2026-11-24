@@ -1,5 +1,5 @@
 {
-  "extends": "@inbeat/config/tsconfig/nextjs.json",
+  "extends": "@fieldtripagency/config/tsconfig/nextjs.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]

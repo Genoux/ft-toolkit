@@ -1,5 +1,5 @@
 {
-  "name": "@inbeat/ui",
+  "name": "@fieldtripagency/ui",
   "version": "0.19.1",
   "description": "inBeat design tokens and primitives (Radix + Tailwind v4), shipped as source",
   "type": "module",
@@ -70,7 +70,7 @@
     "@base-ui/react": "^1.2.0",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
-    "@inbeat/config": "workspace:^",
+    "@fieldtripagency/config": "workspace:^",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-themes": "^10.6.0",

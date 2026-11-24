@@ -1,4 +1,4 @@
-import { SectionSpinner } from "@inbeat/ui/components/spinner";
+import { SectionSpinner } from "@fieldtripagency/ui/components/spinner";
 
 export default function Loading() {
   return (

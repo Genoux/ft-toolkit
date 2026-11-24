@@ -219,7 +219,7 @@ export async function create(dir: string, options: CreateOptions): Promise<void>
 
   if (!existsSync(templateDir)) {
     throw new Error(
-      "template missing from @inbeat/standards; run `bun run build:packages` in ib-toolkit.",
+      "template missing from @fieldtripagency/standards; run `bun run build:packages` in ib-toolkit.",
     );
   }
   assertNoConflicts(targetDir, templateEntries(templateDir));

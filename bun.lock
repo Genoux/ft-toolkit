@@ -17,7 +17,7 @@
       },
     },
     "packages/config": {
-      "name": "@inbeat/config",
+      "name": "@fieldtripagency/config",
       "version": "0.19.1",
       "devDependencies": {
         "vitest": "^4.1.1",
@@ -32,10 +32,10 @@
       ],
     },
     "packages/core": {
-      "name": "@inbeat/core",
+      "name": "@fieldtripagency/core",
       "version": "0.19.1",
       "devDependencies": {
-        "@inbeat/config": "workspace:^",
+        "@fieldtripagency/config": "workspace:^",
         "vitest": "^4.1.1",
         "zod": "^4.3.6",
       },
@@ -44,17 +44,17 @@
       },
     },
     "packages/next": {
-      "name": "@inbeat/next",
+      "name": "@fieldtripagency/next",
       "version": "0.19.1",
       "dependencies": {
-        "@inbeat/core": "workspace:^",
+        "@fieldtripagency/core": "workspace:^",
         "@upstash/ratelimit": "^2.0.6",
         "@upstash/redis": "^1.35.3",
         "server-only": "^0.0.1",
       },
       "devDependencies": {
         "@clerk/nextjs": "^7.0.6",
-        "@inbeat/config": "workspace:^",
+        "@fieldtripagency/config": "workspace:^",
         "@neondatabase/serverless": "^1.0.2",
         "@sentry/nextjs": "^10",
         "@types/react": "^19",
@@ -86,7 +86,7 @@
       ],
     },
     "packages/standards": {
-      "name": "@inbeat/standards",
+      "name": "@fieldtripagency/standards",
       "version": "0.19.1",
       "bin": {
         "ib": "./src/cli.ts",
@@ -95,18 +95,18 @@
         "@clack/prompts": "^1.8.1",
       },
       "devDependencies": {
-        "@inbeat/config": "workspace:^",
+        "@fieldtripagency/config": "workspace:^",
         "vitest": "^4.1.1",
       },
     },
     "packages/standards/template": {
-      "name": "@inbeat/template",
+      "name": "@fieldtripagency/template",
       "version": "0.0.0",
       "dependencies": {
         "@base-ui/react": "^1.2.0",
-        "@inbeat/core": "workspace:^",
-        "@inbeat/next": "workspace:^",
-        "@inbeat/ui": "workspace:^",
+        "@fieldtripagency/core": "workspace:^",
+        "@fieldtripagency/next": "workspace:^",
+        "@fieldtripagency/ui": "workspace:^",
         "@sentry/nextjs": "^10",
         "@t3-oss/env-nextjs": "^0.13.8",
         "@tanstack/react-table": "^8.21.3",
@@ -128,8 +128,8 @@
       },
       "devDependencies": {
         "@biomejs/biome": "2.5.15",
-        "@inbeat/config": "workspace:^",
-        "@inbeat/standards": "workspace:^",
+        "@fieldtripagency/config": "workspace:^",
+        "@fieldtripagency/standards": "workspace:^",
         "@tailwindcss/postcss": "^4.3.3",
         "@types/node": "^22",
         "@types/react": "^19",
@@ -142,7 +142,7 @@
       },
     },
     "packages/ui": {
-      "name": "@inbeat/ui",
+      "name": "@fieldtripagency/ui",
       "version": "0.19.1",
       "dependencies": {
         "class-variance-authority": "^0.7.1",
@@ -151,9 +151,9 @@
       },
       "devDependencies": {
         "@base-ui/react": "^1.2.0",
+        "@fieldtripagency/config": "workspace:^",
         "@fontsource-variable/geist": "^5.3.0",
         "@fontsource-variable/geist-mono": "^5.3.0",
-        "@inbeat/config": "workspace:^",
         "@storybook/addon-a11y": "^10.6.0",
         "@storybook/addon-docs": "^10.6.0",
         "@storybook/addon-themes": "^10.6.0",
@@ -368,6 +368,18 @@
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.28.2", "", { "os": "win32", "cpu": "x64" }, "sha512-5ebpxr3nWMzrL/rnUI755Jkuee0bHL/Gq0WTF9lvcpv73wAp5eu8MfBUgWK9bhWvZjj7yX8etf/8tI8Ney695g=="],
 
+    "@fieldtripagency/config": ["@fieldtripagency/config@workspace:packages/config"],
+
+    "@fieldtripagency/core": ["@fieldtripagency/core@workspace:packages/core"],
+
+    "@fieldtripagency/next": ["@fieldtripagency/next@workspace:packages/next"],
+
+    "@fieldtripagency/standards": ["@fieldtripagency/standards@workspace:packages/standards"],
+
+    "@fieldtripagency/template": ["@fieldtripagency/template@workspace:packages/standards/template"],
+
+    "@fieldtripagency/ui": ["@fieldtripagency/ui@workspace:packages/ui"],
+
     "@floating-ui/core": ["@floating-ui/core@1.8.0", "", { "dependencies": { "@floating-ui/utils": "^0.2.12" } }, "sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ=="],
 
     "@floating-ui/dom": ["@floating-ui/dom@1.8.0", "", { "dependencies": { "@floating-ui/core": "^1.8.0", "@floating-ui/utils": "^0.2.12" } }, "sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg=="],
@@ -435,18 +447,6 @@
     "@img/sharp-win32-ia32": ["@img/sharp-win32-ia32@0.35.5", "", { "os": "win32", "cpu": "ia32" }, "sha512-5Zm82LoBc43nhwNybZlG7Y1KO//Zhsn306fQl29ZOuStHLGTo3BWL83q3cznX0poxSAMuYL1On/BHBxkBeKr6A=="],
 
     "@img/sharp-win32-x64": ["@img/sharp-win32-x64@0.35.5", "", { "os": "win32", "cpu": "x64" }, "sha512-x76eH0vEiHlcMQu8Y8IenntaACtddpT6W0wmXtWrnKcnKI7ME5DdgqhAD6SEWOEl1v2zDvkZDhFA9KnURwpfqg=="],
-
-    "@inbeat/config": ["@inbeat/config@workspace:packages/config"],
-
-    "@inbeat/core": ["@inbeat/core@workspace:packages/core"],
-
-    "@inbeat/next": ["@inbeat/next@workspace:packages/next"],
-
-    "@inbeat/standards": ["@inbeat/standards@workspace:packages/standards"],
-
-    "@inbeat/template": ["@inbeat/template@workspace:packages/standards/template"],
-
-    "@inbeat/ui": ["@inbeat/ui@workspace:packages/ui"],
 
     "@joshwooding/vite-plugin-react-docgen-typescript": ["@joshwooding/vite-plugin-react-docgen-typescript@0.7.0", "", { "dependencies": { "glob": "^13.0.1", "react-docgen-typescript": "^2.2.2" }, "peerDependencies": { "typescript": ">= 4.3.x", "vite": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0" }, "optionalPeers": ["typescript"] }, "sha512-qvsTEwEFefhdirGOPnu9Wp6ChfIwy2dBCRuETU3uE+4cC+PFoxMSiiEhxk4lOluA34eARHA0OxqsEUYDqRMgeQ=="],
 

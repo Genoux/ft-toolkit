@@ -1,4 +1,4 @@
-import { fail, type Result } from "@inbeat/core/result";
+import { fail, type Result } from "@fieldtripagency/core/result";
 import { revalidatePath } from "next/cache.js";
 import { unstable_rethrow } from "next/navigation.js";
 import type { z } from "zod";

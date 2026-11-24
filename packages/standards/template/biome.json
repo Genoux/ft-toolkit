@@ -1,5 +1,5 @@
 {
-  "extends": ["@inbeat/config/biome"],
+  "extends": ["@fieldtripagency/config/biome"],
   "files": {
     "includes": ["**", "!!**/.next", "!**/next-env.d.ts", "!**/*.md"]
   }

@@ -83,7 +83,7 @@ const commands: Record<string, () => number | Promise<number>> = {
     }
     if (stale.length > 0) {
       console.error(
-        `out of date with @inbeat/standards, run \`ib sync\`:\n  ${stale.join("\n  ")}`,
+        `out of date with @fieldtripagency/standards, run \`ib sync\`:\n  ${stale.join("\n  ")}`,
       );
     }
     if (ignoring.length > 0) {
@@ -103,7 +103,7 @@ const commands: Record<string, () => number | Promise<number>> = {
     }
     if (spacing.problems.length > 0) {
       console.error(
-        "hand-picked spacing (use Stack, Inline, Grid or Item from @inbeat/ui, or mark the file " +
+        "hand-picked spacing (use Stack, Inline, Grid or Item from @fieldtripagency/ui, or mark the file " +
           `\`// signature-surface: <what>\`):\n  ${spacing.problems.join("\n  ")}`,
       );
     }

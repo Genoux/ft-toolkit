@@ -6,24 +6,24 @@ Shared packages for inBeat apps: config, server building blocks, UI and agent st
 
 | Package | What's in it |
 | --- | --- |
-| `@inbeat/config` | tsconfig, Biome, dependency-cruiser, Vitest and commitlint presets |
-| `@inbeat/core` | Framework-free primitives: errors, results, logger, env schemas |
-| `@inbeat/next` | Next.js pieces: `action()`, `route()`, Sentry, rate limiting, security headers, fonts |
-| `@inbeat/ui` | Design tokens and components (Radix + Tailwind v4), shipped as source |
-| `@inbeat/standards` | The `ib` CLI and the agent rules and skills every app shares |
+| `@fieldtripagency/config` | tsconfig, Biome, dependency-cruiser, Vitest and commitlint presets |
+| `@fieldtripagency/core` | Framework-free primitives: errors, results, logger, env schemas |
+| `@fieldtripagency/next` | Next.js pieces: `action()`, `route()`, Sentry, rate limiting, security headers, fonts |
+| `@fieldtripagency/ui` | Design tokens and components (Radix + Tailwind v4), shipped as source |
+| `@fieldtripagency/standards` | The `ib` CLI and the agent rules and skills every app shares |
 
 `packages/standards/template` is the base app (no authentication). When in doubt about how something is wired, look there.
 
 ## Start a project
 
 ```sh
-bun add -g @inbeat/standards   # installs `ib`; ~/.bun/bin must be on PATH
+bun add -g @fieldtripagency/standards   # installs `ib`; ~/.bun/bin must be on PATH
 ```
 
 Then, for every project:
 
 ```sh
-ib create my-app              # or: bunx @inbeat/standards create my-app
+ib create my-app              # or: bunx @fieldtripagency/standards create my-app
 cd my-app && bun dev
 ```
 
@@ -32,7 +32,7 @@ brief and which guides to read, so you add no extra context.
 
 `ib create <dir> [--local]` creates the base app. It copies the template, sets the package name, runs `git init` and `bun install`, and syncs the managed `AGENTS.md` block. `<dir>` may be `.` or an existing folder as long as none of the template's paths exist in it.
 
-- `--local` is for developing the toolkit: it runs `bun run pack:local` and points `@inbeat/*` at `.packs/*.tgz` by absolute path, so never commit that `package.json`.
+- `--local` is for developing the toolkit: it runs `bun run pack:local` and points `@fieldtripagency/*` at `.packs/*.tgz` by absolute path, so never commit that `package.json`.
 
 ### Ship it
 
@@ -68,23 +68,23 @@ Tools: `claude` (`.mcp.json`), `cursor` (`.cursor/mcp.json`), `vscode` (`.vscode
 Packages are public on npmjs.org; no registry config or token is needed.
 
 ```sh
-bun add @inbeat/core @inbeat/next @inbeat/ui geist
-bun add -d @inbeat/config @inbeat/standards
+bun add @fieldtripagency/core @fieldtripagency/next @fieldtripagency/ui geist
+bun add -d @fieldtripagency/config @fieldtripagency/standards
 ```
 
 Then:
 
-- `tsconfig.json` extends `@inbeat/config/tsconfig/nextjs.json`
-- `next.config.ts` has `transpilePackages: ["@inbeat/ui"]` (core and next ship compiled JS), and `geist` is a dependency (`@inbeat/next/fonts` loads it)
-- `vitest.config.ts` spreads `vitestPreset` from `@inbeat/config/vitest`, which runs `@inbeat/*` through Vite so mocks and aliases apply (alias `server-only` to a stub, see the template). Only code that runs outside Vite (e.g. workflow step bundles) needs `execArgv: ["--conditions=react-server"]`
-- `biome.json` extends `@inbeat/config/biome`
-- `globals.css` imports `@inbeat/ui/theme.css`, and `@inbeat/ui/fieldtrip.css` after it when the app carries the Fieldtrip brand (palette and brand fonts; the app loads the licensed font files)
-- the root layout puts `fontVariables` from `@inbeat/next/fonts` on `<html>`
+- `tsconfig.json` extends `@fieldtripagency/config/tsconfig/nextjs.json`
+- `next.config.ts` has `transpilePackages: ["@fieldtripagency/ui"]` (core and next ship compiled JS), and `geist` is a dependency (`@fieldtripagency/next/fonts` loads it)
+- `vitest.config.ts` spreads `vitestPreset` from `@fieldtripagency/config/vitest`, which runs `@fieldtripagency/*` through Vite so mocks and aliases apply (alias `server-only` to a stub, see the template). Only code that runs outside Vite (e.g. workflow step bundles) needs `execArgv: ["--conditions=react-server"]`
+- `biome.json` extends `@fieldtripagency/config/biome`
+- `globals.css` imports `@fieldtripagency/ui/theme.css`, and `@fieldtripagency/ui/fieldtrip.css` after it when the app carries the Fieldtrip brand (palette and brand fonts; the app loads the licensed font files)
+- the root layout puts `fontVariables` from `@fieldtripagency/next/fonts` on `<html>`
 - `bunx ib sync` writes the shared agent rules and downloads the latest shared third-party skills; `bunx ib check` fails CI when the rules drift
 
 ### Shared skills
 
-`packages/standards/external-skills.txt` lists third-party skills every app gets (design, animation, code, workflow). `ib create` and `ib sync` download the latest version of each from GitHub into the app's `.agents/skills/`, which Codex, Cursor, Gemini CLI, Copilot and OpenCode read, and link each one into `.claude/skills/` for Claude Code (a copy where links are not allowed). They are never committed: the app's `postinstall` runs `ib sync`, so `bun install` after a clone fetches them (skipped when `CI` is set). A folder without the `.toolkit-source` marker is the app's own and is never replaced. A failed download only warns, and removes nothing. To add or drop a skill, edit the list and release `@inbeat/standards`.
+`packages/standards/external-skills.txt` lists third-party skills every app gets (design, animation, code, workflow). `ib create` and `ib sync` download the latest version of each from GitHub into the app's `.agents/skills/`, which Codex, Cursor, Gemini CLI, Copilot and OpenCode read, and link each one into `.claude/skills/` for Claude Code (a copy where links are not allowed). They are never committed: the app's `postinstall` runs `ib sync`, so `bun install` after a clone fetches them (skipped when `CI` is set). A folder without the `.toolkit-source` marker is the app's own and is never replaced. A failed download only warns, and removes nothing. To add or drop a skill, edit the list and release `@fieldtripagency/standards`.
 
 ## Develop
 
@@ -114,6 +114,12 @@ Versions come from PR titles. Merges are squash-only, so the title becomes the c
 | `chore:`, `docs:`, `ci:` … | none |
 
 Merging to `main` keeps a release PR up to date with the next version and changelog. Merging that PR publishes every package at the same version.
+
+Experimental builds: run "Release packages" from the Actions tab on any branch with `channel: experimental` (pushes to the branches listed in `release.yml` do it automatically). Every package is published as `<next minor>.0-experimental.<run number>` under the `experimental` dist-tag, never `latest`; an app tries it with `bun add @fieldtripagency/ui@experimental`.
+
+### Moving from `@inbeat/*`
+
+The packages were published as `@inbeat/*` up to 0.19.1 and continue as `@fieldtripagency/*` with the same versions. In an app, swap every `@inbeat/` import, preset path and dependency for `@fieldtripagency/`, then `bun install` and `bunx ib sync`.
 
 ## Rules
 

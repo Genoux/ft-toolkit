@@ -1,6 +1,6 @@
 ---
 name: ib-ui
-description: Build UI in an inBeat app with @inbeat/ui primitives and tokens. Use when creating or editing components, pages, dialogs, tables, forms, empty states, or when the user mentions ib-ui or @ib-ui.
+description: Build UI in an inBeat app with @fieldtripagency/ui primitives and tokens. Use when creating or editing components, pages, dialogs, tables, forms, empty states, or when the user mentions ib-ui or @ib-ui.
 ---
 
 # ib-ui
@@ -33,7 +33,7 @@ once a second app needs it.
 
 ## Rules
 
-- Import `@inbeat/ui/components/<name>`; `cn` from `@inbeat/ui/lib/utils`.
+- Import `@fieldtripagency/ui/components/<name>`; `cn` from `@fieldtripagency/ui/lib/utils`.
 - Lines only where the eye cannot group things by spacing: no rules between rows, sections or
   label/value pairs. A list that scrolls under a search or header sits in a frame (`DialogBody frame`,
   a framed `ItemGroup`), so the frame is the edge rows pass behind; never edge lines that come and go.
@@ -190,7 +190,7 @@ Render in this order: loading, then error, then empty, then the content.
 
 ## Catalog
 
-Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
+Every module of `@fieldtripagency/ui`, imported as `@fieldtripagency/ui/<path>`.
 
 ### Actions
 - `components/button`: Button with variants, sizes and `buttonVariants` for link styling; `variant="destructive"` for a confirm that deletes; `loading` swaps the leading icon (else the trailing one, else the label's place) for a spinner, so the width never changes; mark a trailing icon `data-icon="inline-end"`.
@@ -296,10 +296,10 @@ Every module of `@inbeat/ui`, imported as `@inbeat/ui/<path>`.
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@inbeat/ui/theme.css";
+@import "@fieldtripagency/ui/theme.css";
 ```
 
-`next.config.ts`: `transpilePackages: ["@inbeat/ui"]` (ui ships source; core and next ship compiled JS).
+`next.config.ts`: `transpilePackages: ["@fieldtripagency/ui"]` (ui ships source; core and next ship compiled JS).
 The template installs every peer the catalog needs.
 
 ## Look: neutral, Fieldtrip, or product-specific
@@ -310,7 +310,7 @@ the choice plus, for product-specific, which tokens it overrides and why (`produ
 three; only tokens and signature surfaces change.
 
 - **Neutral** (default; dashboards and internal tools): `theme.css` alone.
-- **Fieldtrip brand**: add `@import "@inbeat/ui/fieldtrip.css";` after `theme.css`. It gives the
+- **Fieldtrip brand**: add `@import "@fieldtripagency/ui/fieldtrip.css";` after `theme.css`. It gives the
   brand palette as `--color-fieldtrip-<name>` and `-light` (ink, olive, orange, mauve, brown,
   green, spring, yellow, sky, pink, powder; utilities like `bg-fieldtrip-orange`) and maps
   `font-sans` to SwissNow and `font-serif` to Diplomat. The font files are licensed and stay in

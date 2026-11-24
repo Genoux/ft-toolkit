@@ -1,5 +1,5 @@
 {
-  "name": "@inbeat/next",
+  "name": "@fieldtripagency/next",
   "version": "0.19.1",
   "description": "Next.js App Router building blocks for inBeat apps: actions, routes, security, observability",
   "type": "module",
@@ -65,7 +65,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@inbeat/core": "workspace:^",
+    "@fieldtripagency/core": "workspace:^",
     "@upstash/ratelimit": "^2.0.6",
     "@upstash/redis": "^1.35.3",
     "server-only": "^0.0.1"
@@ -102,7 +102,7 @@
   },
   "devDependencies": {
     "@clerk/nextjs": "^7.0.6",
-    "@inbeat/config": "workspace:^",
+    "@fieldtripagency/config": "workspace:^",
     "@neondatabase/serverless": "^1.0.2",
     "@sentry/nextjs": "^10",
     "@types/react": "^19",

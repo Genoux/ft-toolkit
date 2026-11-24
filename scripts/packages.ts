@@ -34,11 +34,12 @@ const DEPENDENCY_FIELDS = ["dependencies", "peerDependencies", "devDependencies"
 export async function withWorkspaceRanges<T>(
   pkg: ToolkitPackage,
   run: () => Promise<T>,
+  versionOf: (pkg: ToolkitPackage) => string = (sibling) => sibling.version,
 ): Promise<T> {
   const manifestPath = join(pkg.dir, "package.json");
   const original = readFileSync(manifestPath, "utf8");
   const manifest = JSON.parse(original);
-  const versions = new Map(toolkitPackages().map((sibling) => [sibling.name, sibling.version]));
+  const versions = new Map(toolkitPackages().map((sibling) => [sibling.name, versionOf(sibling)]));
   const resolveRanges = (ranges: Record<string, string>) =>
     Object.fromEntries(
       Object.entries(ranges).map(([name, range]) => [
@@ -52,7 +53,8 @@ export async function withWorkspaceRanges<T>(
       resolveRanges(manifest[field]),
     ]),
   );
-  writeFileSync(manifestPath, `${JSON.stringify({ ...manifest, ...resolved }, null, 2)}\n`);
+  const published = { ...manifest, version: versionOf(pkg), ...resolved };
+  writeFileSync(manifestPath, `${JSON.stringify(published, null, 2)}\n`);
   try {
     return await run();
   } finally {
@@ -60,8 +62,15 @@ export async function withWorkspaceRanges<T>(
   }
 }
 
+// The next minor's prerelease sorts above the current release, below the stable it previews, and
+// outside every `^current` range apps pin, so only an explicit `@experimental` install gets it.
+export function prereleaseVersion(current: string, channel: string, build: string): string {
+  const [major, minor] = current.split(".").map(Number);
+  return `${major}.${(minor ?? 0) + 1}.0-${channel}.${build}`;
+}
+
 export const PACKS_DIR = join(ROOT, ".packs");
 
 export function packTarballPath(pkg: Pick<ToolkitPackage, "shortName">): string {
-  return join(PACKS_DIR, `inbeat-${pkg.shortName}.tgz`);
+  return join(PACKS_DIR, `fieldtripagency-${pkg.shortName}.tgz`);
 }

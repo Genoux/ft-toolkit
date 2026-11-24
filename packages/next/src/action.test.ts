@@ -1,5 +1,5 @@
-import { AppError } from "@inbeat/core/errors";
-import { ok } from "@inbeat/core/result";
+import { AppError } from "@fieldtripagency/core/errors";
+import { ok } from "@fieldtripagency/core/result";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 

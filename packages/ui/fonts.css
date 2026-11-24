@@ -1,7 +1,7 @@
 /*
  * The Fieldtrip faces every app uses: Diplomat for sparing statements (`font-serif`) and SwissNow for a
  * wordmark or brand headline (`font-brand`). Import after theme.css:
- *   @import "@inbeat/ui/fonts.css";
+ *   @import "@fieldtripagency/ui/fonts.css";
  * fieldtrip.css imports it, so an app on the full brand layer needs only that. An app that loads the
  * faces itself (next/font) can still set --font-swiss-now / --font-diplomat.
  */

@@ -5,10 +5,11 @@ import { describe, expect, it } from "vitest";
 import { foundationProblems } from "./foundation";
 
 const VALID_FILES: Record<string, string> = {
-  "biome.json": JSON.stringify({ extends: ["@inbeat/config/biome"] }),
-  "tsconfig.json": JSON.stringify({ extends: "@inbeat/config/tsconfig/nextjs.json" }),
-  ".dependency-cruiser.cjs": 'module.exports = require("@inbeat/config/dependency-cruiser");',
-  "vitest.config.ts": 'import { vitestPreset } from "@inbeat/config/vitest";',
+  "biome.json": JSON.stringify({ extends: ["@fieldtripagency/config/biome"] }),
+  "tsconfig.json": JSON.stringify({ extends: "@fieldtripagency/config/tsconfig/nextjs.json" }),
+  ".dependency-cruiser.cjs":
+    'module.exports = require("@fieldtripagency/config/dependency-cruiser");',
+  "vitest.config.ts": 'import { vitestPreset } from "@fieldtripagency/config/vitest";',
 };
 
 function appWith(overrides: Record<string, string | null> = {}): string {
@@ -28,9 +29,9 @@ describe("foundationProblems", () => {
 
   it("accepts extends as a string or as an array containing the preset", () => {
     const dir = appWith({
-      "biome.json": JSON.stringify({ extends: "@inbeat/config/biome" }),
+      "biome.json": JSON.stringify({ extends: "@fieldtripagency/config/biome" }),
       "tsconfig.json": JSON.stringify({
-        extends: ["./base.json", "@inbeat/config/tsconfig/nextjs.json"],
+        extends: ["./base.json", "@fieldtripagency/config/tsconfig/nextjs.json"],
       }),
     });
     expect(foundationProblems(dir)).toEqual([]);
@@ -38,20 +39,20 @@ describe("foundationProblems", () => {
 
   it("accepts an app that overrides fields next to the vitest preset", () => {
     const dir = appWith({
-      "vitest.config.ts": `import { vitestPreset } from "@inbeat/config/vitest";
+      "vitest.config.ts": `import { vitestPreset } from "@fieldtripagency/config/vitest";
 export default { test: { ...vitestPreset.test, restoreMocks: false } };`,
     });
     expect(foundationProblems(dir)).toEqual([]);
   });
 
   it.each([
-    ["biome.json", "biome.json (or biome.jsonc) must extend @inbeat/config/biome"],
-    ["tsconfig.json", "tsconfig.json must extend @inbeat/config/tsconfig/nextjs.json"],
+    ["biome.json", "biome.json (or biome.jsonc) must extend @fieldtripagency/config/biome"],
+    ["tsconfig.json", "tsconfig.json must extend @fieldtripagency/config/tsconfig/nextjs.json"],
     [
       ".dependency-cruiser.cjs",
-      ".dependency-cruiser.cjs must use @inbeat/config/dependency-cruiser",
+      ".dependency-cruiser.cjs must use @fieldtripagency/config/dependency-cruiser",
     ],
-    ["vitest.config.ts", "vitest.config.ts must import from @inbeat/config/vitest"],
+    ["vitest.config.ts", "vitest.config.ts must import from @fieldtripagency/config/vitest"],
   ])("reports a missing %s", (file, message) => {
     expect(foundationProblems(appWith({ [file]: null }))).toEqual([message]);
   });
@@ -68,9 +69,9 @@ export default { test: { ...vitestPreset.test, restoreMocks: false } };`,
 
   it("accepts biome.json and tsconfig.json with comments and trailing commas", () => {
     const dir = appWith({
-      "biome.json": '{\n  // shared rules\n  "extends": ["@inbeat/config/biome",],\n}',
+      "biome.json": '{\n  // shared rules\n  "extends": ["@fieldtripagency/config/biome",],\n}',
       "tsconfig.json":
-        '{\n  /* preset */ "extends": "@inbeat/config/tsconfig/nextjs.json",\n  "compilerOptions": {},\n}',
+        '{\n  /* preset */ "extends": "@fieldtripagency/config/tsconfig/nextjs.json",\n  "compilerOptions": {},\n}',
     });
     expect(foundationProblems(dir)).toEqual([]);
   });
@@ -78,14 +79,14 @@ export default { test: { ...vitestPreset.test, restoreMocks: false } };`,
   it("accepts biome.jsonc in place of biome.json", () => {
     const dir = appWith({
       "biome.json": null,
-      "biome.jsonc": '{\n  // shared rules\n  "extends": ["@inbeat/config/biome"]\n}',
+      "biome.jsonc": '{\n  // shared rules\n  "extends": ["@fieldtripagency/config/biome"]\n}',
     });
     expect(foundationProblems(dir)).toEqual([]);
   });
 
   it("reports a config that is not JSON and names no preset", () => {
     expect(foundationProblems(appWith({ "biome.json": "{ nope" }))).toEqual([
-      "biome.json (or biome.jsonc) must extend @inbeat/config/biome",
+      "biome.json (or biome.jsonc) must extend @fieldtripagency/config/biome",
     ]);
   });
 });
