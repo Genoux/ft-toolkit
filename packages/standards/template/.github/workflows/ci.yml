@@ -13,8 +13,8 @@ permissions:
 jobs:
   verify:
     if: github.event_name == 'pull_request'
-    uses: Genoux/ib-toolkit/.github/workflows/verify.yml@main
+    uses: Genoux/ft-toolkit/.github/workflows/verify.yml@main
 
   release:
     if: github.event_name == 'repository_dispatch' && github.event.client_payload.environment == 'production'
-    uses: Genoux/ib-toolkit/.github/workflows/release-gate.yml@main
+    uses: Genoux/ft-toolkit/.github/workflows/release-gate.yml@main

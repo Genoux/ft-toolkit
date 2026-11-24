@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Genoux/ib-toolkit.git",
+    "url": "git+https://github.com/Genoux/ft-toolkit.git",
     "directory": "packages/standards"
   },
   "publishConfig": {

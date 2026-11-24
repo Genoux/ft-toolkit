@@ -1,4 +1,4 @@
-// Shared preset. Apps: { "extends": ["github>Genoux/ib-toolkit//renovate.json5"] }
+// Shared preset. Apps: { "extends": ["github>Genoux/ft-toolkit//renovate.json5"] }
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["config:recommended", ":semanticCommits", ":semanticCommitTypeAll(chore)"],

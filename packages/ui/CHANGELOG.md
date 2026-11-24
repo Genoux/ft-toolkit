@@ -1,191 +1,191 @@
 # Changelog
 
-## [0.19.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.19.0...ui-v0.19.1) (2026-11-20)
+## [0.19.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.19.0...ui-v0.19.1) (2026-11-20)
 
 
 ### Bug Fixes
 
-* **ui:** center the calendar month arrows ([#91](https://github.com/Genoux/ib-toolkit/issues/91)) ([1a54f20](https://github.com/Genoux/ib-toolkit/commit/1a54f20f0fb09a4402c3fcb0ecf7e07b28f20f6f))
+* **ui:** center the calendar month arrows ([#91](https://github.com/Genoux/ft-toolkit/issues/91)) ([1a54f20](https://github.com/Genoux/ft-toolkit/commit/1a54f20f0fb09a4402c3fcb0ecf7e07b28f20f6f))
 
-## [0.19.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.18.1...ui-v0.19.0) (2026-11-19)
+## [0.19.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.18.1...ui-v0.19.0) (2026-11-19)
 
 
 ### Features
 
-* **ui:** calmer platform disclaimer with a got it button ([#89](https://github.com/Genoux/ib-toolkit/issues/89)) ([7332258](https://github.com/Genoux/ib-toolkit/commit/7332258509893ff702a159db9c558706db5eec1d))
+* **ui:** calmer platform disclaimer with a got it button ([#89](https://github.com/Genoux/ft-toolkit/issues/89)) ([7332258](https://github.com/Genoux/ft-toolkit/commit/7332258509893ff702a159db9c558706db5eec1d))
 
-## [0.18.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.18.0...ui-v0.18.1) (2026-11-18)
+## [0.18.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.18.0...ui-v0.18.1) (2026-11-18)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.18.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.17.0...ui-v0.18.0) (2026-11-18)
+## [0.18.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.17.0...ui-v0.18.0) (2026-11-18)
 
 
 ### Features
 
-* page layout, look layers and ui rules in ib check ([#81](https://github.com/Genoux/ib-toolkit/issues/81)) ([0bb464e](https://github.com/Genoux/ib-toolkit/commit/0bb464e262595d75c37ea4b39af6306599571ebc))
+* page layout, look layers and ui rules in ib check ([#81](https://github.com/Genoux/ft-toolkit/issues/81)) ([0bb464e](https://github.com/Genoux/ft-toolkit/commit/0bb464e262595d75c37ea4b39af6306599571ebc))
 
 
 ### Bug Fixes
 
-* **ui:** keep single-digit counts a perfect circle ([#86](https://github.com/Genoux/ib-toolkit/issues/86)) ([bf12156](https://github.com/Genoux/ib-toolkit/commit/bf1215651dd0af8928850e37807800b6c8e17666))
-* **ui:** show a record's key facts as one card each ([#83](https://github.com/Genoux/ib-toolkit/issues/83)) ([b7b02c1](https://github.com/Genoux/ib-toolkit/commit/b7b02c177c1a8bf495748304b1b7ded0153a3d11))
+* **ui:** keep single-digit counts a perfect circle ([#86](https://github.com/Genoux/ft-toolkit/issues/86)) ([bf12156](https://github.com/Genoux/ft-toolkit/commit/bf1215651dd0af8928850e37807800b6c8e17666))
+* **ui:** show a record's key facts as one card each ([#83](https://github.com/Genoux/ft-toolkit/issues/83)) ([b7b02c1](https://github.com/Genoux/ft-toolkit/commit/b7b02c177c1a8bf495748304b1b7ded0153a3d11))
 
-## [0.17.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.16.0...ui-v0.17.0) (2026-11-17)
+## [0.17.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.16.0...ui-v0.17.0) (2026-11-17)
 
 
 ### Features
 
-* **ui:** date picker, dialog fields, empty state links ([#80](https://github.com/Genoux/ib-toolkit/issues/80)) ([10d5fa7](https://github.com/Genoux/ib-toolkit/commit/10d5fa70b575eb7b7c413dd8a9b60a9925f614af))
+* **ui:** date picker, dialog fields, empty state links ([#80](https://github.com/Genoux/ft-toolkit/issues/80)) ([10d5fa7](https://github.com/Genoux/ft-toolkit/commit/10d5fa70b575eb7b7c413dd8a9b60a9925f614af))
 
-## [0.16.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.15.0...ui-v0.16.0) (2026-11-14)
+## [0.16.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.15.0...ui-v0.16.0) (2026-11-14)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.15.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.14.0...ui-v0.15.0) (2026-11-14)
+## [0.15.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.14.0...ui-v0.15.0) (2026-11-14)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.14.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.13.0...ui-v0.14.0) (2026-11-13)
+## [0.14.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.13.0...ui-v0.14.0) (2026-11-13)
 
 
 ### Features
 
-* enforce the type scale and show avatar stack names ([#70](https://github.com/Genoux/ib-toolkit/issues/70)) ([e6020e6](https://github.com/Genoux/ib-toolkit/commit/e6020e649762503db92358590822d603ebe8d29d))
-* **ui:** set table cells to 13.5px ([#72](https://github.com/Genoux/ib-toolkit/issues/72)) ([3e1b5d5](https://github.com/Genoux/ib-toolkit/commit/3e1b5d5d80c36c99a6c2efd03fe26921110d39eb))
+* enforce the type scale and show avatar stack names ([#70](https://github.com/Genoux/ft-toolkit/issues/70)) ([e6020e6](https://github.com/Genoux/ft-toolkit/commit/e6020e649762503db92358590822d603ebe8d29d))
+* **ui:** set table cells to 13.5px ([#72](https://github.com/Genoux/ft-toolkit/issues/72)) ([3e1b5d5](https://github.com/Genoux/ft-toolkit/commit/3e1b5d5d80c36c99a6c2efd03fe26921110d39eb))
 
-## [0.13.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.12.2...ui-v0.13.0) (2026-11-12)
+## [0.13.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.12.2...ui-v0.13.0) (2026-11-12)
 
 
 ### Features
 
-* **ui:** add opt-in fieldtrip brand layer ([#68](https://github.com/Genoux/ib-toolkit/issues/68)) ([1e8f629](https://github.com/Genoux/ib-toolkit/commit/1e8f6296336e8e76c69787f374ba6b782c690abe))
+* **ui:** add opt-in fieldtrip brand layer ([#68](https://github.com/Genoux/ft-toolkit/issues/68)) ([1e8f629](https://github.com/Genoux/ft-toolkit/commit/1e8f6296336e8e76c69787f374ba6b782c690abe))
 
 
 ### Bug Fixes
 
-* **standards:** keep markdown out of biome in new apps ([1e8f629](https://github.com/Genoux/ib-toolkit/commit/1e8f6296336e8e76c69787f374ba6b782c690abe))
+* **standards:** keep markdown out of biome in new apps ([1e8f629](https://github.com/Genoux/ft-toolkit/commit/1e8f6296336e8e76c69787f374ba6b782c690abe))
 
-## [0.12.2](https://github.com/Genoux/ib-toolkit/compare/ui-v0.12.1...ui-v0.12.2) (2026-10-19)
-
-
-### Bug Fixes
-
-* **ui:** plain dim dialog overlays, pretty-wrap descriptions ([#64](https://github.com/Genoux/ib-toolkit/issues/64)) ([c640ef7](https://github.com/Genoux/ib-toolkit/commit/c640ef78becfc03ec7b7e32da16c11b20758eab4))
-
-## [0.12.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.12.0...ui-v0.12.1) (2026-10-15)
+## [0.12.2](https://github.com/Genoux/ft-toolkit/compare/ui-v0.12.1...ui-v0.12.2) (2026-10-19)
 
 
 ### Bug Fixes
 
-* **ui:** show members without photos in avatar stack ([#62](https://github.com/Genoux/ib-toolkit/issues/62)) ([46f6011](https://github.com/Genoux/ib-toolkit/commit/46f60117a685ef24d7c06a3652d7bde5ad4894bc))
+* **ui:** plain dim dialog overlays, pretty-wrap descriptions ([#64](https://github.com/Genoux/ft-toolkit/issues/64)) ([c640ef7](https://github.com/Genoux/ft-toolkit/commit/c640ef78becfc03ec7b7e32da16c11b20758eab4))
 
-## [0.12.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.11.3...ui-v0.12.0) (2026-10-13)
+## [0.12.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.12.0...ui-v0.12.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **ui:** show members without photos in avatar stack ([#62](https://github.com/Genoux/ft-toolkit/issues/62)) ([46f6011](https://github.com/Genoux/ft-toolkit/commit/46f60117a685ef24d7c06a3652d7bde5ad4894bc))
+
+## [0.12.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.11.3...ui-v0.12.0) (2026-10-13)
 
 
 ### ⚠ BREAKING CHANGES
 
-* **ui:** make breadcrumb a single adaptive component ([#60](https://github.com/Genoux/ib-toolkit/issues/60))
+* **ui:** make breadcrumb a single adaptive component ([#60](https://github.com/Genoux/ft-toolkit/issues/60))
 
 ### Features
 
-* **ui:** make breadcrumb a single adaptive component ([#60](https://github.com/Genoux/ib-toolkit/issues/60)) ([502a13b](https://github.com/Genoux/ib-toolkit/commit/502a13baeac34279c88cb77192d3ce824da58d23))
+* **ui:** make breadcrumb a single adaptive component ([#60](https://github.com/Genoux/ft-toolkit/issues/60)) ([502a13b](https://github.com/Genoux/ft-toolkit/commit/502a13baeac34279c88cb77192d3ce824da58d23))
 
-## [0.11.3](https://github.com/Genoux/ib-toolkit/compare/ui-v0.11.2...ui-v0.11.3) (2026-10-13)
-
-
-### Bug Fixes
-
-* **ui:** keep long breadcrumb titles on one line ([#58](https://github.com/Genoux/ib-toolkit/issues/58)) ([31852e3](https://github.com/Genoux/ib-toolkit/commit/31852e3002bc1d5f9b86aec0d4eb35624b013307))
-
-## [0.11.2](https://github.com/Genoux/ib-toolkit/compare/ui-v0.11.1...ui-v0.11.2) (2026-10-09)
+## [0.11.3](https://github.com/Genoux/ft-toolkit/compare/ui-v0.11.2...ui-v0.11.3) (2026-10-13)
 
 
 ### Bug Fixes
 
-* **ui:** open tooltips on keyboard focus only ([#56](https://github.com/Genoux/ib-toolkit/issues/56)) ([cee23e3](https://github.com/Genoux/ib-toolkit/commit/cee23e3d16012e27bc16ea19b8f6830a4a439e63))
+* **ui:** keep long breadcrumb titles on one line ([#58](https://github.com/Genoux/ft-toolkit/issues/58)) ([31852e3](https://github.com/Genoux/ft-toolkit/commit/31852e3002bc1d5f9b86aec0d4eb35624b013307))
 
-## [0.11.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.11.0...ui-v0.11.1) (2026-10-08)
+## [0.11.2](https://github.com/Genoux/ft-toolkit/compare/ui-v0.11.1...ui-v0.11.2) (2026-10-09)
 
 
 ### Bug Fixes
 
-* **ui:** reduce table row radius to lg ([#54](https://github.com/Genoux/ib-toolkit/issues/54)) ([597ef96](https://github.com/Genoux/ib-toolkit/commit/597ef96327be82c562c0e616920f1ec09f888032))
+* **ui:** open tooltips on keyboard focus only ([#56](https://github.com/Genoux/ft-toolkit/issues/56)) ([cee23e3](https://github.com/Genoux/ft-toolkit/commit/cee23e3d16012e27bc16ea19b8f6830a4a439e63))
 
-## [0.11.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.10.0...ui-v0.11.0) (2026-10-08)
+## [0.11.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.11.0...ui-v0.11.1) (2026-10-08)
 
 
-### Features
+### Bug Fixes
 
-* **ui:** custom trigger label and full list props on multi-select ([#52](https://github.com/Genoux/ib-toolkit/issues/52)) ([072c6bd](https://github.com/Genoux/ib-toolkit/commit/072c6bdf10201136e15379c699a804cc0b4e15e6))
+* **ui:** reduce table row radius to lg ([#54](https://github.com/Genoux/ft-toolkit/issues/54)) ([597ef96](https://github.com/Genoux/ft-toolkit/commit/597ef96327be82c562c0e616920f1ec09f888032))
 
-## [0.10.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.9.4...ui-v0.10.0) (2026-10-08)
+## [0.11.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.10.0...ui-v0.11.0) (2026-10-08)
 
 
 ### Features
 
-* **ui:** disable single multi-select options ([#50](https://github.com/Genoux/ib-toolkit/issues/50)) ([5be0d19](https://github.com/Genoux/ib-toolkit/commit/5be0d1918dab26cd08b2f46b7a26067bfe5cc9f4))
+* **ui:** custom trigger label and full list props on multi-select ([#52](https://github.com/Genoux/ft-toolkit/issues/52)) ([072c6bd](https://github.com/Genoux/ft-toolkit/commit/072c6bdf10201136e15379c699a804cc0b4e15e6))
 
-## [0.9.4](https://github.com/Genoux/ib-toolkit/compare/ui-v0.9.3...ui-v0.9.4) (2026-10-08)
+## [0.10.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.9.4...ui-v0.10.0) (2026-10-08)
+
+
+### Features
+
+* **ui:** disable single multi-select options ([#50](https://github.com/Genoux/ft-toolkit/issues/50)) ([5be0d19](https://github.com/Genoux/ft-toolkit/commit/5be0d1918dab26cd08b2f46b7a26067bfe5cc9f4))
+
+## [0.9.4](https://github.com/Genoux/ft-toolkit/compare/ui-v0.9.3...ui-v0.9.4) (2026-10-08)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.9.3](https://github.com/Genoux/ib-toolkit/compare/ui-v0.9.2...ui-v0.9.3) (2026-10-08)
+## [0.9.3](https://github.com/Genoux/ft-toolkit/compare/ui-v0.9.2...ui-v0.9.3) (2026-10-08)
 
 
 ### Bug Fixes
 
-* alert radius, spacing rule and sync cleanup ([#47](https://github.com/Genoux/ib-toolkit/issues/47)) ([b9d1f5d](https://github.com/Genoux/ib-toolkit/commit/b9d1f5d3c4a46d01e4dca9c1485438d28210a3c9))
-* **ui:** show multi-select row ring only on keyboard focus ([#45](https://github.com/Genoux/ib-toolkit/issues/45)) ([6c578a3](https://github.com/Genoux/ib-toolkit/commit/6c578a358dbd01ac3ac1631091dc977b2fca8515))
+* alert radius, spacing rule and sync cleanup ([#47](https://github.com/Genoux/ft-toolkit/issues/47)) ([b9d1f5d](https://github.com/Genoux/ft-toolkit/commit/b9d1f5d3c4a46d01e4dca9c1485438d28210a3c9))
+* **ui:** show multi-select row ring only on keyboard focus ([#45](https://github.com/Genoux/ft-toolkit/issues/45)) ([6c578a3](https://github.com/Genoux/ft-toolkit/commit/6c578a358dbd01ac3ac1631091dc977b2fca8515))
 
-## [0.9.2](https://github.com/Genoux/ib-toolkit/compare/ui-v0.9.1...ui-v0.9.2) (2026-10-07)
-
-
-### Bug Fixes
-
-* **ui:** pad breadcrumb page like breadcrumb link ([#43](https://github.com/Genoux/ib-toolkit/issues/43)) ([b9c42c3](https://github.com/Genoux/ib-toolkit/commit/b9c42c39572ca89d1c940fdc1c62e705ecda64b2))
-
-## [0.9.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.9.0...ui-v0.9.1) (2026-10-05)
+## [0.9.2](https://github.com/Genoux/ft-toolkit/compare/ui-v0.9.1...ui-v0.9.2) (2026-10-07)
 
 
 ### Bug Fixes
 
-* **ui:** align sortable table headers with plain ones ([#41](https://github.com/Genoux/ib-toolkit/issues/41)) ([f2d794b](https://github.com/Genoux/ib-toolkit/commit/f2d794b66ed798208b2dfe9bf75c1f40332aaa77))
+* **ui:** pad breadcrumb page like breadcrumb link ([#43](https://github.com/Genoux/ft-toolkit/issues/43)) ([b9c42c3](https://github.com/Genoux/ft-toolkit/commit/b9c42c39572ca89d1c940fdc1c62e705ecda64b2))
 
-## [0.9.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.8.0...ui-v0.9.0) (2026-10-02)
-
-
-### Miscellaneous Chores
-
-* **ui:** Synchronize inbeat versions
-
-## [0.8.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.7.1...ui-v0.8.0) (2026-10-01)
+## [0.9.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.9.0...ui-v0.9.1) (2026-10-05)
 
 
-### Miscellaneous Chores
+### Bug Fixes
 
-* **ui:** Synchronize inbeat versions
+* **ui:** align sortable table headers with plain ones ([#41](https://github.com/Genoux/ft-toolkit/issues/41)) ([f2d794b](https://github.com/Genoux/ft-toolkit/commit/f2d794b66ed798208b2dfe9bf75c1f40332aaa77))
 
-## [0.7.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.7.0...ui-v0.7.1) (2026-10-01)
+## [0.9.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.8.0...ui-v0.9.0) (2026-10-02)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.7.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.6.1...ui-v0.7.0) (2026-10-01)
+## [0.8.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.7.1...ui-v0.8.0) (2026-10-01)
+
+
+### Miscellaneous Chores
+
+* **ui:** Synchronize inbeat versions
+
+## [0.7.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.7.0...ui-v0.7.1) (2026-10-01)
+
+
+### Miscellaneous Chores
+
+* **ui:** Synchronize inbeat versions
+
+## [0.7.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.6.1...ui-v0.7.0) (2026-10-01)
 
 
 ### ⚠ BREAKING CHANGES
@@ -194,66 +194,66 @@
 
 ### Features
 
-* publish [@inbeat](https://github.com/inbeat) packages publicly on npm ([#27](https://github.com/Genoux/ib-toolkit/issues/27)) ([2bd9f53](https://github.com/Genoux/ib-toolkit/commit/2bd9f53c2d4dd030bdee037b8b1dce1e1bb828b5))
+* publish [@inbeat](https://github.com/inbeat) packages publicly on npm ([#27](https://github.com/Genoux/ft-toolkit/issues/27)) ([2bd9f53](https://github.com/Genoux/ft-toolkit/commit/2bd9f53c2d4dd030bdee037b8b1dce1e1bb828b5))
 
-## [0.6.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.6.0...ui-v0.6.1) (2026-10-01)
-
-
-### Miscellaneous Chores
-
-* **ui:** Synchronize inbeat versions
-
-## [0.6.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.5.0...ui-v0.6.0) (2026-10-01)
+## [0.6.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.6.0...ui-v0.6.1) (2026-10-01)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.5.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.4.0...ui-v0.5.0) (2026-10-01)
+## [0.6.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.5.0...ui-v0.6.0) (2026-10-01)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.4.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.3.0...ui-v0.4.0) (2026-09-30)
+## [0.5.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.4.0...ui-v0.5.0) (2026-10-01)
+
+
+### Miscellaneous Chores
+
+* **ui:** Synchronize inbeat versions
+
+## [0.4.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.3.0...ui-v0.4.0) (2026-09-30)
 
 
 ### ⚠ BREAKING CHANGES
 
-* **standards:** sync skills to .agents/skills only ([#15](https://github.com/Genoux/ib-toolkit/issues/15))
+* **standards:** sync skills to .agents/skills only ([#15](https://github.com/Genoux/ft-toolkit/issues/15))
 
 ### Features
 
-* **standards:** sync skills to .agents/skills only ([#15](https://github.com/Genoux/ib-toolkit/issues/15)) ([cd3e8a2](https://github.com/Genoux/ib-toolkit/commit/cd3e8a21f028790ad84c26dc1cc832475885c461))
+* **standards:** sync skills to .agents/skills only ([#15](https://github.com/Genoux/ft-toolkit/issues/15)) ([cd3e8a2](https://github.com/Genoux/ft-toolkit/commit/cd3e8a21f028790ad84c26dc1cc832475885c461))
 
-## [0.3.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.2.0...ui-v0.3.0) (2026-09-30)
+## [0.3.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.2.0...ui-v0.3.0) (2026-09-30)
 
 
 ### Miscellaneous Chores
 
 * **ui:** Synchronize inbeat versions
 
-## [0.2.0](https://github.com/Genoux/ib-toolkit/compare/ui-v0.1.2...ui-v0.2.0) (2026-09-30)
+## [0.2.0](https://github.com/Genoux/ft-toolkit/compare/ui-v0.1.2...ui-v0.2.0) (2026-09-30)
 
 
 ### ⚠ BREAKING CHANGES
 
-* **ui,next:** harden ui peers, csp and rate-limit ip ([#8](https://github.com/Genoux/ib-toolkit/issues/8))
+* **ui,next:** harden ui peers, csp and rate-limit ip ([#8](https://github.com/Genoux/ft-toolkit/issues/8))
 
 ### Bug Fixes
 
-* **ui,next:** harden ui peers, csp and rate-limit ip ([#8](https://github.com/Genoux/ib-toolkit/issues/8)) ([4ad992c](https://github.com/Genoux/ib-toolkit/commit/4ad992c96181a21c3dbee0bb542d9afe32163deb))
+* **ui,next:** harden ui peers, csp and rate-limit ip ([#8](https://github.com/Genoux/ft-toolkit/issues/8)) ([4ad992c](https://github.com/Genoux/ft-toolkit/commit/4ad992c96181a21c3dbee0bb542d9afe32163deb))
 
-## [0.1.2](https://github.com/Genoux/ib-toolkit/compare/ui-v0.1.1...ui-v0.1.2) (2026-09-30)
+## [0.1.2](https://github.com/Genoux/ft-toolkit/compare/ui-v0.1.1...ui-v0.1.2) (2026-09-30)
 
 
 ### Bug Fixes
 
-* resolve workspace ranges from manifests on publish ([#5](https://github.com/Genoux/ib-toolkit/issues/5)) ([0f4328e](https://github.com/Genoux/ib-toolkit/commit/0f4328eb0897501380880f429a952d9d228563a2))
+* resolve workspace ranges from manifests on publish ([#5](https://github.com/Genoux/ft-toolkit/issues/5)) ([0f4328e](https://github.com/Genoux/ft-toolkit/commit/0f4328eb0897501380880f429a952d9d228563a2))
 
-## [0.1.1](https://github.com/Genoux/ib-toolkit/compare/ui-v0.1.0...ui-v0.1.1) (2026-09-30)
+## [0.1.1](https://github.com/Genoux/ft-toolkit/compare/ui-v0.1.0...ui-v0.1.1) (2026-09-30)
 
 
 ### Miscellaneous Chores
