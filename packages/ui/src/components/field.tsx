@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { CircleAlert } from "lucide-react"
 
 import { cn } from "../lib/utils"
 import { Label } from "./label"
@@ -33,7 +34,7 @@ function FieldLegend({
       className={cn(
         "mb-3 font-medium",
         "data-[variant=legend]:text-base",
-        "data-[variant=label]:text-sm",
+        "data-[variant=label]:mb-2 data-[variant=label]:text-sm",
         className
       )}
       {...props}
@@ -46,7 +47,7 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-group"
       className={cn(
-        "group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
+        "group/field-group @container/field-group flex w-full flex-col gap-6 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-(--gap-lg)",
         className
       )}
       {...props}
@@ -54,8 +55,25 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/** Two fields side by side from the sm breakpoint, stacked below it. The column gap is the one the
+ * choice-card RadioGroup and `Grid gap="md"` use, so cards and the fields under them share columns. */
+function FieldRow({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="field-row"
+      className={cn(
+        "grid grid-cols-1 gap-x-(--gap-md) gap-y-6 sm:grid-cols-2",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+// Beside a label and description, a control centres on the label's first 20px line: the 16px
+// checkbox and radio move down 2px, the 22px switch up 1px and the 18px small switch down 1px.
 const fieldVariants = cva(
-  "group/field flex w-full gap-3 data-[invalid=true]:text-destructive",
+  "group/field flex w-full gap-(--gap-sm)",
   {
     variants: {
       orientation: {
@@ -63,12 +81,14 @@ const fieldVariants = cva(
         horizontal: [
           "flex-row items-center",
           "[&>[data-slot=field-label]]:flex-auto",
-          "has-[>[data-slot=field-content]]:items-start has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
+          "has-[>[data-slot=field-content]]:items-start has-[>[data-slot=field-content]]:[&>[role=checkbox]]:mt-0.5 has-[>[data-slot=field-content]]:[&>[role=radio]]:mt-0.5",
+          "has-[>[data-slot=field-content]]:[&>[data-slot=switch][data-size=default]]:-mt-px has-[>[data-slot=field-content]]:[&>[data-slot=switch][data-size=sm]]:mt-px",
         ],
         responsive: [
           "flex-col @md/field-group:flex-row @md/field-group:items-center [&>*]:w-full @md/field-group:[&>*]:w-auto [&>.sr-only]:w-auto",
           "@md/field-group:[&>[data-slot=field-label]]:flex-auto",
-          "@md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
+          "@md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox]]:mt-0.5 @md/field-group:has-[>[data-slot=field-content]]:[&>[role=radio]]:mt-0.5",
+          "@md/field-group:has-[>[data-slot=field-content]]:[&>[data-slot=switch][data-size=default]]:-mt-px @md/field-group:has-[>[data-slot=field-content]]:[&>[data-slot=switch][data-size=sm]]:mt-px",
         ],
       },
     },
@@ -99,7 +119,7 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-content"
       className={cn(
-        "group/field-content flex flex-1 flex-col gap-1.5 leading-snug",
+        "group/field-content flex flex-1 flex-col gap-1",
         className
       )}
       {...props}
@@ -109,19 +129,44 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
 
 function FieldLabel({
   className,
+  required,
+  optional,
+  children,
   ...props
-}: React.ComponentProps<typeof Label>) {
+}: React.ComponentProps<typeof Label> & {
+  /** Shows the marker and tells screen readers; still set `required` on the control itself. */
+  required?: boolean
+  /** A muted "(optional)" after the label. Mark whichever kind is rarer in the form, not both. */
+  optional?: boolean
+}) {
   return (
     <Label
       data-slot="field-label"
       className={cn(
-        "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50",
-        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-4",
-        "has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5 dark:has-data-[state=checked]:bg-primary/10",
+        "group/field-label peer/field-label flex w-fit gap-2 group-data-[disabled=true]/field:opacity-50",
+        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:border-input has-[>[data-slot=field]]:bg-card has-[>[data-slot=field]]:shadow-hairline [&>*]:data-[slot=field]:px-4 [&>*]:data-[slot=field]:py-3",
+        "has-[>[data-slot=field]]:transition-[background-color,border-color,box-shadow] has-[>[data-slot=field]]:duration-(--duration-fast) has-[>[data-slot=field]]:ease-out-expo has-[>[data-slot=field]]:hover:border-ring/60",
+        "has-[>[data-slot=field]]:has-focus-visible:focus-ring",
+        "has-[>[data-slot=field]]:has-data-[state=checked]:border-primary has-[>[data-slot=field]]:has-data-[state=checked]:bg-muted/60 dark:has-[>[data-slot=field]]:has-data-[state=checked]:bg-input/30",
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {required && (
+        <>
+          <span data-slot="field-required" aria-hidden className="-ml-1.5 text-destructive">
+            *
+          </span>
+          <span className="sr-only">(required)</span>
+        </>
+      )}
+      {optional && (
+        <span data-slot="field-optional" className="-ml-1 font-normal text-muted-foreground">
+          (optional)
+        </span>
+      )}
+    </Label>
   )
 }
 
@@ -130,7 +175,7 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-label"
       className={cn(
-        "flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50",
+        "flex w-fit items-center gap-2 text-sm font-medium group-data-[disabled=true]/field:opacity-50",
         className
       )}
       {...props}
@@ -143,8 +188,8 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="field-description"
       className={cn(
-        "text-sm leading-normal font-normal text-muted-foreground group-has-[[data-orientation=horizontal]]/field:text-balance",
-        "last:mt-0 nth-last-2:-mt-1 [[data-variant=legend]+&]:-mt-1.5",
+        "text-xs font-normal text-muted-foreground group-has-[[data-orientation=horizontal]]/field:text-balance group-data-[disabled=true]/field:opacity-50",
+        "-mt-0.5 [[data-variant=legend]+&]:-mt-1.5",
         "[&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
         className
       )}
@@ -165,7 +210,7 @@ function FieldSeparator({
       data-slot="field-separator"
       data-content={!!children}
       className={cn(
-        "relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2",
+        "relative -my-2 h-5 text-xs group-data-[variant=outline]/field-group:-mb-2",
         className
       )}
       {...props}
@@ -173,7 +218,7 @@ function FieldSeparator({
       <Separator className="absolute inset-0 top-1/2" />
       {children && (
         <span
-          className="relative mx-auto block w-fit bg-background px-2 text-muted-foreground"
+          className="relative mx-auto block w-fit bg-background px-2 text-subtle-foreground"
           data-slot="field-separator-content"
         >
           {children}
@@ -226,10 +271,14 @@ function FieldError({
     <div
       role="alert"
       data-slot="field-error"
-      className={cn("text-sm font-normal text-destructive", className)}
+      className={cn(
+        "-mt-0.5 flex items-start gap-1.5 text-xs font-normal text-destructive",
+        className
+      )}
       {...props}
     >
-      {content}
+      <CircleAlert aria-hidden className="mt-0.5 size-3.5 shrink-0" />
+      <div className="min-w-0">{content}</div>
     </div>
   )
 }
@@ -240,6 +289,7 @@ export {
   FieldDescription,
   FieldError,
   FieldGroup,
+  FieldRow,
   FieldLegend,
   FieldSeparator,
   FieldSet,

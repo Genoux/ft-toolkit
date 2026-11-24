@@ -1,19 +1,18 @@
-import { Button } from "@inbeat/ui/components/button";
-import { Stack } from "@inbeat/ui/components/layout";
+import { EmptyState } from "@inbeat/ui/components/empty-state";
 import { Page } from "@inbeat/ui/components/page";
 import Link from "next/link";
 import { ROUTES } from "@/shared/config/routes";
 
 export default function NotFound() {
   return (
-    <Page size="narrow" className="min-h-screen items-center justify-center text-center" asChild>
+    <Page size="centered" asChild>
       <main>
-        <Stack gap="lg" align="center">
-          <h1 className="text-2xl font-medium">Page not found</h1>
-          <Button variant="outline" asChild>
-            <Link href={ROUTES.home}>Back home</Link>
-          </Button>
-        </Stack>
+        <EmptyState
+          size="page"
+          title="Page not found"
+          action={{ label: "Back home", variant: "outline", href: ROUTES.home }}
+          renderLink={(href, content) => <Link href={href}>{content}</Link>}
+        />
       </main>
     </Page>
   );

@@ -1,0 +1,41 @@
+/*
+ * The Fieldtrip faces every app uses: Diplomat for sparing statements (`font-serif`) and SwissNow for a
+ * wordmark or brand headline (`font-brand`). Import after theme.css:
+ *   @import "@inbeat/ui/fonts.css";
+ * fieldtrip.css imports it, so an app on the full brand layer needs only that. An app that loads the
+ * faces itself (next/font) can still set --font-swiss-now / --font-diplomat.
+ */
+@font-face {
+  font-family: "SwissNow";
+  src: url("./fonts/SwissNow-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SwissNow";
+  src: url("./fonts/SwissNow-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SwissNow";
+  src: url("./fonts/SwissNow-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Diplomat";
+  src: url("./fonts/DiplomatST_Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* UI text stays Geist (theme.css): it is built for dense interfaces. Fieldtrip shows through Diplomat
+ * statements, used sparingly, and SwissNow for a wordmark or brand headline (`font-brand`). */
+@theme inline {
+  --font-serif: var(--font-diplomat, "Diplomat"), ui-serif, Georgia, serif;
+  --font-brand: var(--font-swiss-now, "SwissNow"), ui-sans-serif, system-ui, sans-serif;
+}

@@ -6,7 +6,12 @@ import { AnimatePresence, motion } from "motion/react"
 
 import { cn } from "../lib/utils"
 import { Button } from "./button"
-import { EASING_FUNCTION } from "../lib/easing"
+import {
+  dialogWidthClassName,
+  overlayClassName,
+  overlayPanelClassName,
+  useOverlayMotion,
+} from "../internal/overlay-motion"
 
 const AlertDialogOpenContext = React.createContext(false)
 
@@ -63,6 +68,7 @@ function AlertDialogContent({
   size?: "default" | "sm"
 }) {
   const isOpen = React.useContext(AlertDialogOpenContext)
+  const motionProps = useOverlayMotion()
 
   return (
     <AlertDialogPortal forceMount>
@@ -73,42 +79,36 @@ function AlertDialogContent({
             asChild
             forceMount
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15, ease: EASING_FUNCTION.dialog }}
-              style={{ willChange: "opacity" }}
-              className="fixed inset-0 z-50 bg-black/30"
-            />
+            <motion.div {...motionProps.overlay} className={overlayClassName} />
           </AlertDialogPrimitive.Overlay>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.15, ease: EASING_FUNCTION.dialog }}
-            style={{ willChange: "transform, opacity" }}
-            className="fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2 data-[size=default]:max-w-xs data-[size=default]:sm:max-w-sm data-[size=sm]:max-w-xs"
-            data-size={size}
-          >
-            <AlertDialogPrimitive.Content
-              data-slot="alert-dialog-content"
-              data-size={size}
-              forceMount
+          <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              {...motionProps.panel}
               className={cn(
-                "bg-background ring-foreground/10 gap-4 rounded-xl p-4 ring-1 group/alert-dialog-content grid w-full outline-none",
-                className
+                "pointer-events-auto w-full",
+                dialogWidthClassName[size === "sm" ? "sm" : "md"]
               )}
-              {...props}
             >
-              {children}
-            </AlertDialogPrimitive.Content>
-          </motion.div>
+              <AlertDialogPrimitive.Content
+                data-slot="alert-dialog-content"
+                data-size={size}
+                forceMount
+                className={cn(
+                  overlayPanelClassName,
+                  "group/alert-dialog-content grid w-full gap-6 rounded-2xl p-7 outline-none data-[size=sm]:gap-5 data-[size=sm]:p-6",
+                  className
+                )}
+                {...props}
+              >
+                {children}
+              </AlertDialogPrimitive.Content>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </AlertDialogPortal>
@@ -122,7 +122,7 @@ function AlertDialogHeader({
   return (
     <div
       data-slot="alert-dialog-header"
-      className={cn("grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]", className)}
+      className={cn("grid grid-rows-[auto_1fr] place-items-center gap-1 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr] sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-cols-[auto_1fr]", className)}
       {...props}
     />
   )
@@ -136,7 +136,7 @@ function AlertDialogFooter({
     <div
       data-slot="alert-dialog-footer"
       className={cn(
-        "bg-muted/50 -mx-4 -mb-4 rounded-b-xl border-t p-4 flex flex-col-reverse gap-2 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end",
+        "flex flex-col-reverse gap-2 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end",
         className
       )}
       {...props}
@@ -146,12 +146,14 @@ function AlertDialogFooter({
 
 function AlertDialogMedia({
   className,
+  variant = "default",
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & { variant?: "default" | "destructive" }) {
   return (
     <div
       data-slot="alert-dialog-media"
-      className={cn("bg-muted mb-2 inline-flex size-10 items-center justify-center rounded-md sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6", className)}
+      data-variant={variant}
+      className={cn("bg-muted mb-2 inline-flex size-10 items-center justify-center rounded-lg text-foreground data-[variant=destructive]:bg-destructive/10 data-[variant=destructive]:text-destructive sm:group-data-[size=default]/alert-dialog-content:row-span-2 sm:group-data-[size=default]/alert-dialog-content:mb-0 sm:group-data-[size=default]/alert-dialog-content:self-center *:[svg:not([class*='size-'])]:size-5", className)}
       {...props}
     />
   )
@@ -164,7 +166,7 @@ function AlertDialogTitle({
   return (
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
-      className={cn("text-base font-medium sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2", className)}
+      className={cn("text-base font-semibold sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2", className)}
       {...props}
     />
   )

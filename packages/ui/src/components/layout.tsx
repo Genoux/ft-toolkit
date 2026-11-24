@@ -1,5 +1,6 @@
 import { Slot } from "radix-ui";
 import type { ComponentProps } from "react";
+import { growWithEmptyStateClassName } from "../internal/empty-state-fill";
 import { cn } from "../lib/utils";
 
 const GAP = {
@@ -42,7 +43,13 @@ function Stack({ gap = "md", align = "stretch", asChild = false, className, ...p
   return (
     <Comp
       data-slot="stack"
-      className={cn("flex min-w-0 flex-col", GAP[gap], ALIGN[align], className)}
+      className={cn(
+        "flex min-w-0 flex-col",
+        growWithEmptyStateClassName,
+        GAP[gap],
+        ALIGN[align],
+        className,
+      )}
       {...props}
     />
   );
@@ -87,18 +94,52 @@ const MIN_COLUMN = {
   lg: "grid-cols-[repeat(auto-fill,minmax(min(22rem,100%),1fr))]",
 } as const;
 
+const MIN_COLUMN_STRETCH = {
+  sm: "grid-cols-[repeat(auto-fit,minmax(min(12rem,100%),1fr))]",
+  md: "grid-cols-[repeat(auto-fit,minmax(min(16rem,100%),1fr))]",
+  lg: "grid-cols-[repeat(auto-fit,minmax(min(22rem,100%),1fr))]",
+} as const;
+
+const FIXED_COLUMNS = {
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+} as const;
+
 type GridProps = Omit<LayoutProps, "align"> & {
   /** Narrowest a column may get; the grid fits as many columns as the width allows, one on a phone. */
   min?: keyof typeof MIN_COLUMN;
+  /** A fixed count on wide screens instead of `min`, for a set that must line up, such as a featured stat and three more; one column on a phone. */
+  cols?: keyof typeof FIXED_COLUMNS;
+  /** `2` keeps two columns on a phone instead of one, for filters and small tiles. */
+  phoneCols?: 1 | 2;
+  /** With `min`: a short set widens to fill the row instead of leaving empty columns, for a few info cards rather than a catalogue. */
+  stretch?: boolean;
 };
 
 /** Equal columns that reflow with the width: cards, stats, tiles. */
-function Grid({ gap = "lg", min = "md", asChild = false, className, ...props }: GridProps) {
+function Grid({
+  gap = "lg",
+  min = "md",
+  cols,
+  phoneCols = 1,
+  stretch = false,
+  asChild = false,
+  className,
+  ...props
+}: GridProps) {
   const Comp = asChild ? Slot.Root : "div";
   return (
     <Comp
       data-slot="grid"
-      className={cn("grid min-w-0", GAP[gap], MIN_COLUMN[min], className)}
+      data-cols={cols}
+      className={cn(
+        "grid min-w-0",
+        GAP[gap],
+        cols ? FIXED_COLUMNS[cols] : (stretch ? MIN_COLUMN_STRETCH : MIN_COLUMN)[min],
+        phoneCols === 2 && "max-sm:grid-cols-2",
+        className,
+      )}
       {...props}
     />
   );

@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+import { AnnotationCaption, getAnnotatedState, StateMarker } from "./state-annotation";
 
+/** Rows by columns of examples; a row or column named after an interaction state marks its examples. */
 export function VariantGrid<Row extends string, Column extends string>({
   rows,
   columns,
@@ -11,20 +13,22 @@ export function VariantGrid<Row extends string, Column extends string>({
 }) {
   return (
     <div
-      className="grid items-center gap-x-6 gap-y-4"
+      className="grid items-center gap-x-8 gap-y-5"
       style={{ gridTemplateColumns: `6rem repeat(${columns.length}, auto)` }}
     >
       <span />
       {columns.map((column) => (
-        <code key={column} className="text-xs text-muted-foreground">
+        <AnnotationCaption key={column} className="border-b border-dashed border-border pb-1.5">
           {column}
-        </code>
+        </AnnotationCaption>
       ))}
       {rows.map((row) => (
         <div key={row} className="contents">
-          <code className="text-xs text-muted-foreground">{row}</code>
+          <AnnotationCaption>{row}</AnnotationCaption>
           {columns.map((column) => (
-            <div key={column}>{renderCell(row, column)}</div>
+            <StateMarker key={column} state={getAnnotatedState(row) ?? getAnnotatedState(column)}>
+              {renderCell(row, column)}
+            </StateMarker>
           ))}
         </div>
       ))}

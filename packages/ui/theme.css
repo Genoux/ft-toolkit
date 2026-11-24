@@ -10,6 +10,67 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * The one focus indicator: a solid 2px ring with a 2px gap, at least 3:1 on every surface (theme.test.ts
+ * holds that). Use `focus-visible:focus-ring`; `focus-ring-inset` draws inside for rows and menu items
+ * whose container clips overflow.
+ */
+@utility focus-ring {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@utility focus-ring-inset {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+/*
+ * Type roles. Components pick a role, never a pixel size: 3xs avatar initials and count dots,
+ * 2xs overlines, xs meta and captions, table rows, sm body and controls, title the page heading,
+ * stat a card figure, display the one hero figure on a page. xs is 13px (Tailwind ships 12): meta lines
+ * must stay readable on a light canvas.
+ */
+@theme {
+  --text-3xs: 0.5625rem;
+  --text-3xs--line-height: 1;
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.125rem;
+  --text-table: 0.84375rem;
+  --text-table--line-height: 1.25rem;
+  --text-title: 2.25rem;
+  --text-title--line-height: 2.5rem;
+  --text-title--letter-spacing: -0.025em;
+  --text-item: 0.9375rem;
+  --text-item--line-height: 1.25rem;
+  --text-title-sm: 1.75rem;
+  --text-title-sm--line-height: 2.25rem;
+  --text-title-sm--letter-spacing: -0.02em;
+  --text-stat: 2rem;
+  --text-stat--line-height: 2.5rem;
+  --text-stat--letter-spacing: -0.025em;
+  --text-display: 3.5rem;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.035em;
+  /* Motion: exponential ease-out from an already-visible state; fast for hover and press, base for menus and popovers, slow for sheets and height changes. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.78, 0, 0.22, 1);
+  --animate-dot-pulse: dot-pulse 1.6s var(--ease-out-expo) infinite;
+
+  @keyframes dot-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -25,8 +86,42 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  /*
+   * Toned surfaces (status badges, the badge Select, Alert, a warning IconButton) read `--tone`, set on
+   * the element, and keep its hue at a fixed lightness per theme, the way Pool's pastel status pills
+   * (Tailwind's 100 fills and 800 text) do: a translucent tint of a mid-tone darkens toward grey instead.
+   * The chroma cap keeps light tints inside sRGB, where a clipped blue drifts to cyan. Solid keeps the
+   * tone's own colour once it is dark enough for the page colour on it (Fieldtrip's green is), else
+   * moves it to the theme's bound. theme.test.ts checks AA and the hue for every tone and theme.
+   */
+  --color-tone-tint: oklch(
+    from var(--tone) var(--tone-tint-l)
+      min(calc(c * var(--tone-tint-chroma)), var(--tone-tint-chroma-max)) h
+  );
+  --color-tone-tint-hover: oklch(
+    from var(--tone) calc(var(--tone-tint-l) + var(--tone-tint-step))
+      min(calc(c * var(--tone-tint-chroma)), var(--tone-tint-chroma-max)) h
+  );
+  --color-tone-tint-strong: oklch(
+    from var(--tone) calc(var(--tone-tint-l) + 2 * var(--tone-tint-step))
+      min(calc(c * var(--tone-tint-chroma)), var(--tone-tint-chroma-max)) h
+  );
+  --color-tone-ink: oklch(from var(--tone) var(--tone-ink-l) calc(c * var(--tone-ink-chroma)) h);
+  --color-tone-solid: oklch(
+    from var(--tone) clamp(var(--tone-solid-l-min), l, var(--tone-solid-l-max)) c h
+  );
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+  --color-subtle-foreground: var(--subtle-foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -38,81 +133,131 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-cream: var(--cream);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  /* Radius roles: sm a checkbox, md a row or menu item, lg a menu, popover or textarea, xl a card or table frame, 2xl a dialog or hero. Single-line controls are rounded-full. */
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-  --shadow-hairline: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-  --shadow-subtle: 0px 4px 8px -2px rgba(0, 0, 0, 0.06), 0px 2px 4px -2px rgba(0, 0, 0, 0.04);
-  --shadow-elevated: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-hairline: 0px 1px 2px 0px rgb(20 20 16 / 0.04);
+  --shadow-raised: 0px 1px 2px 0px rgb(20 20 16 / 0.06), 0px 0px 0px 1px rgb(20 20 16 / 0.04);
+  --shadow-subtle: 0px 4px 8px -2px rgb(20 20 16 / 0.06), 0px 2px 4px -2px rgb(20 20 16 / 0.04);
+  --shadow-elevated: 0px 12px 24px -8px rgb(20 20 16 / 0.12), 0px 4px 8px -2px rgb(20 20 16 / 0.05);
 }
 
+/*
+ * Every text level passes WCAG AA (4.5:1) on cards, canvas and sidebar; subtle is the floor.
+ * Surfaces separate by tone, not by lines, in three steps: the sidebar a shade deeper than the
+ * page's warm off-white canvas, cards and popovers white on it, borders faint. Three text levels: foreground,
+ * muted-foreground (secondary) and subtle-foreground (meta). highlight is the one coloured
+ * surface a page may use, for its hero figure. A status colour marks dots and icons; its
+ * -foreground pair is readable text in that colour (a stat's delta); the --tone-* lightnesses shape
+ * every toned surface (see --color-tone-tint).
+ */
 :root {
+  --background: oklch(0.985 0.0015 95);
+  --foreground: oklch(0.21 0.006 95);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.21 0.006 95);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.53 0.19 27);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
+  --popover-foreground: oklch(0.21 0.006 95);
+  --primary: oklch(0.21 0.006 95);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.955 0.002 95);
+  --secondary-foreground: oklch(0.21 0.006 95);
+  --muted: oklch(0.955 0.002 95);
+  --muted-foreground: oklch(0.45 0.008 95);
+  --subtle-foreground: oklch(0.54 0.006 95);
+  --accent: oklch(0.945 0.002 95);
+  --accent-foreground: oklch(0.21 0.006 95);
+  --destructive: oklch(0.55 0.19 27);
+  --destructive-foreground: oklch(0.47 0.17 27);
+  /* Fieldtrip's status hues for every app, so a "Pending" or "Approved" reads the same everywhere. */
+  --success: #157428;
+  --success-foreground: color-mix(in oklab, #157428 55%, var(--foreground));
+  --warning: #ea4112;
+  --warning-foreground: color-mix(in oklab, #ea4112 55%, var(--foreground));
+  --info: #46bdf0;
+  --info-foreground: color-mix(in oklab, #46bdf0 55%, var(--foreground));
+  --tone-tint-l: 0.94;
+  --tone-tint-chroma: 0.4;
+  --tone-tint-chroma-max: 0.04;
+  --tone-tint-step: -0.025;
+  --tone-ink-l: 0.45;
+  --tone-ink-chroma: 0.75;
+  --tone-solid-l-min: 0;
+  --tone-solid-l-max: 0.52;
+  --highlight: oklch(0.86 0.045 262);
+  --highlight-foreground: oklch(0.21 0.006 95);
+  --border: oklch(0.915 0.003 95);
+  --input: oklch(0.895 0.004 95);
+  --ring: oklch(0.6 0.01 95);
+  --radius: 0.75rem;
   /* Spacing roles. Layout components read these; an app changes its density by overriding them. */
-  --gap-xs: 0.25rem;
+  --gap-xs: 0.375rem;
   --gap-sm: 0.5rem;
-  --gap-md: 0.75rem;
-  --gap-lg: 1rem;
-  --gap-xl: 1.5rem;
-  --card-padding: 1.25rem;
-  --item-padding-x: 1rem;
-  --item-padding-y: 0.75rem;
+  --gap-md: 1rem;
+  --gap-lg: 1.25rem;
+  --gap-xl: 2rem;
+  --card-padding: 1.5rem;
+  --item-padding-x: 1.25rem;
+  --item-padding-y: 1rem;
+  /* Motion durations, read as duration-(--duration-fast|base|slow): Tailwind has no duration namespace in @theme. */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
   --cream: #f3f3f3;
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --sidebar: oklch(0.97 0.002 95);
+  --sidebar-foreground: oklch(0.4 0.008 95);
+  --sidebar-accent: oklch(0.945 0.003 95);
+  --sidebar-accent-foreground: oklch(0.21 0.006 95);
+  --sidebar-border: oklch(0.91 0.003 95);
+  --sidebar-ring: oklch(0.6 0.01 95);
 }
 
 .dark {
-  --background: #101012;
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.08 0.003 264);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.08 0.003 264);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.32 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.32 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.32 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.16 0.003 95);
+  --foreground: oklch(0.97 0.002 95);
+  --card: oklch(0.2 0.003 95);
+  --card-foreground: oklch(0.97 0.002 95);
+  --popover: oklch(0.22 0.003 95);
+  --popover-foreground: oklch(0.97 0.002 95);
+  --primary: oklch(0.97 0.002 95);
+  --primary-foreground: oklch(0.2 0.003 95);
+  --secondary: oklch(0.26 0.003 95);
+  --secondary-foreground: oklch(0.97 0.002 95);
+  --muted: oklch(0.26 0.003 95);
+  --muted-foreground: oklch(0.76 0.005 95);
+  --subtle-foreground: oklch(0.64 0.005 95);
+  --accent: oklch(0.27 0.003 95);
+  --accent-foreground: oklch(0.97 0.002 95);
   --destructive: oklch(0.68 0.15 22);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --sidebar: #080808;
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-accent: hsl(240 4% 6%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 4% 6%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --destructive-foreground: oklch(0.78 0.12 22);
+  --success: oklch(0.72 0.14 152);
+  --success-foreground: oklch(0.82 0.11 152);
+  --warning: oklch(0.8 0.14 75);
+  --warning-foreground: oklch(0.86 0.11 75);
+  --info: oklch(0.7 0.12 250);
+  --info-foreground: oklch(0.82 0.09 250);
+  --tone-tint-l: 0.3;
+  --tone-tint-chroma: 0.35;
+  --tone-tint-chroma-max: 0.06;
+  --tone-tint-step: 0.04;
+  --tone-ink-l: 0.86;
+  --tone-ink-chroma: 0.7;
+  --tone-solid-l-min: 0.72;
+  --tone-solid-l-max: 1;
+  --highlight: oklch(0.84 0.05 262);
+  --highlight-foreground: oklch(0.2 0.003 95);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.66 0.005 95);
+  --sidebar: oklch(0.185 0.003 95);
+  --sidebar-foreground: oklch(0.8 0.004 95);
+  --sidebar-accent: oklch(0.25 0.003 95);
+  --sidebar-accent-foreground: oklch(0.97 0.002 95);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.66 0.005 95);
 }
 
 @layer base {
@@ -122,6 +267,25 @@
 
   body {
     @apply bg-background text-foreground;
+    caret-color: var(--primary);
+    scrollbar-color: var(--input) transparent;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--highlight) 70%, transparent);
+    color: var(--foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      /* biome-ignore-start lint/complexity/noImportantStyles: reduced motion must override every component's own duration, whatever its specificity */
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+      /* biome-ignore-end lint/complexity/noImportantStyles: reduced motion must override every component's own duration, whatever its specificity */
+    }
   }
 
   button,

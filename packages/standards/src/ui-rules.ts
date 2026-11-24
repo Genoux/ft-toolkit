@@ -26,6 +26,17 @@ const RULES = [
     reason: "hand-set colour, use a token",
   },
   {
+    pattern: /(?<![\w-])rounded(?:-[trblse]{1,2})?-(?:\[[^\]]+\]|3xl|4xl)/g,
+    reason: "radius outside the roles (sm, md, lg, xl, 2xl, full)",
+  },
+  { pattern: /(?<![\w-])shadow-\[[^\]]+\]/g, reason: "hand-set shadow, use a shadow token" },
+  {
+    pattern:
+      /\b(?:color|background(?:Color)?|border(?:Color)?|fill|stroke):\s*["'`](?:#|rgba?\(|hsla?\(|oklch\()/g,
+    reason: "hand-set colour in a style, use a token",
+  },
+  { pattern: /\btransition-all\b/g, reason: "transition-all, animate only what changes" },
+  {
     pattern:
       /from "(?:@mui\/|@chakra-ui\/|antd|@mantine\/|@headlessui\/|react-bootstrap|@nextui-org\/|@heroui\/|react-icons|@heroicons\/|@tabler\/icons|@phosphor-icons|framer-motion|@radix-ui\/)/g,
     reason: "another UI library; use @inbeat/ui, lucide-react, radix-ui and motion",

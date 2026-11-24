@@ -20,13 +20,19 @@
     "sync": "bun run build:packages && bun scripts/sync-local.ts",
     "release": "bun run build:packages && bun scripts/publish.ts",
     "eval:ui": "bun evals/ui/run.ts",
-    "test:eval": "bun test evals/ui"
+    "test:eval": "bun test evals/ui",
+    "visual": "bun scripts/visual.ts",
+    "visual:approve": "bun scripts/visual.ts --approve",
+    "align": "bun scripts/align.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
     "@biomejs/biome": "^2.5.15",
     "@types/bun": "^1.3.5",
+    "@types/pngjs": "^6.0.5",
+    "pixelmatch": "^7.2.0",
     "playwright": "1.65.1",
+    "pngjs": "^7.0.0",
     "turbo": "^2.5.8",
     "typescript": "^5.9.3"
   }

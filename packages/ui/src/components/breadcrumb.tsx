@@ -48,7 +48,7 @@ function BreadcrumbSeparator({ className }: { className?: string }) {
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn("[&>svg]:size-3.5", className)}
+      className={cn("text-subtle-foreground [&>svg]:size-3.5", className)}
     >
       <ChevronRight />
     </li>
@@ -90,7 +90,7 @@ function BreadcrumbPage({ children }: { children: React.ReactNode }) {
         role="link"
         aria-disabled="true"
         aria-current="page"
-        className="block truncate py-1 px-1.5 text-foreground font-normal"
+        className="block truncate px-1.5 py-1 font-medium text-foreground"
       >
         {children}
       </span>
@@ -113,9 +113,9 @@ function BreadcrumbMenu<Link extends BreadcrumbLinkItem>({
         <DropdownMenu>
           <DropdownMenuTrigger
             aria-label="Show more breadcrumbs"
-            className="flex h-7 items-center rounded-md px-1.5 hover:text-foreground hover:bg-muted-foreground/5 transition-colors"
+            className="flex h-7 items-center rounded-full px-2 outline-none transition-colors duration-(--duration-fast) ease-out-expo hover:bg-muted hover:text-foreground focus-visible:focus-ring data-[state=open]:bg-muted data-[state=open]:text-foreground"
           >
-            <MoreHorizontal className="size-4" />
+            <MoreHorizontal className="size-3.5" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="max-w-72">
             {links.map((link) => (
@@ -148,7 +148,7 @@ function Breadcrumb<Link extends BreadcrumbLinkItem>({
         <TruncationTooltip content={link.label}>
           <Slot.Root
             data-slot="breadcrumb-link"
-            className="block max-w-40 truncate py-1 px-1.5 rounded-md hover:text-foreground hover:bg-muted-foreground/5 transition-colors"
+            className="block max-w-40 truncate rounded-full px-1.5 py-1 outline-none transition-colors duration-(--duration-fast) ease-out-expo hover:bg-muted hover:text-foreground focus-visible:focus-ring"
           >
             {renderLink(link, link.label)}
           </Slot.Root>
@@ -162,7 +162,7 @@ function Breadcrumb<Link extends BreadcrumbLinkItem>({
     <nav aria-label="breadcrumb" data-slot="breadcrumb" className={cn("min-w-0", className)}>
       <ol
         data-slot="breadcrumb-list"
-        className="text-muted-foreground flex items-center gap-1 text-sm"
+        className="flex items-center gap-0.5 text-sm text-muted-foreground"
       >
         {links.length > 0 && (
           <BreadcrumbMenu links={links} renderLink={renderLink} className="lg:hidden" />

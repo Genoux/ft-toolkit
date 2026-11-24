@@ -2,10 +2,10 @@
 # of each from GitHub into the project's .agents/skills/, linked into
 # .claude/skills/ for Claude Code (never committed).
 #
-# Only pattern references and checklists that every app must follow belong
-# here. Taste, workflow and code-style skills (frontend-design, taste-skill,
-# emil-design-eng, code-simplifier, grill-me, ...) are each developer's choice:
-# install them in your own ~/.claude/skills, never through the toolkit.
+# Only pattern references, checklists and the one shared design skill
+# (impeccable) belong here. Other taste, workflow and code-style skills
+# (frontend-design, taste-skill, emil-design-eng, code-simplifier, grill-me, ...)
+# are each developer's choice: install them in your own ~/.claude/skills.
 #
 # <owner/repo>  <folder in the repo>  [installed name]
 #   folder/*    every skill folder inside folder
@@ -15,6 +15,9 @@
 # UI checklists
 ibelick/ui-skills                      skills/fixing-accessibility
 ibelick/ui-skills                      skills/fixing-metadata
+
+# Design quality: critique, audit and polish on top of @inbeat/ui (owner, 2026-11-22)
+pbakaus/impeccable                     .agents/skills/impeccable
 
 # Stack patterns
 PatternsDev/skills                     react/*

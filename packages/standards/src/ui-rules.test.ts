@@ -26,6 +26,21 @@ afterEach(() => {
 });
 
 describe("uiRuleProblems", () => {
+  it("reports hand-set radius, shadows, style colours and transition-all", () => {
+    const appDir = appWith({
+      "src/tile.tsx":
+        '<div className="rounded-[10px] rounded-t-3xl shadow-[0_2px_4px_#000] transition-all" style={{ color: "#ff0000" }} />\n<div className="rounded-xl rounded-full shadow-elevated transition-colors" style={{ color: "var(--brand)" }} />',
+    });
+
+    expect(uiRuleProblems(appDir).sort()).toEqual([
+      'src/tile.tsx:1 color: "# (hand-set colour in a style, use a token)',
+      "src/tile.tsx:1 rounded-[10px] (radius outside the roles (sm, md, lg, xl, 2xl, full))",
+      "src/tile.tsx:1 rounded-t-3xl (radius outside the roles (sm, md, lg, xl, 2xl, full))",
+      "src/tile.tsx:1 shadow-[0_2px_4px_#000] (hand-set shadow, use a shadow token)",
+      "src/tile.tsx:1 transition-all (transition-all, animate only what changes)",
+    ]);
+  });
+
   it("accepts the roles of the scale, display sizes included", () => {
     const appDir = appWith({
       "src/page.tsx":

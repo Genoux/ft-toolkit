@@ -1,14 +1,22 @@
 "use client";
 
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
 import { cn } from "../lib/utils";
+import { IconButton } from "./icon-button";
 
 type CarouselOptions = Parameters<typeof useEmblaCarousel>[0];
 
-const CarouselContext = React.createContext<{ carouselRef: UseEmblaCarouselType[0] } | null>(
-  null,
-);
+type CarouselContextValue = {
+  carouselRef: UseEmblaCarouselType[0];
+  scrollPrev: () => void;
+  scrollNext: () => void;
+  canScrollPrev: boolean;
+  canScrollNext: boolean;
+};
+
+const CarouselContext = React.createContext<CarouselContextValue | null>(null);
 
 function useCarousel() {
   const context = React.useContext(CarouselContext);
@@ -32,18 +40,39 @@ function Carousel({
     ...(scrollDuration !== undefined && { duration: scrollDuration }),
   });
 
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
+  const [canScrollNext, setCanScrollNext] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!api) return;
+    const syncButtons = () => {
+      setCanScrollPrev(api.canScrollPrev());
+      setCanScrollNext(api.canScrollNext());
+    };
+    syncButtons();
+    api.on("select", syncButtons).on("reInit", syncButtons);
+    return () => {
+      api.off("select", syncButtons).off("reInit", syncButtons);
+    };
+  }, [api]);
+
+  const scrollPrev = () => api?.scrollPrev();
+  const scrollNext = () => api?.scrollNext();
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
-      api?.scrollPrev();
+      scrollPrev();
     } else if (event.key === "ArrowRight") {
       event.preventDefault();
-      api?.scrollNext();
+      scrollNext();
     }
   };
 
   return (
-    <CarouselContext.Provider value={{ carouselRef }}>
+    <CarouselContext.Provider
+      value={{ carouselRef, scrollPrev, scrollNext, canScrollPrev, canScrollNext }}
+    >
       <section
         onKeyDownCapture={handleKeyDown}
         className={cn("relative", className)}
@@ -80,4 +109,42 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-export { Carousel, CarouselContent, CarouselItem };
+type CarouselButtonProps = Omit<
+  React.ComponentProps<typeof IconButton>,
+  "label" | "onClick" | "children" | "pressed" | "pressedLabel"
+> & { label?: string };
+
+/** Scrolls back one page; disabled at the start. Place it where the design wants, such as a header beside CarouselNext. */
+function CarouselPrevious({ label = "Previous", size = "icon-sm", ...props }: CarouselButtonProps) {
+  const { scrollPrev, canScrollPrev } = useCarousel();
+  return (
+    <IconButton
+      data-slot="carousel-previous"
+      label={label}
+      size={size}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      <ChevronLeft />
+    </IconButton>
+  );
+}
+
+function CarouselNext({ label = "Next", size = "icon-sm", ...props }: CarouselButtonProps) {
+  const { scrollNext, canScrollNext } = useCarousel();
+  return (
+    <IconButton
+      data-slot="carousel-next"
+      label={label}
+      size={size}
+      disabled={!canScrollNext}
+      onClick={scrollNext}
+      {...props}
+    >
+      <ChevronRight />
+    </IconButton>
+  );
+}
+
+export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious };

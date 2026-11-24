@@ -54,7 +54,7 @@ export function DestructiveActionDialog({
   isPending = false,
   cancelLabel = "Cancel",
   confirmLabel = "Delete",
-  pendingLabel = "Deleting...",
+  pendingLabel = "Deleting…",
   children,
   confirmDisabled = false,
   variant = "simple",
@@ -74,8 +74,7 @@ export function DestructiveActionDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      {/* Same semantics as AlertDialog: a click outside never dismisses a destructive step. */}
-      <DialogContent role="alertdialog" onInteractOutside={(event) => event.preventDefault()}>
+      <DialogContent role="alertdialog" showCloseButton={!isPending} dismissible={false}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
@@ -84,18 +83,20 @@ export function DestructiveActionDialog({
         {variant === "typed" ? (
           <Field>
             <Label htmlFor={typedInputId} className="text-muted-foreground">
-              Type{" "}
-              <span className="font-mono font-semibold tracking-wide text-foreground">
-                {requiredPhrase}
-              </span>{" "}
-              to confirm
+              {/* One text run: Label is a flex row, and loose words beside the phrase would each become a column. */}
+              <span>
+                Type{" "}
+                <span className="font-mono font-medium tracking-wide text-foreground">
+                  {requiredPhrase}
+                </span>{" "}
+                to confirm
+              </span>
             </Label>
             <Input
               id={typedInputId}
               autoCapitalize="off"
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
-              placeholder={requiredPhrase}
               autoComplete="off"
               spellCheck={false}
               className="text-foreground"
@@ -109,7 +110,12 @@ export function DestructiveActionDialog({
               {cancelLabel}
             </Button>
           </DialogClose>
-          <Button disabled={!canConfirm} onClick={onConfirm}>
+          <Button
+            variant="destructive"
+            loading={isPending}
+            disabled={!canConfirm}
+            onClick={onConfirm}
+          >
             {isPending ? pendingLabel : confirmLabel}
           </Button>
         </DialogFooter>

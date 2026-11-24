@@ -109,18 +109,22 @@ UI is in exactly one of three layers:
   override `--gap-*`, `--card-padding` and `--item-padding-*` in `globals.css`. An app that is
   mostly signature surfaces (an album, a game) deletes `.ib-spacing-baseline`; the rule then
   only counts.
-- The toolkit ships no taste skills; each developer picks their own. Whatever they say, the
-  rules here and in `ib-ui` win for plumbing and page layout.
+- The toolkit ships one design skill, `impeccable`, for critique, audits and polish; other taste
+  skills are each developer's choice. Whatever any of them say, the rules here and in `ib-ui` win
+  for plumbing and page layout: they improve a page with toolkit components and tokens, never by
+  restyling them.
 - Type scale: every text takes one of these roles and nothing sets a size or weight of its own
   (`ib check` fails on `text-[13px]`, `font-[510]`, `font-bold`). Body `text-sm` (14px): inputs,
-  menu items, detail values, person names. Table cells are 13.5px, set by `Table`, and column
-  headers 13px, set by `TableHead`. Body strong `text-sm font-medium`: a row's identifying cell,
-  card titles, form labels, buttons, tabs. Caption `text-xs` muted: meta lines, timestamps,
-  hints. Tag `text-xs font-medium`: pills and count badges. Section title
-  `text-base font-semibold`; card, sheet and dialog title `text-lg font-semibold`; page title
-  `text-xl font-semibold`. Secondary information is `text-muted-foreground`, never smaller.
-  Weights are regular, medium and semibold. Larger named sizes are for display text on public
-  and onboarding screens. To change the scale, change it in ib-toolkit.
+  menu items, detail values, person names. Table cells `text-table` (13.5px), set by `Table`;
+  column headers `text-xs`, set by `TableHead`. Body strong `text-sm font-medium`: a row's
+  identifying cell, card titles, form labels, buttons, tabs. Caption `text-xs` in
+  `text-subtle-foreground`: meta lines, timestamps, hints. Tag `text-xs font-medium`: pills and
+  count badges. Overline `text-2xs` uppercase: nav group labels only, never above a heading.
+  Section title `text-sm font-medium`; card title `text-sm font-medium`; dialog title
+  `text-base font-semibold`; page title `text-title font-semibold`. Figures: `text-stat` in a
+  card, `text-display` for the one hero figure. Secondary information is
+  `text-muted-foreground`, meta `text-subtle-foreground`, never smaller. Weights are regular,
+  medium and semibold. To change the scale, change it in ib-toolkit.
 - Radix via `radix-ui`; animation via `motion` only.
 
 ### Simplicity

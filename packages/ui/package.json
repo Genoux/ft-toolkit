@@ -9,15 +9,18 @@
   "files": [
     "CHANGELOG.md",
     "fieldtrip.css",
+    "fonts",
     "src",
     "theme.css"
   ],
   "exports": {
     "./theme.css": "./theme.css",
     "./fieldtrip.css": "./fieldtrip.css",
+    "./fonts.css": "./fonts.css",
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
-    "./lib/*": "./src/lib/*.ts"
+    "./lib/*": "./src/lib/*.ts",
+    "./fonts/*": "./fonts/*"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

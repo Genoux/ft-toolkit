@@ -4,25 +4,48 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Select as SelectPrimitive } from "radix-ui";
 import * as React from "react";
 
-import { usePortalContainer } from "./portal-container";
 import { cn } from "../lib/utils";
+import {
+  controlSurfaceClassName,
+  listboxIndicatorClassName,
+  listboxItemClassName,
+  listboxLabelClassName,
+  controlHeightBySizeAttributeClassName,
+  fieldRadiusClassName,
+  listboxPanelClassName,
+  listboxPanelPaddingClassName,
+  listboxSeparatorClassName,
+  radixPanelMotionClassName,
+} from "../internal/control-styles";
+import {
+  toneColorClassName,
+  toneTextClassName,
+  toneTintClassName,
+} from "../internal/tone-styles";
+import { usePortalContainer } from "./portal-container";
 
 // Sentinel used internally so Radix never sees two items with the same value/key.
 // Consumers never deal with this — Select and SelectContent handle it transparently.
 const CLEAR_SENTINEL = "__clear__";
 
-type SelectClearableContext = { clearable: boolean; noneSelected: boolean };
+type SelectClearableContext = { clearable: boolean; noneSelected: boolean; clearLabel: string };
 const ClearableCtx = React.createContext<SelectClearableContext>({
   clearable: false,
   noneSelected: false,
+  clearLabel: "Select",
 });
 
 function Select({
   clearable = false,
+  clearLabel = "Select",
   value,
   onValueChange,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root> & { clearable?: boolean }) {
+}: React.ComponentProps<typeof SelectPrimitive.Root> & {
+  clearable?: boolean;
+  /** With `clearable`: the option that clears the value, also shown in the trigger while empty. */
+  clearLabel?: string;
+}) {
   const effectiveValue = clearable ? value || CLEAR_SENTINEL : value;
   const noneSelected = clearable && !value;
   const handleChange = React.useCallback(
@@ -31,7 +54,7 @@ function Select({
   );
 
   return (
-    <ClearableCtx.Provider value={{ clearable, noneSelected }}>
+    <ClearableCtx.Provider value={{ clearable, noneSelected, clearLabel }}>
       <SelectPrimitive.Root
         data-slot="select"
         value={effectiveValue}
@@ -50,40 +73,101 @@ function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.V
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+type SelectTriggerVariant = "default" | "ghost" | "badge";
+
+type SelectTriggerTone = "neutral" | "success" | "warning" | "info" | "destructive";
+
+const BADGE_TONED = cn(
+  toneTintClassName,
+  "hover:bg-tone-tint-hover data-[state=open]:bg-tone-tint-hover",
+  toneTextClassName,
+);
+
+// The same tint and text as a toned Badge, so a status picker reads as the status pill beside it.
+const badgeToneClassName: Record<SelectTriggerTone, string> = {
+  neutral: "bg-muted text-foreground hover:bg-accent data-[state=open]:bg-accent",
+  success: cn(BADGE_TONED, toneColorClassName.success),
+  warning: cn(BADGE_TONED, toneColorClassName.warning),
+  info: cn(BADGE_TONED, toneColorClassName.info),
+  destructive: cn(BADGE_TONED, toneColorClassName.destructive),
+};
+
+const selectTriggerVariantClassName: Record<SelectTriggerVariant, string> = {
+  default: cn(
+    controlSurfaceClassName,
+    fieldRadiusClassName,
+    controlHeightBySizeAttributeClassName,
+    "min-w-36 justify-between pr-3.5 pl-4 data-[size=sm]:pr-3 data-[size=sm]:pl-3.5 data-[state=open]:border-ring dark:hover:bg-input/50",
+  ),
+  ghost: cn(
+    fieldRadiusClassName,
+    controlHeightBySizeAttributeClassName,
+    "justify-between px-3 text-foreground hover:bg-muted data-[state=open]:bg-muted focus-visible:focus-ring aria-invalid:ring-1 aria-invalid:ring-destructive",
+  ),
+  badge: cn(
+    "gap-1 px-2.5 text-xs font-medium data-[size=default]:h-6 focus-visible:focus-ring disabled:cursor-default disabled:opacity-100 [&>svg:last-child]:size-3 [&>svg:last-child]:text-current [&>svg:last-child]:opacity-60 disabled:[&>svg:last-child]:hidden",
+    "data-[size=lg]:h-9 data-[size=lg]:gap-1.5 data-[size=lg]:px-3.5 data-[size=lg]:text-sm data-[size=lg]:[&>svg:last-child]:size-3.5",
+  ),
+};
+
 function selectTriggerClassName({
   className,
   noneSelected,
+  variant = "default",
+  tone = "neutral",
 }: {
   className?: string;
   noneSelected?: boolean;
+  variant?: SelectTriggerVariant;
+  /** The badge variant's tint, for a status picker that reads as the status pill. */
+  tone?: SelectTriggerTone;
 } = {}) {
   return cn(
-    "min-w-36 border-input data-placeholder:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-1.5 rounded-lg border bg-transparent px-2.5 py-1.5 text-sm whitespace-nowrap transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+    "flex w-fit items-center gap-1.5 rounded-full text-sm whitespace-nowrap outline-none transition-[color,background-color,border-color,box-shadow] duration-(--duration-fast) ease-out-expo data-placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+    "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-subtle-foreground",
+    "[&>svg:last-child]:transition-transform [&>svg:last-child]:duration-(--duration-base) [&>svg:last-child]:ease-out-expo data-[state=open]:[&>svg:last-child]:rotate-180",
+    selectTriggerVariantClassName[variant],
+    variant === "badge" && badgeToneClassName[tone],
     noneSelected && "text-muted-foreground",
     className,
   );
 }
 
+type SelectTriggerProps = React.ComponentProps<typeof SelectPrimitive.Trigger> &
+  (
+    | { variant?: "default" | "ghost"; size?: "sm" | "default"; tone?: never }
+    | {
+        variant: "badge";
+        /** `default` matches Badge's `md` in a table row; `lg` matches the `icon-sm` buttons beside a page or section header's status. */
+        size?: "default" | "lg";
+        /** Tints the pill with a status tone. */
+        tone?: SelectTriggerTone;
+      }
+  );
+
+/** The badge variant keeps its own height. */
 function SelectTrigger({
   className,
   size = "default",
+  variant = "default",
+  tone,
   children,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size?: "sm" | "default";
-}) {
+}: SelectTriggerProps) {
   const { noneSelected } = React.useContext(ClearableCtx);
 
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-size={size}
-      className={selectTriggerClassName({ className, noneSelected })}
+      data-variant={variant}
+      data-tone={variant === "badge" ? (tone ?? "neutral") : undefined}
+      className={selectTriggerClassName({ className, noneSelected, variant, tone })}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="size-3.5 opacity-50" />
+        <ChevronDownIcon className="size-4 text-subtle-foreground" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
@@ -96,15 +180,20 @@ function SelectContent({
   align = "center",
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
-  const { clearable } = React.useContext(ClearableCtx);
+  const { clearable, clearLabel } = React.useContext(ClearableCtx);
   const portalContainer = usePortalContainer();
+  const isItemAligned = position === "item-aligned";
 
   return (
     <SelectPrimitive.Portal container={portalContainer ?? undefined}>
       <SelectPrimitive.Content
         data-slot="select-content"
+        data-align-trigger={isItemAligned}
         className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-60 max-h-(--radix-select-content-available-height) min-w-32 origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border",
+          listboxPanelClassName,
+          radixPanelMotionClassName,
+          "data-[align-trigger=true]:animate-none",
+          "relative z-60 max-h-(--radix-select-content-available-height) min-w-32 origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto",
           position === "popper" &&
           "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           className,
@@ -116,17 +205,17 @@ function SelectContent({
         <SelectScrollUpButton />
         <SelectPrimitive.Viewport
           className={cn(
-            "p-1",
+            listboxPanelPaddingClassName,
             position === "popper" &&
-            "h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width) scroll-my-1",
+            "h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width) scroll-my-1.5",
           )}
         >
           {clearable && (
             <SelectPrimitive.Item
               value={CLEAR_SENTINEL}
-              className="focus:bg-accent text-muted-foreground relative flex w-full items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none"
+              className={cn(listboxItemClassName, "pr-9 text-muted-foreground focus:bg-muted")}
             >
-              <SelectPrimitive.ItemText>Select</SelectPrimitive.ItemText>
+              <SelectPrimitive.ItemText>{clearLabel}</SelectPrimitive.ItemText>
             </SelectPrimitive.Item>
           )}
           {children}
@@ -141,7 +230,7 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
-      className={cn("text-muted-foreground px-2 py-1.5 text-xs", className)}
+      className={cn(listboxLabelClassName, className)}
       {...props}
     />
   );
@@ -156,15 +245,13 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        listboxItemClassName,
+        "pr-9 focus:bg-muted focus:text-foreground *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2.5",
         className,
       )}
       {...props}
     >
-      <span
-        data-slot="select-item-indicator"
-        className="absolute right-2 flex size-3.5 items-center justify-center"
-      >
+      <span data-slot="select-item-indicator" className={listboxIndicatorClassName}>
         <SelectPrimitive.ItemIndicator>
           <CheckIcon className="size-4" />
         </SelectPrimitive.ItemIndicator>
@@ -181,7 +268,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn("bg-border pointer-events-none -mx-1 my-1 h-px", className)}
+      className={cn(listboxSeparatorClassName, className)}
       {...props}
     />
   );
@@ -194,7 +281,7 @@ function SelectScrollUpButton({
   return (
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
-      className={cn("flex items-center justify-center py-1", className)}
+      className={cn("flex items-center justify-center py-1 text-subtle-foreground", className)}
       {...props}
     >
       <ChevronUpIcon className="size-4" />
@@ -209,7 +296,7 @@ function SelectScrollDownButton({
   return (
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"
-      className={cn("flex items-center justify-center py-1", className)}
+      className={cn("flex items-center justify-center py-1 text-subtle-foreground", className)}
       {...props}
     >
       <ChevronDownIcon className="size-4" />

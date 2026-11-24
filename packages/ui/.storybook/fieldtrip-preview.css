@@ -1,0 +1,7 @@
+/* The brand layer, mounted by the Brand toolbar toggle in preview.tsx after preview.css. It compiles
+ * fieldtrip.css alone: importing theme.css here would pull in its `@source "./src"` and re-emit every
+ * toolkit utility after the main build, where a re-emitted `.w-full` beats a story's `sm:w-80`. */
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "../fieldtrip.css";
+/* The brand's @theme inline fonts only reach the utilities compiled here. */
+@source inline("font-serif font-brand");

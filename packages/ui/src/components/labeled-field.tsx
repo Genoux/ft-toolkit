@@ -8,11 +8,11 @@ interface LabeledFieldProps {
 }
 
 export function LabeledField({ label, value, className }: LabeledFieldProps) {
-  if (!value) return null;
+  if (value === undefined || value === null || value === false || value === "") return null;
   return (
-    <Field className={cn("flex flex-col items-start justify-between gap-2", className)}>
-      <FieldLabel className="text-xs text-muted-foreground">{label}</FieldLabel>
-      <FieldContent className="text-sm font-medium text-foreground">{value}</FieldContent>
+    <Field className={cn("items-start gap-1.5", className)}>
+      <FieldLabel className="text-xs font-normal text-muted-foreground">{label}</FieldLabel>
+      <FieldContent className="text-sm font-medium text-foreground tabular-nums">{value}</FieldContent>
     </Field>
   );
 }

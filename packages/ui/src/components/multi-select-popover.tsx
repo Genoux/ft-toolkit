@@ -6,8 +6,12 @@ import { SearchInput } from "./search-input";
 import { selectTriggerClassName } from "./select";
 import { Spinner } from "./spinner";
 import { ChevronDownIcon } from "lucide-react";
-import { type ReactNode, useMemo, useState } from "react";
+import { type ComponentProps, type ReactNode, useMemo, useState } from "react";
 import { cn } from "../lib/utils";
+import {
+  listboxItemClassName,
+  listboxPanelPaddingClassName,
+} from "../internal/control-styles";
 import { PersonAvatar } from "./person-identity";
 
 const ELLIPSIS = "…";
@@ -84,26 +88,27 @@ export function MultiSelectOptionList({
 
   if (isPending) {
     return (
-      <div className="flex min-h-[140px] w-full items-center justify-center p-4">
-        <Spinner className="size-5" />
+      <div className="flex min-h-36 w-full items-center justify-center p-4">
+        <Spinner className="size-5 text-subtle-foreground" />
       </div>
     );
   }
 
   return (
-    <div className="flex max-h-64 flex-col">
+    <div className="flex max-h-72 flex-col">
       {searchable ? (
-        <div className="shrink-0 border-b p-1.5">
+        <div className="shrink-0 p-1 pb-0">
           <SearchInput
+            size="sm"
             value={query}
             onChange={setQuery}
             placeholder={searchPlaceholder}
-            className="w-full"
+            className="w-full min-w-0 [&_[data-slot=input]]:rounded-lg [&_[data-slot=input]]:border-transparent [&_[data-slot=input]]:bg-muted [&_[data-slot=input]]:shadow-none"
           />
         </div>
       ) : null}
       <div
-        className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain p-1"
+        className={cn("min-h-0 flex-1 overflow-y-auto overscroll-y-contain", listboxPanelPaddingClassName)}
         onWheel={(event) => event.stopPropagation()}
       >
         {visibleOptions.map((option) => {
@@ -116,8 +121,8 @@ export function MultiSelectOptionList({
               htmlFor={rowId}
               onPointerDown={keepOpenOnToggle ? (event) => event.preventDefault() : undefined}
               className={cn(
-                "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm",
-                "hover:bg-muted/80 has-focus-visible:ring-2 has-focus-visible:ring-ring",
+                listboxItemClassName,
+                "gap-2.5 hover:bg-muted has-focus-visible:bg-muted",
                 isDisabled && "pointer-events-none opacity-50",
               )}
             >
@@ -135,7 +140,7 @@ export function MultiSelectOptionList({
           );
         })}
         {visibleOptions.length === 0 ? (
-          <p className="px-2 py-3 text-sm text-muted-foreground">
+          <p className="px-3 py-6 text-center text-sm text-muted-foreground">
             {options.length === 0 ? emptyMessage : "No matches."}
           </p>
         ) : null}
@@ -148,13 +153,20 @@ export function MultiSelectPopover({
   placeholder,
   onChange,
   renderLabel,
-  triggerClassName = "min-w-36 w-44 max-w-44",
+  size = "default",
+  triggerClassName = "w-auto min-w-24 max-w-44",
   contentClassName = "w-72 overflow-hidden",
+  id,
+  "aria-invalid": ariaInvalid,
+  "aria-describedby": ariaDescribedBy,
   ...listProps
-}: Omit<MultiSelectOptionListProps, "onToggle"> & {
+}: Omit<MultiSelectOptionListProps, "onToggle"> &
+  Pick<ComponentProps<"button">, "id" | "aria-invalid" | "aria-describedby"> & {
   placeholder: string;
   onChange: (values: string[]) => void;
   renderLabel?: (selectedOptions: MultiSelectOption[]) => ReactNode;
+  /** `default` (h-10) matches Input, Select and the page toolbar; `sm` (h-9) a compact row in a card or panel. */
+  size?: "sm" | "default";
   triggerClassName?: string;
   contentClassName?: string;
 }) {
@@ -170,7 +182,10 @@ export function MultiSelectPopover({
       <PopoverTrigger asChild>
         <button
           type="button"
-          data-size="sm"
+          id={id}
+          aria-invalid={ariaInvalid}
+          aria-describedby={ariaDescribedBy}
+          data-size={size}
           className={selectTriggerClassName({
             className: triggerClassName,
             noneSelected: !isActive,
@@ -180,12 +195,12 @@ export function MultiSelectPopover({
           <span data-slot="select-value" className="truncate">
             {triggerLabel}
           </span>
-          <ChevronDownIcon className="size-3.5 opacity-50" aria-hidden />
+          <ChevronDownIcon className="size-4 text-subtle-foreground" aria-hidden />
         </button>
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className={cn("overscroll-y-contain p-0", contentClassName)}
+        className={cn("overscroll-y-contain border-0 p-0", contentClassName)}
         onOpenAutoFocus={(event) => event.preventDefault()}
         onWheel={(event) => event.stopPropagation()}
       >

@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@inbeat/ui/components/button";
-import { Stack } from "@inbeat/ui/components/layout";
+import { EmptyState } from "@inbeat/ui/components/empty-state";
 import { Page } from "@inbeat/ui/components/page";
 
 type ErrorPageProps = {
@@ -13,17 +12,16 @@ type ErrorPageProps = {
 // carry internals. The digest is enough for support to find the server log.
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   return (
-    <Page size="narrow" className="min-h-screen items-center justify-center text-center" asChild>
+    <Page size="centered" asChild>
       <main>
-        <Stack gap="sm" align="center">
-          <h1 className="text-2xl font-medium">Something went wrong</h1>
-          {error.digest ? (
-            <p className="font-mono text-xs text-muted-foreground">{error.digest}</p>
-          ) : null}
-        </Stack>
-        <Button type="button" variant="outline" onClick={reset}>
-          Try again
-        </Button>
+        <EmptyState
+          size="page"
+          title="Something went wrong"
+          action={{ label: "Try again", variant: "outline", onClick: reset }}
+          meta={
+            error.digest ? <span className="font-mono text-xs">{error.digest}</span> : undefined
+          }
+        />
       </main>
     </Page>
   );

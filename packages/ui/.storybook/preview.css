@@ -4,6 +4,7 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
 @import "../theme.css";
+@import "../fonts.css";
 
 @source "../stories";
 

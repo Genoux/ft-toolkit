@@ -3,8 +3,14 @@
 import { CalendarDays } from "lucide-react";
 import type { ComponentProps } from "react";
 import { useState } from "react";
+import { cn } from "../lib/utils";
 import { Button } from "./button";
 import { Calendar } from "./calendar";
+import {
+  type ControlSize,
+  controlSurfaceClassName,
+  fieldRadiusClassName,
+} from "../internal/control-styles";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 type DatePickerProps = Pick<
@@ -15,6 +21,11 @@ type DatePickerProps = Pick<
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  size?: ControlSize;
+  /** BCP 47 locale for the shown date. Fixed by default so server and browser render the same text. */
+  locale?: string;
+  /** Merged into the trigger; the default width is `w-full`. */
+  className?: string;
 };
 
 // A calendar date has no time zone: `new Date("2027-04-30")` is UTC midnight, the day before west
@@ -30,21 +41,43 @@ function toIsoDate(date: Date): string {
   return `${date.getFullYear()}-${month}-${day}`;
 }
 
-function DatePicker({ value, onChange, placeholder = "Pick a date", ...triggerProps }: DatePickerProps) {
+function DatePicker({
+  value,
+  onChange,
+  placeholder = "Pick a date",
+  size = "default",
+  locale = "en-US",
+  className,
+  ...triggerProps
+}: DatePickerProps) {
   const [open, setOpen] = useState(false);
   const selected = value ? fromIsoDate(value) : undefined;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="w-full justify-start font-normal" {...triggerProps}>
-          <CalendarDays className="text-muted-foreground" />
+        <Button
+          variant="outline"
+          size={size}
+          className={cn(
+            controlSurfaceClassName,
+            fieldRadiusClassName,
+            "w-full justify-start gap-2 px-4 font-normal tabular-nums hover:bg-card has-[>svg]:pl-3.5 data-[state=open]:border-ring data-[state=open]:bg-card dark:hover:bg-input/30 dark:data-[state=open]:bg-input/30",
+            !selected && "text-muted-foreground",
+            className,
+          )}
+          {...triggerProps}
+        >
+          <CalendarDays className="text-subtle-foreground" />
           {selected
-            ? selected.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+            ? new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(selected)
             : placeholder}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent
+        className="w-auto border-0 p-0"
+        align="start"
+      >
         <Calendar
           mode="single"
           selected={selected}

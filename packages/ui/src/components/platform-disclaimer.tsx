@@ -1,11 +1,15 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useLayoutEffect, useState } from "react";
+import { EASING_FUNCTION } from "../lib/easing";
 import { Alert, AlertDescription, AlertTitle } from "./alert";
 import { Button } from "./button";
 
 const DISMISS_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
+// --duration-slow in seconds: motion/react takes a number, not a CSS variable.
+const ENTER_DURATION_SECONDS = 0.32;
+const ENTER_DELAY_SECONDS = 2;
 
 function isDismissed(cookieName: string): boolean {
   return document.cookie.split("; ").includes(`${cookieName}=1`);
@@ -24,6 +28,7 @@ type PlatformDisclaimerProps = {
 
 function PlatformDisclaimer({ title, description, cookieName }: PlatformDisclaimerProps) {
   const [dismissed, setDismissed] = useState<boolean | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useLayoutEffect(() => {
     setDismissed(isDismissed(cookieName));
@@ -35,14 +40,18 @@ function PlatformDisclaimer({ title, description, cookieName }: PlatformDisclaim
     <div className="pointer-events-none fixed inset-x-4 bottom-4 z-40 sm:inset-x-auto sm:right-6 sm:bottom-6">
       <motion.div
         className="pointer-events-auto sm:max-w-lg"
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: reduceMotion ? 0 : 4 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 2 }}
+        transition={{
+          duration: ENTER_DURATION_SECONDS,
+          delay: ENTER_DELAY_SECONDS,
+          ease: EASING_FUNCTION.exponential,
+        }}
       >
         <Alert className="flex items-center justify-between gap-6 rounded-xl py-4 pr-4 pl-5 shadow-elevated">
           <div className="flex min-w-0 flex-col gap-0.5">
             <AlertTitle>{title}</AlertTitle>
-            <AlertDescription className="text-[13px]">{description}</AlertDescription>
+            <AlertDescription className="text-table">{description}</AlertDescription>
           </div>
           <Button
             type="button"

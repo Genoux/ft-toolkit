@@ -2,13 +2,9 @@
  * Opt-in Fieldtrip brand layer. Import after theme.css in the app's globals.css:
  *   @import "@inbeat/ui/theme.css";
  *   @import "@inbeat/ui/fieldtrip.css";
- * The licensed font files stay in the app (this package is public): load SwissNow and Diplomat
- * with next/font/local and put the --font-swiss-now and --font-diplomat variables on <html>.
+ * Brand colours; the faces come from fonts.css, imported here, so an app needs no font setup.
  */
-@theme inline {
-  --font-sans: var(--font-swiss-now);
-  --font-serif: var(--font-diplomat);
-}
+@import "./fonts.css";
 
 /* static: apps read these through var(--color-fieldtrip-<name>), which Tailwind cannot see, so unused ones would be dropped. */
 /* Base/light pairs from the "Fieldtrip - Brand" Figma palette; ink has no light pair there, so it takes grey-3. */
@@ -35,4 +31,17 @@
   --color-fieldtrip-pink-light: #ffd5dd;
   --color-fieldtrip-powder: #bccfef;
   --color-fieldtrip-powder-light: #e4ecf9;
+}
+
+/* :not(.dark) because :root and .dark tie on specificity and this file loads after theme.css. */
+:root:not(.dark) {
+  --foreground: var(--color-fieldtrip-ink);
+  --card-foreground: var(--color-fieldtrip-ink);
+  --popover-foreground: var(--color-fieldtrip-ink);
+  --primary: var(--color-fieldtrip-ink);
+  --secondary-foreground: var(--color-fieldtrip-ink);
+  --accent-foreground: var(--color-fieldtrip-ink);
+  --sidebar-accent-foreground: var(--color-fieldtrip-ink);
+  --highlight: var(--color-fieldtrip-powder);
+  --highlight-foreground: var(--color-fieldtrip-ink);
 }
