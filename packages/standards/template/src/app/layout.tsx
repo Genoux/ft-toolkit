@@ -6,8 +6,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "inBeat app",
-  description: "Built on the inBeat toolkit",
+  title: "Fieldtrip app",
+  description: "Built on the Fieldtrip toolkit",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

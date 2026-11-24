@@ -12,7 +12,7 @@ import {
 const appDirs: string[] = [];
 
 function appWith(files: Record<string, string>): string {
-  const appDir = mkdtempSync(join(tmpdir(), "ib-ui-rules-"));
+  const appDir = mkdtempSync(join(tmpdir(), "ft-ui-rules-"));
   appDirs.push(appDir);
   for (const [path, contents] of Object.entries(files)) {
     mkdirSync(join(appDir, path, ".."), { recursive: true });

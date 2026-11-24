@@ -13,8 +13,8 @@
     "lint:fix": "biome check . --write",
     "format": "biome format --write .",
     "lint:arch": "depcruise src --config .dependency-cruiser.cjs",
-    "ib:sync": "ib sync",
-    "ib:check": "ib check"
+    "ft:sync": "ft sync",
+    "ft:check": "ft check"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",

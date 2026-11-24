@@ -16,7 +16,7 @@
     "lint": {
       "outputs": []
     },
-    "ib:check": {
+    "ft:check": {
       "cache": false
     },
     "build": {

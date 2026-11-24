@@ -20,7 +20,7 @@ on:
         type: boolean
         default: false
       standards-check:
-        description: Run `bunx ib check` (managed AGENTS block, skills, rules)
+        description: Run `bunx ft check` (managed AGENTS block, skills, rules)
         type: boolean
         default: true
       ref:
@@ -74,7 +74,9 @@ jobs:
 
       - name: Agent standards
         if: inputs.standards-check
-        run: bunx ib check
+        # Apps still on @inbeat/standards only have the `ib` bin. Drop the fallback once every
+        # app is on @fieldtripagency/standards.
+        run: if [ -e node_modules/.bin/ft ]; then bunx ft check; else bunx ib check; fi
 
       - name: Extra
         if: inputs.extra-command != ''

@@ -31,7 +31,7 @@ import {
 import { CREATOR_PROFILE, CREATOR_TOTAL, photoUrl } from "../screens/pool/fixtures";
 import { CreatorProfileView, RatingBadge } from "../screens/pool/pool-blocks";
 
-// The page patterns of the ib-ui skill, one story each. Apps copy the composition, not the data.
+// The page patterns of the ft-ui skill, one story each. Apps copy the composition, not the data.
 
 const meta = {
   title: "Organisms/Page",

@@ -30,7 +30,7 @@ describe("applyManagedBlock", () => {
     const existing = `# AGENTS.md\n\n${BLOCK_START} v0.0.1 -->\nold\n${BLOCK_END}\n\n## This app\n- fact\n`;
     const updated = applyManagedBlock(existing);
     expect(updated).not.toContain("\nold\n");
-    expect(updated).toContain("## inBeat toolkit standard");
+    expect(updated).toContain("## Fieldtrip toolkit standard");
     expect(updated).toContain("## This app\n- fact");
   });
 
@@ -39,6 +39,15 @@ describe("applyManagedBlock", () => {
       .split("\n")
       .find((line) => line.startsWith(BLOCK_START));
     expect(header).not.toMatch(/v\d+\.\d+\.\d+/);
+  });
+
+  it("swaps a block written before the ib → ft rename instead of adding a second one", () => {
+    const existing =
+      "# AGENTS.md\n\n<!-- ib:standard:start -->\nold\n<!-- ib:standard:end -->\n\n## This app\n";
+    const updated = applyManagedBlock(existing);
+    expect(updated).not.toContain("ib:standard");
+    expect(updated.split(BLOCK_START)).toHaveLength(2);
+    expect(updated).toContain("## This app");
   });
 
   it("prepends the block when markers are missing", () => {
@@ -50,37 +59,40 @@ describe("write / staleFiles", () => {
   const skillPath = (name: string) => join(".agents", "skills", name, "SKILL.md");
 
   it("syncs everything, then reports clean, then detects drift", () => {
-    const dir = mkdtempSync(join(tmpdir(), "ib-std-"));
+    const dir = mkdtempSync(join(tmpdir(), "ft-std-"));
     expect(staleFiles(dir).length).toBeGreaterThan(0);
     write(dir);
     expect(staleFiles(dir)).toEqual([]);
 
-    writeFileSync(join(dir, skillPath("ib-ui")), "edited");
-    expect(staleFiles(dir)).toEqual([skillPath("ib-ui")]);
+    writeFileSync(join(dir, skillPath("ft-ui")), "edited");
+    expect(staleFiles(dir)).toEqual([skillPath("ft-ui")]);
   });
 
   it("writes skills only under .agents/skills", () => {
-    const dir = mkdtempSync(join(tmpdir(), "ib-std-"));
+    const dir = mkdtempSync(join(tmpdir(), "ft-std-"));
     write(dir);
     expect(readdirSync(dir).sort()).toEqual([".agents", "AGENTS.md"]);
     expect(readdirSync(join(dir, ".agents", "skills")).sort()).toEqual([
-      "ib-feature",
-      "ib-toolkit",
-      "ib-ui",
+      "ft-feature",
+      "ft-toolkit",
+      "ft-ui",
     ]);
   });
 
   describe("legacy files", () => {
     const legacyPaths = [
-      ...["ib-ui", "ib-feature", "ib-toolkit"].flatMap((name) => [
-        join(".claude", "skills", name, "SKILL.md"),
-        join(".cursor", "skills", name, "SKILL.md"),
-        join(".cursor", "rules", `${name}.mdc`),
+      ...["ui", "feature", "toolkit"].flatMap((name) => [
+        ...[`ft-${name}`, `ib-${name}`].flatMap((skill) => [
+          join(".claude", "skills", skill, "SKILL.md"),
+          join(".cursor", "skills", skill, "SKILL.md"),
+          join(".cursor", "rules", `${skill}.mdc`),
+        ]),
+        join(".agents", "skills", `ib-${name}`, "SKILL.md"),
       ]),
     ];
 
     function legacyApp(extra: Record<string, string> = {}): string {
-      const dir = mkdtempSync(join(tmpdir(), "ib-legacy-"));
+      const dir = mkdtempSync(join(tmpdir(), "ft-legacy-"));
       write(dir);
       for (const path of [...legacyPaths, ...Object.keys(extra)]) {
         mkdirSync(join(dir, path, ".."), { recursive: true });
@@ -99,6 +111,20 @@ describe("write / staleFiles", () => {
       expect(staleFiles(dir)).toEqual([]);
       expect(existsSync(join(dir, ".claude"))).toBe(false);
       expect(existsSync(join(dir, ".cursor"))).toBe(false);
+      expect(readdirSync(join(dir, ".agents", "skills")).sort()).toEqual([
+        "ft-feature",
+        "ft-toolkit",
+        "ft-ui",
+      ]);
+    });
+
+    it("moves the pre-rename spacing baseline to its new name", () => {
+      const dir = legacyApp({ ".ib-spacing-baseline": "1 src/old.tsx\n" });
+      expect(staleFiles(dir)).toContain(".ib-spacing-baseline");
+      write(dir);
+      expect(existsSync(join(dir, ".ib-spacing-baseline"))).toBe(false);
+      expect(readFileSync(join(dir, ".ft-spacing-baseline"), "utf8")).toBe("1 src/old.tsx\n");
+      expect(staleFiles(dir)).toEqual([]);
     });
 
     it("keeps user files and the directories that hold them", () => {
@@ -110,7 +136,7 @@ describe("write / staleFiles", () => {
       const dir = legacyApp(mine);
       write(dir);
       for (const path of Object.keys(mine)) expect(existsSync(join(dir, path))).toBe(true);
-      expect(existsSync(join(dir, ".claude", "skills", "ib-ui"))).toBe(false);
+      expect(existsSync(join(dir, ".claude", "skills", "ft-ui"))).toBe(false);
       expect(existsSync(join(dir, ".cursor", "skills"))).toBe(false);
     });
   });
@@ -118,7 +144,7 @@ describe("write / staleFiles", () => {
 
 describe("claudeFilesIgnoringAgents", () => {
   function app(files: Record<string, string>): string {
-    const dir = mkdtempSync(join(tmpdir(), "ib-claude-"));
+    const dir = mkdtempSync(join(tmpdir(), "ft-claude-"));
     for (const [path, contents] of Object.entries(files)) {
       mkdirSync(join(dir, path, ".."), { recursive: true });
       writeFileSync(join(dir, path), contents);

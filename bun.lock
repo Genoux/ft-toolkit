@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "ib-toolkit",
+      "name": "ft-toolkit",
       "devDependencies": {
         "@axe-core/playwright": "4.14.0",
         "@biomejs/biome": "^2.5.15",
@@ -89,7 +89,7 @@
       "name": "@fieldtripagency/standards",
       "version": "0.19.1",
       "bin": {
-        "ib": "./src/cli.ts",
+        "ft": "./src/cli.ts",
       },
       "dependencies": {
         "@clack/prompts": "^1.8.1",

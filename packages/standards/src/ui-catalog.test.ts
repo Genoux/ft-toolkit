@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const UI_SRC = join(import.meta.dirname, "..", "..", "ui", "src");
-const SKILL = join(import.meta.dirname, "..", "skills", "ib-ui", "SKILL.md");
+const SKILL = join(import.meta.dirname, "..", "skills", "ft-ui", "SKILL.md");
 const MODULE_DIRECTORIES = ["components", "hooks", "lib"];
 
 function exportedModules(): string[] {
@@ -22,7 +22,7 @@ function cataloguedModules(): string[] {
     .sort();
 }
 
-describe("ib-ui catalog", () => {
+describe("ft-ui catalog", () => {
   it("lists every @fieldtripagency/ui module exactly once", () => {
     const catalogued = cataloguedModules();
     expect(new Set(catalogued).size).toBe(catalogued.length);

@@ -13,7 +13,7 @@ const VALID_FILES: Record<string, string> = {
 };
 
 function appWith(overrides: Record<string, string | null> = {}): string {
-  const dir = mkdtempSync(join(tmpdir(), "ib-foundation-"));
+  const dir = mkdtempSync(join(tmpdir(), "ft-foundation-"));
   for (const [path, contents] of Object.entries({ ...VALID_FILES, ...overrides })) {
     if (contents === null) continue;
     mkdirSync(dirname(join(dir, path)), { recursive: true });

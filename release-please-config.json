@@ -31,7 +31,7 @@
   "plugins": [
     {
       "type": "linked-versions",
-      "groupName": "inbeat",
+      "groupName": "fieldtrip",
       "components": ["config", "core", "next", "ui", "standards"]
     }
   ]

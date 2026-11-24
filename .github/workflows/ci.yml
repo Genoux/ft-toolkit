@@ -23,7 +23,7 @@ jobs:
           bun-version: 1.3.5
       - run: bun install --frozen-lockfile
       - run: bunx biome ci .
-      - run: bunx turbo run typecheck test lint:arch lint ib:check build-storybook
+      - run: bunx turbo run typecheck test lint:arch lint ft:check build-storybook
 
   create-smoke:
     name: create-smoke
@@ -47,7 +47,7 @@ jobs:
         working-directory: ${{ env.SMOKE_APP }}
       - run: bun run lint:arch
         working-directory: ${{ env.SMOKE_APP }}
-      - run: bun run ib:check
+      - run: bun run ft:check
         working-directory: ${{ env.SMOKE_APP }}
       - run: bun run build
         working-directory: ${{ env.SMOKE_APP }}

@@ -9,8 +9,8 @@ import {
   withWorkspaceRanges,
 } from "./packages";
 
-// Tarballs, not `link:`/`file:` folders: Bun symlinks those back into ib-toolkit, so the app
-// would load ib-toolkit's copies of react, @clerk/nextjs and @sentry/nextjs and break context.
+// Tarballs, not `link:`/`file:` folders: Bun symlinks those back into ft-toolkit, so the app
+// would load ft-toolkit's copies of react, @clerk/nextjs and @sentry/nextjs and break context.
 mkdirSync(PACKS_DIR, { recursive: true });
 
 const bunCacheDir = (await $`bun pm cache`.quiet().text()).trim().split("\n").at(-1) ?? "";

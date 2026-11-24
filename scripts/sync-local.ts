@@ -143,5 +143,5 @@ if (watchMode) {
       timer = setTimeout(rebuildAndSync, 100);
     });
   }
-  console.info("watching ib-toolkit/packages …");
+  console.info("watching ft-toolkit/packages …");
 }

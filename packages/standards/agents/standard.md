@@ -1,23 +1,23 @@
-## inBeat toolkit standard
+## Fieldtrip toolkit standard
 
 Stack: Next.js App Router, TypeScript strict, React 19, Drizzle + Neon, Clerk, Sentry, Vercel, Bun.
 Shared code comes from `@fieldtripagency/*` (ui ships source via `transpilePackages`; core and next ship compiled JS). Never fork a toolkit
-file into the app; change it in ib-toolkit.
+file into the app; change it in ft-toolkit.
 
 ### Before you build
 
 - If "Product brief" under "This app" is empty, write the user's brief there first (problem,
   users, core flows), then build.
 - Before any UI, "Look" under "This app" names one of neutral, Fieldtrip or product-specific
-  (see "Look" in the `ib-ui` skill). If the heading is missing or empty, ask the user, then add it.
-- Read the matching guide before the work, whatever tool you are: `.agents/skills/ib-ui/SKILL.md`
-  (component catalog, UI rules) before any UI, `.agents/skills/ib-feature/SKILL.md` for a new
-  feature, `.agents/skills/ib-toolkit/SKILL.md` for actions, routes, auth, env and rate limits.
+  (see "Look" in the `ft-ui` skill). If the heading is missing or empty, ask the user, then add it.
+- Read the matching guide before the work, whatever tool you are: `.agents/skills/ft-ui/SKILL.md`
+  (component catalog, UI rules) before any UI, `.agents/skills/ft-feature/SKILL.md` for a new
+  feature, `.agents/skills/ft-toolkit/SKILL.md` for actions, routes, auth, env and rate limits.
 - Read the version-matched Next.js docs in `node_modules/next/dist/docs/` before Next.js work.
 
 ### Two tiers
 
-- **Required** (CI enforces): `@fieldtripagency/config` presets (extend them: biome, tsconfig, dependency-cruiser, vitest; `ib check`
+- **Required** (CI enforces): `@fieldtripagency/config` presets (extend them: biome, tsconfig, dependency-cruiser, vitest; `ft check`
   enforces it), the action/route error contract,
   `securityHeaders()`, Sentry presets, rate limiting on public entry points, this block.
 - **Opt-in**: `@fieldtripagency/ui` blocks, extra layer rules.
@@ -65,7 +65,7 @@ Server actions are queued per client; never use them for reads.
 
 ### Auth
 
-- New apps start without authentication; set it up per "Integrations" in the `ib-toolkit` skill.
+- New apps start without authentication; set it up per "Integrations" in the `ft-toolkit` skill.
 - `authorize` is required on every `action()` and `route()`, and it is the app's own check
   (session, roles, ownership). `publicAccess` is an explicit choice and must be rate limited.
 - Redirect targets go through `safeRedirectPath`. `APP_URL` comes from env, never `Host`.
@@ -93,25 +93,25 @@ UI is in exactly one of three layers:
 
 | Layer | What | Rule |
 |---|---|---|
-| Plumbing | buttons, inputs, forms, dialogs, menus, tables, toasts, tabs, the app shell, page frame, type scale, spacing | From `@fieldtripagency/ui` when it has the piece. Missing piece or variant: compose it in the app from `@fieldtripagency/ui` primitives and tokens, mark it `// toolkit-gap: <what is missing>`, and tell the user; it moves to ib-toolkit once a second app needs it. Never copy, fork or patch a toolkit file. |
+| Plumbing | buttons, inputs, forms, dialogs, menus, tables, toasts, tabs, the app shell, page frame, type scale, spacing | From `@fieldtripagency/ui` when it has the piece. Missing piece or variant: compose it in the app from `@fieldtripagency/ui` primitives and tokens, mark it `// toolkit-gap: <what is missing>`, and tell the user; it moves to ft-toolkit once a second app needs it. Never copy, fork or patch a toolkit file. |
 | Look | colours, fonts, radius, shadows, density | Tokens only, chosen under "Look": neutral `theme.css`, the Fieldtrip layer, or the app's own token overrides in `globals.css`. Never hex or one-off values in components. |
 | Signature surfaces | what makes this product itself: a game board, a canvas, a hero, a custom card or player | Free, built in the app on the tokens and plumbing; mark the file `// signature-surface: <what>` so it may space itself. They stay in the app until a second app needs them. |
 
-- Pages follow the page patterns in the `ib-ui` skill (list, detail, form, overview). A page that
+- Pages follow the page patterns in the `ft-ui` skill (list, detail, form, overview). A page that
   needs a different layout is allowed; record it under **Deliberate deviations**.
 - Spacing is never picked by hand: `Page`, `PageSection`, `Card` and `Item` pad themselves and
-  `Stack`, `Inline` and `Grid` space their children by role (`xs` … `xl`). `ib check` fails on
+  `Stack`, `Inline` and `Grid` space their children by role (`xs` … `xl`). `ft check` fails on
   `p-*`, `m-*`, `gap-*` and `space-*` in app code; an app that has them already runs
-  `ib check --baseline` once, which allows today's and fails new ones. Density is a Look choice:
+  `ft check --baseline` once, which allows today's and fails new ones. Density is a Look choice:
   override `--gap-*`, `--card-padding` and `--item-padding-*` in `globals.css`. An app that is
-  mostly signature surfaces (an album, a game) deletes `.ib-spacing-baseline`; the rule then
+  mostly signature surfaces (an album, a game) deletes `.ft-spacing-baseline`; the rule then
   only counts.
 - The toolkit ships one design skill, `impeccable`, for critique, audits and polish; other taste
-  skills are each developer's choice. Whatever any of them say, the rules here and in `ib-ui` win
+  skills are each developer's choice. Whatever any of them say, the rules here and in `ft-ui` win
   for plumbing and page layout: they improve a page with toolkit components and tokens, never by
   restyling them.
 - Type scale: every text takes one of these roles and nothing sets a size or weight of its own
-  (`ib check` fails on `text-[13px]`, `font-[510]`, `font-bold`). Body `text-sm` (14px): inputs,
+  (`ft check` fails on `text-[13px]`, `font-[510]`, `font-bold`). Body `text-sm` (14px): inputs,
   menu items, detail values, person names. Table cells `text-table` (13.5px), set by `Table`;
   column headers `text-xs`, set by `TableHead`. Body strong `text-sm font-medium`: a row's
   identifying cell, card titles, form labels, buttons, tabs. Caption `text-xs` in
@@ -121,20 +121,20 @@ UI is in exactly one of three layers:
   `text-base font-semibold`; page title `text-title font-semibold`. Figures: `text-stat` in a
   card, `text-display` for the one hero figure. Secondary information is
   `text-muted-foreground`, meta `text-subtle-foreground`, never smaller. Weights are regular,
-  medium and semibold. To change the scale, change it in ib-toolkit.
+  medium and semibold. To change the scale, change it in ft-toolkit.
 - Radix via `radix-ui`; animation via `motion` only.
 
 ### Simplicity
 
-- Reuse before writing: the `ib-ui` catalog, `@fieldtripagency/*`, the stdlib, then the platform. No speculative abstractions, config or "for later" scaffolding.
+- Reuse before writing: the `ft-ui` catalog, `@fieldtripagency/*`, the stdlib, then the platform. No speculative abstractions, config or "for later" scaffolding.
 - Comments carry only what code cannot. A deliberate shortcut is marked `// shortcut: <ceiling>; <upgrade path>`.
-- Claude Code reads `AGENTS.md` only when the app has no `CLAUDE.md`; if one exists it must contain an `@AGENTS.md` line (`ib check` fails otherwise).
+- Claude Code reads `AGENTS.md` only when the app has no `CLAUDE.md`; if one exists it must contain an `@AGENTS.md` line (`ft check` fails otherwise).
 
 ### Tests and CI
 
 - Vitest colocated `*.test.ts` for every `server/` command, policy and `lib/` function;
   `*.integration.test.ts` against a Neon branch; Playwright in `tests/e2e` against previews.
-- CI: biome, tsc, dependency-cruiser, vitest, migration check, `ib check`, gitleaks.
+- CI: biome, tsc, dependency-cruiser, vitest, migration check, `ft check`, gitleaks.
 - Release: production holds on the Vercel Deployment Check `release`, set by the toolkit `release-gate.yml` after re-verifying (and migrating) the deployed commit.
 
 ### Commits

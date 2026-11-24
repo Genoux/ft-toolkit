@@ -1,9 +1,9 @@
 ---
-name: ib-ui
-description: Build UI in an inBeat app with @fieldtripagency/ui primitives and tokens. Use when creating or editing components, pages, dialogs, tables, forms, empty states, or when the user mentions ib-ui or @ib-ui.
+name: ft-ui
+description: Build UI in an Fieldtrip app with @fieldtripagency/ui primitives and tokens. Use when creating or editing components, pages, dialogs, tables, forms, empty states, or when the user mentions ft-ui or @ft-ui.
 ---
 
-# ib-ui
+# ft-ui
 
 ## Before writing any UI
 
@@ -23,12 +23,12 @@ description: Build UI in an inBeat app with @fieldtripagency/ui primitives and t
 Icons are always `lucide-react`.
 
 **Not allowed**: copying, forking or restyling a toolkit component, faking a variant with
-override classes on it, installing another UI library, running `shadcn add`. `ib check` fails on
+override classes on it, installing another UI library, running `shadcn add`. `ft check` fails on
 other UI, icon and animation libraries, hand-set colours, spacing lengths and type sizes.
 
 **Missing component or variant**: do not stop. Compose it in the feature's `components/` from
 catalog primitives and tokens, mark it `// toolkit-gap: <what is missing>` so it is greppable,
-and tell the user which piece is missing. It moves to ib-toolkit (`packages/ui` plus its story)
+and tell the user which piece is missing. It moves to ft-toolkit (`packages/ui` plus its story)
 once a second app needs it.
 
 ## Rules
@@ -53,7 +53,7 @@ once a second app needs it.
   `shadow-hairline|raised|subtle|elevated`.
 - Card is the container for any custom content; Stat parts give a figure its look; there is no
   stat card component.
-- Spacing: never write `p-*`, `m-*`, `gap-*` or `space-*` yourself; `ib check` fails on them.
+- Spacing: never write `p-*`, `m-*`, `gap-*` or `space-*` yourself; `ft check` fails on them.
   Components own it: `Page`, `PageSection`, `Card` and `Item` pad themselves, and children are
   spaced by `Stack` (one under the other), `Inline` (side by side, wraps) or `Grid` (equal
   columns that reflow). Pick the gap by role, not by size: `xs` a label and its hint, `sm` an
@@ -338,7 +338,7 @@ Look at what you built, the way a user will:
 
 ## Adding or changing a component
 
-Do it in `ib-toolkit/packages/ui/src/components`, add or update its story in `packages/ui/stories`
+Do it in `ft-toolkit/packages/ui/src/components`, add or update its story in `packages/ui/stories`
 (`bun run storybook`; stories are grouped like the catalog, render every variant and size from a
 declared list, and use the neutral data in `stories/lib/fixtures.ts`), add it to the Catalog
 above (a test enforces this), then `bun run sync <app-dir>`. Domain compositions tied to one app's

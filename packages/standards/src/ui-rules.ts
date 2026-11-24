@@ -79,10 +79,10 @@ const HAND_PICKED_SPACING = new RegExp(
 const SIGNATURE_SURFACE = /signature-surface:/;
 const SPACING_REASON = "(hand-picked spacing; use Stack, Inline, Grid or Item)";
 
-export const SPACING_BASELINE = ".ib-spacing-baseline";
+export const SPACING_BASELINE = ".ft-spacing-baseline";
 const BASELINE_HEADER = [
   "# Hand-picked spacing allowed per file while it moves to Stack, Inline, Grid and Item.",
-  "# `ib check` fails when a file gains more. Rewrite it with `ib check --baseline` after removing some.",
+  "# `ft check` fails when a file gains more. Rewrite it with `ft check --baseline` after removing some.",
 ];
 
 function handPickedSpacing(appDir: string): Map<string, string[]> {

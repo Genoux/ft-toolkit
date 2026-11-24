@@ -295,7 +295,7 @@ describe("runMcp", () => {
   const read = (file: string) => readFileSync(join(cwd, file), "utf8");
 
   beforeEach(() => {
-    cwd = mkdtempSync(join(tmpdir(), "ib-mcp-"));
+    cwd = mkdtempSync(join(tmpdir(), "ft-mcp-"));
     writeFileSync(join(cwd, "package.json"), "{}");
   });
   afterEach(() => rmSync(cwd, { recursive: true, force: true }));
@@ -308,7 +308,7 @@ describe("runMcp", () => {
 
   it("prints usage without a tty and without both flags", async () => {
     expect(await run(["--tools", "claude"])).toBe(1);
-    expect(stderr).toContain("usage: ib mcp");
+    expect(stderr).toContain("usage: ft mcp");
   });
 
   it("lists valid names for unknown tools and servers and writes nothing", async () => {
@@ -385,9 +385,9 @@ describe("runMcp", () => {
 
   it("prints usage only for argument errors", async () => {
     expect(await run(["--tools", "emacs", "--servers", "vercel"])).toBe(1);
-    expect(stderr).toContain("usage: ib mcp");
+    expect(stderr).toContain("usage: ft mcp");
     expect(await run(["--tools=", "--servers", "vercel"])).toBe(1);
-    expect(stderr).toContain("usage: ib mcp");
+    expect(stderr).toContain("usage: ft mcp");
   });
 
   it("leaves no temp files behind", async () => {
@@ -402,7 +402,7 @@ describe("runMcp", () => {
   it("prints the mcp usage for --help and -h", async () => {
     for (const flag of ["--help", "-h"]) {
       expect(await run([flag])).toBe(0);
-      expect(stdout).toContain("usage: ib mcp");
+      expect(stdout).toContain("usage: ft mcp");
     }
   });
 

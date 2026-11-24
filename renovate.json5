@@ -8,7 +8,7 @@
   lockFileMaintenance: { enabled: true },
   packageRules: [
     {
-      groupName: "inbeat toolkit",
+      groupName: "fieldtrip toolkit",
       matchPackageNames: ["@fieldtripagency/**"],
       schedule: ["at any time"],
       automerge: true,

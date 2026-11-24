@@ -1,7 +1,7 @@
 {
   "name": "@fieldtripagency/core",
   "version": "0.19.1",
-  "description": "Framework-free primitives for inBeat apps: errors, results, logging, env fragments",
+  "description": "Framework-free primitives for Fieldtrip apps: errors, results, logging, env fragments",
   "type": "module",
   "sideEffects": false,
   "files": [

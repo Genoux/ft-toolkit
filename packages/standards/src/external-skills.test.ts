@@ -36,7 +36,7 @@ function git(cwd: string, ...args: string[]): void {
 
 /** A local repo standing in for GitHub, with files at the given paths. */
 function upstream(files: Record<string, string>): string {
-  const dir = mkdtempSync(join(tmpdir(), "ib-upstream-"));
+  const dir = mkdtempSync(join(tmpdir(), "ft-upstream-"));
   for (const [path, contents] of Object.entries(files)) {
     mkdirSync(join(dir, path, ".."), { recursive: true });
     writeFileSync(join(dir, path), contents);
@@ -48,7 +48,7 @@ function upstream(files: Record<string, string>): string {
 }
 
 function list(lines: string[]): string {
-  const path = join(mkdtempSync(join(tmpdir(), "ib-list-")), "external-skills.txt");
+  const path = join(mkdtempSync(join(tmpdir(), "ft-list-")), "external-skills.txt");
   writeFileSync(path, `# comment\n\n${lines.join("\n")}\n`);
   return path;
 }
@@ -81,7 +81,7 @@ describe("installExternalSkills", () => {
   });
 
   it("installs folders, globs, single files and whole repos under .claude/skills", () => {
-    const app = mkdtempSync(join(tmpdir(), "ib-app-"));
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     const report = installExternalSkills(
       app,
       list([`${repo} skills/*`, `${repo} agents/helper.md`, `${repo} . whole`]),
@@ -104,7 +104,7 @@ describe("installExternalSkills", () => {
   });
 
   it("links every skill for Claude Code and leaves git nothing to commit", () => {
-    const app = mkdtempSync(join(tmpdir(), "ib-app-"));
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     git(app, "init", "-q");
     const report = installExternalSkills(app, list([`${repo} skills/*`]));
     for (const name of report.installed) {
@@ -120,7 +120,7 @@ describe("installExternalSkills", () => {
   });
 
   it("keeps the app's own Claude skill and still installs the shared one", () => {
-    const app = mkdtempSync(join(tmpdir(), "ib-app-"));
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     mkdirSync(join(app, CLAUDE_SKILLS_DIR, "one"), { recursive: true });
     writeFileSync(join(app, CLAUDE_SKILLS_DIR, "one", "SKILL.md"), "mine");
     const report = installExternalSkills(app, list([`${repo} skills/one`]));
@@ -130,7 +130,7 @@ describe("installExternalSkills", () => {
   });
 
   it("keeps the app's own skill with the same name", () => {
-    const app = mkdtempSync(join(tmpdir(), "ib-app-"));
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     mkdirSync(join(app, SKILLS_DIR, "one"), { recursive: true });
     writeFileSync(join(app, SKILLS_DIR, "one", "SKILL.md"), "mine");
     const report = installExternalSkills(app, list([`${repo} skills/one`]));
@@ -139,7 +139,7 @@ describe("installExternalSkills", () => {
   });
 
   it("removes skills that left the list and leaves the app's own", () => {
-    const app = mkdtempSync(join(tmpdir(), "ib-app-"));
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     installExternalSkills(app, list([`${repo} skills/*`]));
     mkdirSync(join(app, SKILLS_DIR, "mine"));
     const report = installExternalSkills(app, list([`${repo} skills/one`]));
@@ -149,9 +149,9 @@ describe("installExternalSkills", () => {
   });
 
   it("reports a failed download and deletes nothing", () => {
-    const app = mkdtempSync(join(tmpdir(), "ib-app-"));
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     installExternalSkills(app, list([`${repo} skills/*`]));
-    const missing = `file://${join(tmpdir(), "ib-no-such-repo")}`;
+    const missing = `file://${join(tmpdir(), "ft-no-such-repo")}`;
     const report = installExternalSkills(app, list([`${missing} skills/one`]));
     expect(report.failed).toHaveLength(1);
     expect(report.removed).toEqual([]);
@@ -159,7 +159,7 @@ describe("installExternalSkills", () => {
   });
 
   it("reports a listed folder that holds no skill", () => {
-    const app = mkdtempSync(join(tmpdir(), "ib-app-"));
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     const report = installExternalSkills(app, list([`${repo} skills/missing`]));
     expect(report.failed).toEqual([`${repo}: no skill at skills/missing`]);
   });

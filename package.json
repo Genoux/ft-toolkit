@@ -1,5 +1,5 @@
 {
-  "name": "ib-toolkit",
+  "name": "ft-toolkit",
   "private": true,
   "packageManager": "bun@1.3.5",
   "workspaces": [
@@ -7,7 +7,7 @@
     "packages/standards/template"
   ],
   "scripts": {
-    "check": "turbo run typecheck test lint:arch lint ib:check && biome check .",
+    "check": "turbo run typecheck test lint:arch lint ft:check && biome check .",
     "dev:template": "turbo run dev --filter=@fieldtripagency/template...",
     "typecheck": "turbo run typecheck",
     "build:packages": "turbo run build --filter=./packages/*",

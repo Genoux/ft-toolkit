@@ -184,7 +184,7 @@ export const configuredServers = (tool: string, text: string | null) =>
   text ? TOOLS[tool].configured(text) : [];
 
 export const USAGE = [
-  "usage: ib mcp [--tools <tool,...>] [--servers <server,...>]",
+  "usage: ft mcp [--tools <tool,...>] [--servers <server,...>]",
   `  tools:   ${toolNames.join(", ")}`,
   `  servers: ${curatedNames.join(", ")}`,
   "  without a terminal both flags are required; otherwise missing ones are prompted",
@@ -330,13 +330,13 @@ export async function runMcp(args: string[], io: McpIo): Promise<number> {
     if (toolFlag) validate("tool", toolFlag, toolNames);
     if (serverFlag) validate("server", serverFlag, curatedNames);
     if (!existsSync(join(io.cwd, "package.json")))
-      throw new Error("no package.json here; run `ib mcp` from the app directory");
+      throw new Error("no package.json here; run `ft mcp` from the app directory");
 
     let tools = toolFlag;
     let servers = serverFlag;
     if (!tools || !servers) {
       interactive = true;
-      prompts.intro("ib mcp");
+      prompts.intro("ft mcp");
       const configured = currentlyConfigured(io.cwd);
       tools ??=
         (await prompts.select({

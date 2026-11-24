@@ -1,11 +1,11 @@
 ---
-name: ib-toolkit
-description: Use the inBeat toolkit (@fieldtripagency/core, @fieldtripagency/next, @fieldtripagency/config) correctly in an inBeat app. Use when writing server actions, route handlers, auth checks, env, rate limits, webhooks, Sentry or logging, or when the user mentions ib-toolkit or @ib-toolkit.
+name: ft-toolkit
+description: Use the Fieldtrip toolkit (@fieldtripagency/core, @fieldtripagency/next, @fieldtripagency/config) correctly in an Fieldtrip app. Use when writing server actions, route handlers, auth checks, env, rate limits, webhooks, Sentry or logging, or when the user mentions ft-toolkit or @ft-toolkit.
 ---
 
-# ib-toolkit
+# ft-toolkit
 
-Read the "inBeat toolkit standard" block in `AGENTS.md` first. This skill is the how-to. Examples use `authorizeStaff` as a stand-in for the app's own `authorize` check; public endpoints use `publicAccess` plus a rate limiter.
+Read the "Fieldtrip toolkit standard" block in `AGENTS.md` first. This skill is the how-to. Examples use `authorizeStaff` as a stand-in for the app's own `authorize` check; public endpoints use `publicAccess` plus a rate limiter.
 
 ## Server action
 
@@ -64,7 +64,7 @@ export const GET = route({
 
 Sentry is already wired in the template.
 
-Run `ib mcp` to give your AI tool access to Vercel, Sentry, Neon, Clerk, Cloudflare. For GitHub use the `gh` CLI.
+Run `ft mcp` to give your AI tool access to Vercel, Sentry, Neon, Clerk, Cloudflare. For GitHub use the `gh` CLI.
 
 ### Auth (Clerk)
 
@@ -122,5 +122,5 @@ export const env = createEnv({
 
 ## Changing the toolkit
 
-Edit your ib-toolkit checkout, run its tests, then `bun run sync <app-dir>` there to copy
+Edit your ft-toolkit checkout, run its tests, then `bun run sync <app-dir>` there to copy
 the sources into the app's `node_modules/@fieldtripagency/*` (use `--watch` while iterating).

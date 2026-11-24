@@ -131,7 +131,7 @@ async function addedSourceLines(appDir: string) {
 }
 
 const staticBugs = (appDir: string): Finding[] =>
-  uiRuleProblems(appDir).map((detail) => ({ check: "ib-check", detail }));
+  uiRuleProblems(appDir).map((detail) => ({ check: "ft-check", detail }));
 
 async function login(baseUrl: string, sessionFile: string) {
   const browser = await chromium.launch({ headless: false });
@@ -172,7 +172,7 @@ async function createApp(dir: string) {
     ["bun", "packages/standards/src/cli.ts", "create", dir, "--local"],
     ROOT,
   );
-  if (!created.ok) throw new Error(`ib create failed: ${created.stderr}`);
+  if (!created.ok) throw new Error(`ft create failed: ${created.stderr}`);
   const git = (...args: string[]) =>
     run(["git", "-c", "user.name=eval", "-c", "user.email=eval@local", ...args], dir);
   await git("init", "-q");
@@ -279,7 +279,7 @@ async function buildAllWithAgent(browser: Browser, outDir: string) {
       name: `${task.id}-${index + 1}`,
     })),
   );
-  const workDir = mkdtempSync(join(tmpdir(), "ib-ui-eval-"));
+  const workDir = mkdtempSync(join(tmpdir(), "ft-ui-eval-"));
   console.info(`apps are built in ${workDir}`);
   const results = await pool(runs, Number(options.concurrency), async ({ task, name }, slot) => {
     console.info(`start ${name}`);

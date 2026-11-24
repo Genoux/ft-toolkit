@@ -1,10 +1,10 @@
 {
   "name": "@fieldtripagency/standards",
   "version": "0.19.1",
-  "description": "Agent standards for inBeat apps: managed AGENTS.md block, skills under .agents/skills, shared third-party skills, ib CLI",
+  "description": "Agent standards for Fieldtrip apps: managed AGENTS.md block, skills under .agents/skills, shared third-party skills, ft CLI",
   "type": "module",
   "bin": {
-    "ib": "./src/cli.ts"
+    "ft": "./src/cli.ts"
   },
   "files": [
     "CHANGELOG.md",

@@ -15,7 +15,7 @@ import { tmpdir } from "node:os";
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
 import { PACKAGE_ROOT } from "./sync";
 
-// Third-party skills every app gets, downloaded fresh on each `ib sync` and
+// Third-party skills every app gets, downloaded fresh on each `ft sync` and
 // never committed. The files go in .agents/skills/, which Codex, Cursor,
 // Gemini CLI, Copilot and OpenCode read; Claude Code reads only
 // .claude/skills/, so each skill is linked there too (copied where links fail).
@@ -26,7 +26,7 @@ export const CLAUDE_SKILLS_DIR = join(".claude", "skills");
 // Present in every folder this installer wrote; a folder without it is the app's own.
 export const MARKER = ".toolkit-source";
 const BIOME_SKIP = { root: false, files: { includes: ["!**"] } };
-const CLAUDE_IGNORE_HEADER = "# Written by ib sync: links to the shared skills in .agents/skills.";
+const CLAUDE_IGNORE_HEADER = "# Written by ft sync: links to the shared skills in .agents/skills.";
 
 export type ExternalSkill = { repo: string; path: string; name?: string };
 
@@ -160,7 +160,7 @@ export function installExternalSkills(
   }
 
   for (const [repo, entries] of byRepo) {
-    const tmp = mkdtempSync(join(tmpdir(), "ib-skills-"));
+    const tmp = mkdtempSync(join(tmpdir(), "ft-skills-"));
     try {
       const checkout = join(tmp, "repo");
       const whole = entries.some((entry) => entry.path === ".");

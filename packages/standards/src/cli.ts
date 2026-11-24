@@ -14,11 +14,11 @@ import {
 } from "./ui-rules";
 
 const USAGE = [
-  "usage: ib <create <dir> [--local] | sync [app-dir] | check [app-dir] [--baseline] | mcp>",
+  "usage: ft <create <dir> [--local] | sync [app-dir] | check [app-dir] [--baseline] | mcp>",
   "  create <dir>   start a new app",
-  "  mcp            write MCP server config for your AI tools; run `ib mcp` for the picker",
+  "  mcp            write MCP server config for your AI tools; run `ft mcp` for the picker",
   "  --baseline     with check: allow the hand-picked spacing there is today, fail only new spacing",
-  "  --local        write absolute file: paths to ib-toolkit tarballs; for toolkit development and CI only,",
+  "  --local        write absolute file: paths to ft-toolkit tarballs; for toolkit development and CI only,",
   "                 never commit that package.json",
 ].join("\n");
 
@@ -37,7 +37,7 @@ function syncExternalSkills(dir: string): void {
   for (const line of formatReport(report)) console.info(line);
   if (report.failed.length > 0) {
     console.warn(
-      `could not download some skills (offline?); run \`ib sync\` again later:\n  ${report.failed.join("\n  ")}`,
+      `could not download some skills (offline?); run \`ft sync\` again later:\n  ${report.failed.join("\n  ")}`,
     );
   }
 }
@@ -55,7 +55,7 @@ const commands: Record<string, () => number | Promise<number>> = {
       console.error(USAGE);
       return 1;
     }
-    // The skills arrive through the app's postinstall (`ib sync`), run by create's `bun install`.
+    // The skills arrive through the app's postinstall (`ft sync`), run by create's `bun install`.
     await create(parsed.dir, { local: parsed.local });
     return 0;
   },
@@ -78,12 +78,12 @@ const commands: Record<string, () => number | Promise<number>> = {
     if (!spacing.enforced && spacing.total > 0) {
       console.warn(
         `${spacing.total} hand-picked paddings, margins and gaps in src; ` +
-          "`ib check --baseline` allows these and fails new ones",
+          "`ft check --baseline` allows these and fails new ones",
       );
     }
     if (stale.length > 0) {
       console.error(
-        `out of date with @fieldtripagency/standards, run \`ib sync\`:\n  ${stale.join("\n  ")}`,
+        `out of date with @fieldtripagency/standards, run \`ft sync\`:\n  ${stale.join("\n  ")}`,
       );
     }
     if (ignoring.length > 0) {
@@ -98,7 +98,7 @@ const commands: Record<string, () => number | Promise<number>> = {
     if (offRules.length > 0) {
       console.error(
         'outside the UI rules (see "UI" in the standard; use the toolkit, or change it in ' +
-          `ib-toolkit):\n  ${offRules.join("\n  ")}`,
+          `ft-toolkit):\n  ${offRules.join("\n  ")}`,
       );
     }
     if (spacing.problems.length > 0) {

@@ -1,9 +1,9 @@
 ---
-name: ib-feature
-description: Scaffold or extend a feature slice in an inBeat app following the toolkit layout (actions, queries, server, components, schemas, tests). Use when adding a new feature, entity, page with data, or when the user mentions ib-feature or @ib-feature.
+name: ft-feature
+description: Scaffold or extend a feature slice in an Fieldtrip app following the toolkit layout (actions, queries, server, components, schemas, tests). Use when adding a new feature, entity, page with data, or when the user mentions ft-feature or @ft-feature.
 ---
 
-# ib-feature
+# ft-feature
 
 ## Steps
 

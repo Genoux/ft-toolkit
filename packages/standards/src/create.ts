@@ -80,10 +80,10 @@ export function rewriteManifest(
     name,
     // `bun install` after a clone fetches the shared skills, which are never
     // committed. Added here, not in the template: the template is a workspace of
-    // ib-toolkit, where it would download them on every toolkit install.
+    // ft-toolkit, where it would download them on every toolkit install.
     scripts: {
       ...(manifest.scripts as Record<string, string> | undefined),
-      postinstall: "ib sync",
+      postinstall: "ft sync",
     },
     ...(tarballs && { overrides: tarballs }),
   };
@@ -94,7 +94,7 @@ export function findToolkitRoot(from: string = PACKAGE_ROOT): string | null {
   const isToolkit =
     existsSync(join(from, "scripts", "pack-local.ts")) &&
     existsSync(manifestPath) &&
-    JSON.parse(readFileSync(manifestPath, "utf8")).name === "ib-toolkit";
+    JSON.parse(readFileSync(manifestPath, "utf8")).name === "ft-toolkit";
   if (isToolkit) return from;
   const parent = dirname(from);
   return parent === from ? null : findToolkitRoot(parent);
@@ -133,13 +133,13 @@ function isInsideGitRepo(dir: string): boolean {
 
 function resolveToolkitRoot(local: boolean, targetDir: string): string | null {
   if (findToolkitRoot(targetDir)) {
-    throw new Error(`${targetDir} is inside the ib-toolkit checkout; create projects elsewhere.`);
+    throw new Error(`${targetDir} is inside the ft-toolkit checkout; create projects elsewhere.`);
   }
   if (local) {
     const toolkitRoot = findToolkitRoot();
     if (!toolkitRoot) {
       throw new Error(
-        "--local only works from an ib-toolkit checkout (run the checkout's src/cli.ts).",
+        "--local only works from an ft-toolkit checkout (run the checkout's src/cli.ts).",
       );
     }
     return toolkitRoot;
@@ -219,7 +219,7 @@ export async function create(dir: string, options: CreateOptions): Promise<void>
 
   if (!existsSync(templateDir)) {
     throw new Error(
-      "template missing from @fieldtripagency/standards; run `bun run build:packages` in ib-toolkit.",
+      "template missing from @fieldtripagency/standards; run `bun run build:packages` in ft-toolkit.",
     );
   }
   assertNoConflicts(targetDir, templateEntries(templateDir));

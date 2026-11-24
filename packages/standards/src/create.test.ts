@@ -53,18 +53,18 @@ describe("findConflicts", () => {
   const entries = ["package.json", "_gitignore", "src"];
 
   it("reports nothing for a missing folder", () => {
-    expect(findConflicts(join(tmpdir(), "ib-missing-folder"), entries)).toEqual([]);
+    expect(findConflicts(join(tmpdir(), "ft-missing-folder"), entries)).toEqual([]);
   });
 
   it("allows folders holding only unrelated files", () => {
-    const dir = mkdtempSync(join(tmpdir(), "ib-create-"));
+    const dir = mkdtempSync(join(tmpdir(), "ft-create-"));
     mkdirSync(join(dir, ".git"));
     writeFileSync(join(dir, "brief.md"), "notes");
     expect(findConflicts(dir, entries)).toEqual([]);
   });
 
   it("lists every conflict under its project name", () => {
-    const dir = mkdtempSync(join(tmpdir(), "ib-create-"));
+    const dir = mkdtempSync(join(tmpdir(), "ft-create-"));
     writeFileSync(join(dir, "package.json"), "{}");
     writeFileSync(join(dir, ".gitignore"), "");
     expect(findConflicts(dir, entries)).toEqual(["package.json", ".gitignore"]);
@@ -83,12 +83,12 @@ describe("rewriteManifest", () => {
     expect(rewritten).not.toHaveProperty("overrides");
   });
 
-  it("runs ib sync after every install, keeping the template's scripts", () => {
+  it("runs ft sync after every install, keeping the template's scripts", () => {
     const rewritten = rewriteManifest(
       { ...manifest, scripts: { dev: "next dev" } },
       { name: "acme", version: "0.1.2" },
     );
-    expect(rewritten.scripts).toEqual({ dev: "next dev", postinstall: "ib sync" });
+    expect(rewritten.scripts).toEqual({ dev: "next dev", postinstall: "ft sync" });
   });
 
   it("points workspace deps at local tarballs and overrides every package", () => {
@@ -130,8 +130,8 @@ describe("validateProjectName", () => {
 
 describe("findToolkitRoot", () => {
   function fixtureToolkit(packLocal: boolean): string {
-    const root = mkdtempSync(join(tmpdir(), "ib-toolkit-"));
-    writeFileSync(join(root, "package.json"), JSON.stringify({ name: "ib-toolkit" }));
+    const root = mkdtempSync(join(tmpdir(), "ft-toolkit-"));
+    writeFileSync(join(root, "package.json"), JSON.stringify({ name: "ft-toolkit" }));
     mkdirSync(join(root, "scripts"));
     if (packLocal) writeFileSync(join(root, "scripts", "pack-local.ts"), "");
     mkdirSync(join(root, "packages", "standards"), { recursive: true });
@@ -150,7 +150,7 @@ describe("findToolkitRoot", () => {
 
 describe("create", () => {
   function fixtureTemplate(): string {
-    const template = mkdtempSync(join(tmpdir(), "ib-create-tpl-"));
+    const template = mkdtempSync(join(tmpdir(), "ft-create-tpl-"));
     mkdirSync(join(template, "src"));
     writeFileSync(join(template, "src", "page.ts"), "page");
     writeFileSync(join(template, "_gitignore"), "node_modules");
@@ -171,7 +171,7 @@ describe("create", () => {
   };
 
   it("copies the template, restores dotfiles, rewrites the manifest and seeds .env.local", async () => {
-    const target = join(mkdtempSync(join(tmpdir(), "ib-create-")), "My App");
+    const target = join(mkdtempSync(join(tmpdir(), "ft-create-")), "My App");
     await create(target, { local: false, templateDir: fixtureTemplate(), run: succeed });
     expect(readFileSync(join(target, ".gitignore"), "utf8")).toBe("node_modules");
     expect(existsSync(join(target, "_gitignore"))).toBe(false);
@@ -192,7 +192,7 @@ describe("create", () => {
       mkdirSync(dirname(join(template, file)), { recursive: true });
       writeFileSync(join(template, file), "dev");
     }
-    const target = join(mkdtempSync(join(tmpdir(), "ib-create-")), "clean");
+    const target = join(mkdtempSync(join(tmpdir(), "ft-create-")), "clean");
     await create(target, { local: false, templateDir: template, run: succeed });
     const written = readdirSync(target, { recursive: true });
     expect(written).toEqual(expect.arrayContaining(["src/page.ts", ".gitignore"]));
@@ -203,14 +203,14 @@ describe("create", () => {
   });
 
   it("writes no toolkit bookkeeping into the manifest", async () => {
-    const target = join(mkdtempSync(join(tmpdir(), "ib-create-")), "plain");
+    const target = join(mkdtempSync(join(tmpdir(), "ft-create-")), "plain");
     await create(target, { local: false, templateDir: fixtureTemplate(), run: succeed });
-    expect(JSON.parse(readFileSync(join(target, "package.json"), "utf8"))).not.toHaveProperty("ib");
+    expect(JSON.parse(readFileSync(join(target, "package.json"), "utf8"))).not.toHaveProperty("ft");
   });
 
   it("prints the location and next steps", async () => {
     const info = vi.spyOn(console, "info").mockImplementation(() => {});
-    const target = join(mkdtempSync(join(tmpdir(), "ib-create-")), "plain");
+    const target = join(mkdtempSync(join(tmpdir(), "ft-create-")), "plain");
     await create(target, { local: false, templateDir: fixtureTemplate(), run: succeed });
     const printed = info.mock.calls.map(([message]) => message).join("\n");
     expect(printed).toMatch(
@@ -220,7 +220,7 @@ describe("create", () => {
   });
 
   it("refuses conflicts without writing anything", async () => {
-    const target = mkdtempSync(join(tmpdir(), "ib-create-"));
+    const target = mkdtempSync(join(tmpdir(), "ft-create-"));
     writeFileSync(join(target, "package.json"), "{}");
     await expect(
       create(target, { local: false, templateDir: fixtureTemplate(), run: succeed }),
@@ -228,20 +228,20 @@ describe("create", () => {
     expect(readdirSync(target)).toEqual(["package.json"]);
   });
 
-  it("refuses targets inside an ib-toolkit checkout", async () => {
-    const root = mkdtempSync(join(tmpdir(), "ib-toolkit-"));
-    writeFileSync(join(root, "package.json"), JSON.stringify({ name: "ib-toolkit" }));
+  it("refuses targets inside an ft-toolkit checkout", async () => {
+    const root = mkdtempSync(join(tmpdir(), "ft-toolkit-"));
+    writeFileSync(join(root, "package.json"), JSON.stringify({ name: "ft-toolkit" }));
     mkdirSync(join(root, "scripts"));
     writeFileSync(join(root, "scripts", "pack-local.ts"), "");
     const target = join(root, "apps", "x");
     await expect(
       create(target, { local: false, templateDir: fixtureTemplate(), run: succeed }),
-    ).rejects.toThrow("ib-toolkit");
+    ).rejects.toThrow("ft-toolkit");
     expect(existsSync(target)).toBe(false);
   });
 
   it("removes a directory it created when a later step fails", async () => {
-    const target = join(mkdtempSync(join(tmpdir(), "ib-create-")), "app");
+    const target = join(mkdtempSync(join(tmpdir(), "ft-create-")), "app");
     await expect(
       create(target, { local: false, templateDir: fixtureTemplate(), run: failInstall }),
     ).rejects.toThrow("bun install");
@@ -249,7 +249,7 @@ describe("create", () => {
   });
 
   it("removes only what it wrote from a pre-existing directory", async () => {
-    const target = mkdtempSync(join(tmpdir(), "ib-create-"));
+    const target = mkdtempSync(join(tmpdir(), "ft-create-"));
     mkdirSync(join(target, ".git"));
     writeFileSync(join(target, "brief.md"), "notes");
     await expect(
