@@ -49,7 +49,6 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22.x
-          registry-url: https://registry.npmjs.org
       # Trusted publishing needs npm >= 11.5.1 (https://docs.npmjs.com/trusted-publishers)
       - if: steps.release.outputs.releases_created == 'true' || github.event_name == 'workflow_dispatch'
         run: npm install -g npm@latest
@@ -59,11 +58,8 @@ jobs:
         run: bunx turbo run typecheck test
       - if: steps.release.outputs.releases_created == 'true' || github.event_name == 'workflow_dispatch'
         run: bun run release
-        # npm tries trusted publishing (OIDC) first and falls back to this token. A trusted publisher
-        # can only be added to a package that already exists on npm, so the first publish of each
-        # @fieldtripagency name needs NPM_TOKEN; once every package has one, the secret can go.
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # Auth is trusted publishing only. npm can add a trusted publisher only to a package that
+        # already exists, so a brand-new package needs one manual token publish first.
 
   experimental:
     if: inputs.channel == 'experimental' || (github.event_name == 'push' && github.ref_name != 'main')
@@ -84,7 +80,6 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22.x
-          registry-url: https://registry.npmjs.org
       # Trusted publishing needs npm >= 11.5.1 (https://docs.npmjs.com/trusted-publishers)
       - run: npm install -g npm@latest
       - run: bun install --frozen-lockfile
@@ -92,6 +87,3 @@ jobs:
       # Publishes <current minor + 1>.0-experimental.<run number> under the experimental dist-tag,
       # never latest; the version is computed by publish.ts and never committed.
       - run: bun run release --tag experimental --build ${{ github.run_number }}
-        # Same auth as the release job: OIDC first, NPM_TOKEN until each package has a trusted publisher.
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
