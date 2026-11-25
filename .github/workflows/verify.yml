@@ -3,7 +3,7 @@ name: Verify (reusable)
 # Called from each app:
 #   jobs:
 #     verify:
-#       uses: Genoux/ib-toolkit/.github/workflows/verify.yml@main
+#       uses: Genoux/ft-toolkit/.github/workflows/verify.yml@main
 #       with: { db-check: true }
 on:
   workflow_call:

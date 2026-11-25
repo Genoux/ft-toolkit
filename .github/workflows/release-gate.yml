@@ -9,7 +9,7 @@ name: Release gate (reusable)
 #   jobs:
 #     release:
 #       if: github.event.client_payload.environment == 'production'
-#       uses: Genoux/ib-toolkit/.github/workflows/release-gate.yml@main
+#       uses: Genoux/ft-toolkit/.github/workflows/release-gate.yml@main
 #       with: { db-check: true, migrate: true }
 #       secrets: { DATABASE_URL: "${{ secrets.DATABASE_URL }}" }
 on:
@@ -52,7 +52,7 @@ env:
 
 jobs:
   verify:
-    uses: Genoux/ib-toolkit/.github/workflows/verify.yml@main
+    uses: Genoux/ft-toolkit/.github/workflows/verify.yml@main
     with:
       ref: ${{ github.event.client_payload.git.sha }}
       bun-version: ${{ inputs.bun-version }}
