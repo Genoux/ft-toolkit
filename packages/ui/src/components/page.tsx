@@ -142,7 +142,7 @@ function PageHeader({ title, description, actions, back, pager, media, meta, cla
           ) : null}
           <div className="flex min-w-0 flex-col gap-2">
             <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
-              <h1 className="text-title font-semibold text-balance in-data-[size=medium]:text-title-sm in-data-[size=narrow]:text-title-sm">{title}</h1>
+              <h1 className="text-title text-balance in-data-[size=medium]:text-title-sm in-data-[size=narrow]:text-title-sm">{title}</h1>
               {description ? null : metaElement}
             </div>
             {description ? (
@@ -156,7 +156,7 @@ function PageHeader({ title, description, actions, back, pager, media, meta, cla
         {actions ? (
           <div
             data-slot="page-header-actions"
-            className="flex min-h-(--text-title--line-height) shrink-0 items-center gap-(--gap-sm) in-data-[size=medium]:min-h-(--text-title-sm--line-height) in-data-[size=narrow]:min-h-(--text-title-sm--line-height)"
+            className="flex min-h-[calc(var(--text-title)*var(--text-title--line-height))] shrink-0 items-center gap-(--gap-sm) in-data-[size=medium]:min-h-[calc(var(--text-title-sm)*var(--text-title-sm--line-height))] in-data-[size=narrow]:min-h-[calc(var(--text-title-sm)*var(--text-title-sm--line-height))]"
           >
             {actions}
           </div>
@@ -254,7 +254,7 @@ function PageSection({ title, meta, description, actions, className, children, .
           <div className="flex min-w-0 flex-col gap-1">
             {title ? (
               <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
-                <h2 className="text-base font-medium">{title}</h2>
+                <h2 className="text-heading">{title}</h2>
                 {meta ? (
                   <span data-slot="page-section-meta" className="text-sm text-muted-foreground tabular-nums">
                     {meta}

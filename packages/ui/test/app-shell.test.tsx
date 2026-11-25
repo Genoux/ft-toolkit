@@ -1,6 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AppShell, AppShellHeaderActions, AppShellNav } from "../src/components/app-shell";
+import { Badge } from "../src/components/badge";
+import { NavUser } from "../src/components/nav-user";
 import { TooltipProvider } from "../src/components/tooltip";
 
 describe("AppShell", () => {
@@ -52,5 +54,40 @@ describe("AppShell", () => {
       /<div class="hidden[^"]*md:flex"><button type="button">Language<\/button><\/div>/,
     );
     expect(markup).toMatch(/<button[^>]*class="[^"]*md:hidden"[^>]*aria-label="More actions"/);
+  });
+
+  it("sizes every topbar piece from the one control-sm height", () => {
+    const markup = renderToStaticMarkup(
+      <TooltipProvider>
+        <AppShell
+          layout="topbar"
+          topbarBrand="The Album"
+          topbarNav={
+            <AppShellNav
+              items={[{ title: "Mission", isActive: true }]}
+              renderLink={(item, content) => <a href={`/${item.title}`}>{content}</a>}
+            />
+          }
+          topbarActions={
+            <>
+              <Badge size="lg">5 / 19</Badge>
+              <NavUser
+                variant="avatar"
+                name="Ana Ferreira"
+                email="ana@example.com"
+                onSignOut={() => {}}
+              />
+            </>
+          }
+        >
+          Page
+        </AppShell>
+      </TooltipProvider>,
+    );
+
+    expect(markup).toMatch(/data-slot="nav-link"[^>]*class="[^"]*\bh-control-sm\b/);
+    expect(markup).toMatch(/data-slot="badge"[^>]*class="[^"]*\bh-control-sm\b/);
+    expect(markup).toMatch(/data-slot="avatar"[^>]*class="[^"]*\bsize-control-sm\b/);
+    expect(markup).not.toMatch(/\b(?:h|size)-9\b/);
   });
 });

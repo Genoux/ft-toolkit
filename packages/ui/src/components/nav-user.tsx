@@ -54,7 +54,7 @@ const THEMES = [
 
 function UserAvatar({ name, avatarUrl }: Pick<NavUserProfile, "name" | "avatarUrl">) {
   return (
-    <Avatar className="size-9">
+    <Avatar className="size-control-sm">
       {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}
       <AvatarFallback>{getInitials(name, "?")}</AvatarFallback>
     </Avatar>

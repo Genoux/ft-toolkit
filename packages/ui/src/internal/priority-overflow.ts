@@ -95,7 +95,9 @@ export function usePriorityOverflow({
           : "";
       const next = fitItems({
         itemWidths: widths,
-        availableWidth: frame.clientWidth - inlineMargin - inlinePadding,
+        // clientWidth rounds down while item widths are fractional, so a row that fits exactly would collapse.
+        availableWidth:
+          Math.ceil(frame.getBoundingClientRect().width) - inlineMargin - inlinePadding,
         gap,
         moreWidth,
         pinnedIndex,

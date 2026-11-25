@@ -61,6 +61,8 @@ type AppShellTopbarSlots = {
   topbarBrand: ReactNode;
   /** `AppShellNav`: inline in the bar from md, in a menu sheet below it. */
   topbarNav?: ReactNode;
+  /** Where the nav sits in the bar from md: after the brand, or centered between brand and actions. */
+  topbarNavAlign?: "start" | "center";
   /** The end of the bar: search, notifications, `NavUser variant="avatar"`. */
   topbarActions?: ReactNode;
 };
@@ -107,7 +109,7 @@ function AppShellTitle({ asChild = false, className, ...props }: AppShellTitlePr
     <Comp
       data-slot="app-shell-title"
       className={cn(
-        "block truncate rounded-md text-base font-medium text-foreground outline-none focus-visible:focus-ring",
+        "block truncate rounded-md text-heading text-foreground outline-none focus-visible:focus-ring",
         "in-data-[sidebar=header]:px-2.5 group-data-[collapsible=icon]:invisible",
         className,
       )}
@@ -128,7 +130,7 @@ function AppShellLogo({ children }: { children: ReactNode }) {
 }
 
 type AppShellWorkspaceProps = {
-  /** A square mark: an icon, an initial or an `img`, shown on a size-9 tile. */
+  /** A square mark: an icon, an initial or an `img`, shown on a control-sm tile. */
   logo: ReactNode;
   name: ReactNode;
   description?: ReactNode;
@@ -141,7 +143,7 @@ function AppShellWorkspace({ logo, name, description }: AppShellWorkspaceProps) 
       data-slot="app-shell-workspace"
       className="flex min-w-0 items-center gap-3 px-2.5 py-1 group-data-[collapsible=icon]:p-0"
     >
-      <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-primary text-sm font-medium text-primary-foreground [&_svg]:size-4 [&>img]:size-full [&>img]:object-cover">
+      <div className="flex size-control-sm shrink-0 items-center justify-center overflow-hidden rounded-md bg-primary text-sm font-medium text-primary-foreground [&_svg]:size-4 [&>img]:size-full [&>img]:object-cover">
         {logo}
       </div>
       <div className="grid min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
@@ -177,9 +179,11 @@ function AppShellTopbar({
   topbarBrand,
   topbarNav,
   topbarActions,
+  topbarNavAlign = "start",
   headerVariant = "bordered",
   children,
 }: AppShellTopbarProps) {
+  const centered = topbarNavAlign === "center";
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
@@ -191,6 +195,7 @@ function AppShellTopbar({
         className={cn(
           "flex h-(--header-height) shrink-0 items-center gap-1 px-3 md:gap-6 md:px-6",
           headerVariant === "bordered" && "border-b",
+          centered && "md:grid md:grid-cols-[1fr_auto_1fr]",
         )}
       >
         {topbarNav ? (
@@ -228,7 +233,9 @@ function AppShellTopbar({
           </nav>
         ) : null}
         {topbarActions ? (
-          <div className="ml-auto flex shrink-0 items-center gap-2">{topbarActions}</div>
+          <div className="ml-auto flex shrink-0 items-center gap-2 md:col-start-3 md:justify-self-end">
+            {topbarActions}
+          </div>
         ) : null}
       </header>
       <main id={CONTENT_ID} tabIndex={-1} data-slot="app-shell-content" className={CONTENT_CLASS}>

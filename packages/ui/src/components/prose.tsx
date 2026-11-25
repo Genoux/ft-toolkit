@@ -5,8 +5,8 @@ import { cn } from "../lib/utils";
 const proseClassName = [
   "max-w-prose min-w-0 text-sm/relaxed text-foreground",
   "[&>*+*]:mt-3",
-  "[&_h1]:text-title [&_h1]:font-semibold [&>h1+*]:mt-4",
-  "[&_h2]:text-base [&_h2]:font-medium [&>*+h2]:mt-8",
+  "[&_h1]:text-title [&>h1+*]:mt-4",
+  "[&_h2]:text-heading [&>*+h2]:mt-8",
   "[&_h3]:text-sm [&_h3]:font-medium [&>*+h3]:mt-6",
   "[&_h4]:text-xs [&_h4]:font-medium [&_h4]:text-muted-foreground [&>*+h4]:mt-6",
   "[&_a]:font-medium [&_a]:underline [&_a]:decoration-border [&_a]:underline-offset-4 [&_a]:transition-colors [&_a]:duration-(--duration-fast) [&_a]:ease-out-expo [&_a:hover]:decoration-foreground",

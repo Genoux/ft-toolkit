@@ -59,7 +59,7 @@ describe("PageHeader", () => {
 
     expect(markup).toContain("items-start justify-between");
     expect(markup).toMatch(
-      /data-slot="page-header-actions" class="[^"]*min-h-\(--text-title--line-height\)/,
+      /data-slot="page-header-actions" class="[^"]*min-h-\[calc\(var\(--text-title\)\*var\(--text-title--line-height\)\)\]/,
     );
   });
 });

@@ -97,7 +97,7 @@ const selectTriggerVariantClassName: Record<SelectTriggerVariant, string> = {
     controlSurfaceClassName,
     fieldRadiusClassName,
     controlHeightBySizeAttributeClassName,
-    "min-w-36 justify-between pr-3.5 pl-4 data-[size=sm]:pr-3 data-[size=sm]:pl-3.5 data-[state=open]:border-ring dark:hover:bg-input/50",
+    "justify-between pr-3.5 pl-4 data-[size=sm]:pr-3 data-[size=sm]:pl-3.5 data-[state=open]:border-ring dark:hover:bg-input/50",
   ),
   ghost: cn(
     fieldRadiusClassName,

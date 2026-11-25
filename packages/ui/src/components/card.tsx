@@ -66,7 +66,7 @@ function CardTitle({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="card-title"
-      className={cn("col-start-1 min-w-0 text-base font-semibold text-foreground", className)}
+      className={cn("col-start-1 min-w-0 text-heading text-foreground", className)}
       {...props}
     />
   );
@@ -90,7 +90,7 @@ function CardAction({ className, ...props }: ComponentProps<"div">) {
       className={cn(
         // As tall as CardTitle's line, so whatever it holds centres on the title; a taller button
         // overflows it evenly above and below.
-        "relative z-10 col-start-2 row-span-2 row-start-1 flex h-[calc(var(--text-base)*var(--text-base--line-height))] items-center gap-(--gap-sm) self-start",
+        "relative z-10 col-start-2 row-span-2 row-start-1 flex h-[calc(var(--text-heading)*var(--text-heading--line-height))] items-center gap-(--gap-sm) self-start",
         className,
       )}
       {...props}

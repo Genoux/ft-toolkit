@@ -29,7 +29,9 @@
 @font-face {
   font-family: "Diplomat";
   src: url("./fonts/DiplomatST_Regular.ttf") format("truetype");
-  font-weight: 400;
+  /* Diplomat ships one weight. Claiming the whole range keeps the browser from faking a bold when a
+     serif statement sits on a role that sets 500 or 600 (title, display). */
+  font-weight: 100 900;
   font-display: swap;
 }
 

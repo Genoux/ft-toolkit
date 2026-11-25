@@ -36,12 +36,12 @@ function StatLabel({ className, ...props }: ComponentProps<"div">) {
   );
 }
 
-// A 20px figure in medium reads lighter than the semibold CardTitle above it, so `sm` steps up a
-// weight; the stat and display sizes carry themselves at medium.
+// Each role carries its weight: stat-sm is semibold because a 20px figure in medium reads lighter
+// than the CardTitle above it; stat and display carry themselves at medium.
 const VALUE_SIZE = {
-  sm: "text-xl font-semibold tracking-tight",
-  default: "text-stat font-medium",
-  lg: "text-display font-medium",
+  sm: "text-stat-sm",
+  default: "text-stat",
+  lg: "text-display",
 } as const;
 
 const VALUE_TONE = {

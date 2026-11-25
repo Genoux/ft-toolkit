@@ -26,10 +26,31 @@
 }
 
 /*
- * Type roles. Components pick a role, never a pixel size: 3xs avatar initials and count dots,
- * 2xs overlines, xs meta and captions, table rows, sm body and controls, title the page heading,
- * stat a card figure, display the one hero figure on a page. xs is 13px (Tailwind ships 12): meta lines
- * must stay readable on a light canvas.
+ * Control heights. Every single-line control, and anything that sits in a row with one (the topbar's
+ * nav pills, avatar and badges), takes its height from these, so a row lines up by construction.
+ * Apps use them too: h-control-sm, size-control-sm. The topbar row is control-sm.
+ */
+@theme {
+  --spacing-control-xs: 2rem;
+  --spacing-control-sm: 2.25rem;
+  --spacing-control-default: 2.5rem;
+  --spacing-control-lg: 2.75rem;
+}
+
+/*
+ * Type roles. Every text picks a role, never a size: each role carries its size, line height and
+ * tracking, and the heading roles their weight, so a change of scale happens once, here.
+ *
+ * Interface roles stay fixed, because controls and dense rows must not grow with the window:
+ *   3xs avatar initials and count dots, 2xs overlines, xs meta and captions, table table cells,
+ *   sm body and controls, item a list row's title, base reading text and a page description,
+ *   heading a card, dialog, sheet or section title, lead the paragraph under a hero, stat-sm a
+ *   secondary figure.
+ * Page roles are fluid from a 360px to a 1280px window: title-sm a form or settings page title,
+ * title a page title, stat a card figure, display the one hero figure or statement on a page.
+ * Each fluid role tops out at no more than 2.5x its floor, so text still reaches 200% under browser
+ * zoom (WCAG 1.4.4; smashingmagazine.com/2023/11/addressing-accessibility-concerns-fluid-type).
+ * xs is 13px (Tailwind ships 12): meta lines must stay readable on a light canvas.
  */
 @theme {
   --text-3xs: 0.5625rem;
@@ -40,20 +61,38 @@
   --text-xs--line-height: 1.125rem;
   --text-table: 0.84375rem;
   --text-table--line-height: 1.25rem;
-  --text-title: 2.25rem;
-  --text-title--line-height: 2.5rem;
-  --text-title--letter-spacing: -0.025em;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
   --text-item: 0.9375rem;
   --text-item--line-height: 1.25rem;
-  --text-title-sm: 1.75rem;
-  --text-title-sm--line-height: 2.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-heading: 1rem;
+  --text-heading--line-height: 1.5rem;
+  --text-heading--letter-spacing: -0.01em;
+  --text-heading--font-weight: 600;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.75rem;
+  --text-stat-sm: 1.25rem;
+  --text-stat-sm--line-height: 1.75rem;
+  --text-stat-sm--letter-spacing: -0.015em;
+  --text-stat-sm--font-weight: 600;
+  --text-title-sm: clamp(1.5rem, 1.4022rem + 0.4348vw, 1.75rem);
+  --text-title-sm--line-height: 1.25;
   --text-title-sm--letter-spacing: -0.02em;
-  --text-stat: 2rem;
-  --text-stat--line-height: 2.5rem;
+  --text-title-sm--font-weight: 600;
+  --text-title: clamp(1.75rem, 1.5543rem + 0.8696vw, 2.25rem);
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.025em;
+  --text-title--font-weight: 600;
+  --text-stat: clamp(1.75rem, 1.6522rem + 0.4348vw, 2rem);
+  --text-stat--line-height: 1.25;
   --text-stat--letter-spacing: -0.025em;
-  --text-display: 3.5rem;
-  --text-display--line-height: 1;
+  --text-stat--font-weight: 500;
+  --text-display: clamp(2.5rem, 2.1087rem + 1.7391vw, 3.5rem);
+  --text-display--line-height: 1.05;
   --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 500;
   /* Motion: exponential ease-out from an already-visible state; fast for hover and press, base for menus and popovers, slow for sheets and height changes. */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.78, 0, 0.22, 1);

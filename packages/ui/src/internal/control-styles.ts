@@ -1,27 +1,28 @@
 // A .ts file under components is outside the package's `./components/*` (.tsx) export: these
 // strings are shared by the form controls without becoming public API.
 
-/** `default` (h-10) for forms and the page toolbar; `sm` (h-9) for a compact row inside a card or panel. */
+/** `default` (40px) for forms and the page toolbar; `sm` (36px) for a compact row inside a card or panel. */
 export type ControlSize = "sm" | "default";
 
-/** One height scale for every single-line control, so mixed rows line up. */
+/** One height scale for every single-line control, so mixed rows line up: the --spacing-control-* tokens in theme.css. */
 export const controlHeightClassName = {
-  xs: "h-8",
-  sm: "h-9",
-  default: "h-10",
-  lg: "h-11",
+  xs: "h-control-xs",
+  sm: "h-control-sm",
+  default: "h-control-default",
+  lg: "h-control-lg",
 } as const;
 
 export const controlSquareClassName = {
   "2xs": "size-7",
-  xs: "size-8",
-  sm: "size-9",
-  default: "size-10",
-  lg: "size-11",
+  xs: "size-control-xs",
+  sm: "size-control-sm",
+  default: "size-control-default",
+  lg: "size-control-lg",
 } as const;
 
 /** The same scale for controls that read their size from `data-size`. */
-export const controlHeightBySizeAttributeClassName = "data-[size=sm]:h-9 data-[size=default]:h-10";
+export const controlHeightBySizeAttributeClassName =
+  "data-[size=sm]:h-control-sm data-[size=default]:h-control-default";
 
 /** Fields are rounded-lg in forms and dialogs; in the page toolbar (search and filters on the shell) they are pills like the buttons beside them. */
 export const fieldRadiusClassName = "rounded-lg in-data-[slot=page-toolbar]:rounded-full";

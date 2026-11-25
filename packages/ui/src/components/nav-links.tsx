@@ -22,7 +22,7 @@ type NavLinkItem = {
 const LOOKS = {
   pill: {
     list: "-mx-1 flex items-center gap-1 px-1 py-1.5",
-    link: "h-9 rounded-full px-3.5 font-medium hover:bg-muted dark:hover:bg-muted/50",
+    link: "h-control-sm rounded-full px-3.5 font-medium hover:bg-muted dark:hover:bg-muted/50",
     indicator: "inset-0 rounded-full bg-card shadow-raised dark:bg-muted",
   },
   underline: {

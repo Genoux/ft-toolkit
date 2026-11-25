@@ -54,15 +54,20 @@ const ELEVATIONS = [
 ] as const;
 
 const TYPE_ROLES = [
-  ["text-display", "2,184", "The one hero figure on a page"],
-  ["text-stat", "1,412", "A card figure"],
-  ["text-title", "Creators", "Page title"],
-  ["text-base", "Dialog title", "Larger body"],
-  ["text-sm", "Body, controls and menu items", "Default"],
-  ["text-table", "Table cells", "Rows in a table"],
-  ["text-xs", "Meta, captions, badges, table head", "Secondary"],
-  ["text-2xs", "Workspace", "Nav group overline (uppercase)"],
-  ["text-3xs", "AM", "Avatar initials, count dots"],
+  ["text-display", "2,184", "Fluid 40–56px. The one hero figure or statement on a page"],
+  ["text-title", "Creators", "Fluid 28–36px. Page title"],
+  ["text-stat", "1,412", "Fluid 28–32px. A card figure"],
+  ["text-title-sm", "Account settings", "Fluid 24–28px. Form and settings page title"],
+  ["text-stat-sm", "$4,200", "20px. A secondary figure"],
+  ["text-lead", "The paragraph under a hero", "18px. The paragraph under a hero"],
+  ["text-heading", "Card, dialog and section title", "16px semibold. Card, dialog, sheet, section"],
+  ["text-base", "Reading text and a page description", "16px. Reading text"],
+  ["text-item", "A list row's title", "15px. A list row's title"],
+  ["text-sm", "Body, controls and menu items", "14px. Default"],
+  ["text-table", "Table cells", "13.5px. Rows in a table"],
+  ["text-xs", "Meta, captions, badges, table head", "13px. Secondary"],
+  ["text-2xs", "Workspace", "11px. Nav group overline (uppercase)"],
+  ["text-3xs", "AM", "9px. Avatar initials, count dots"],
 ] as const;
 
 const GAPS = [
@@ -157,7 +162,7 @@ export const Typography: Story = {
         <div key={role} className="grid grid-cols-[8rem_1fr_14rem] items-baseline gap-6 py-4">
           <code className="text-xs text-muted-foreground">{role}</code>
           <span
-            className={`${role} font-medium tabular-nums ${role === "text-2xs" ? "tracking-wider text-subtle-foreground uppercase" : ""}`}
+            className={`${role} tabular-nums ${role === "text-2xs" ? "tracking-wider text-subtle-foreground uppercase" : ""}`}
           >
             {sample}
           </span>
