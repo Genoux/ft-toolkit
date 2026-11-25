@@ -2,7 +2,8 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 // The plumbing and look rules of the "UI" section of the standard that a pattern can catch.
-// Type scale: an app picks a role (text-sm, text-xs, ...) and never a size or weight of its own,
+// Type scale: an app picks a role (text-sm, text-heading, ...) and never a size or weight of its own;
+// Tailwind's own steps from text-lg up are off the scale, because each one is a guess between roles,
 // so a change of scale happens once, in the toolkit. `em` sizes are relative to their parent
 // (inline code in running text), so they follow the scale.
 // Spacing and colour: plain lengths and colour literals are flagged; var(), env() and calc()
@@ -11,6 +12,10 @@ const SPACING = "(?:space-[xy]|gap-[xy]|gap|p[xytrblse]?|m[xytrblse]?)";
 
 const RULES = [
   { pattern: /\btext-\[[\d.]+(?:px|rem)\]/g, reason: "hand-set font size" },
+  {
+    pattern: /(?<![\w-])text-(?:lg|xl|[2-9]xl)\b/g,
+    reason: "size outside the type roles (heading, lead, stat-sm, title-sm, title, stat, display)",
+  },
   { pattern: /\bfont-\[\d+\]/g, reason: "hand-set font weight" },
   {
     pattern: /\bfont-(?:bold|extrabold|black)\b/g,

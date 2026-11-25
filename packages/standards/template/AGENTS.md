@@ -114,17 +114,29 @@ UI is in exactly one of three layers:
   for plumbing and page layout: they improve a page with toolkit components and tokens, never by
   restyling them.
 - Type scale: every text takes one of these roles and nothing sets a size or weight of its own
-  (`ft check` fails on `text-[13px]`, `font-[510]`, `font-bold`). Body `text-sm` (14px): inputs,
-  menu items, detail values, person names. Table cells `text-table` (13.5px), set by `Table`;
-  column headers `text-xs`, set by `TableHead`. Body strong `text-sm font-medium`: a row's
-  identifying cell, card titles, form labels, buttons, tabs. Caption `text-xs` in
-  `text-subtle-foreground`: meta lines, timestamps, hints. Tag `text-xs font-medium`: pills and
-  count badges. Overline `text-2xs` uppercase: nav group labels only, never above a heading.
-  Section title `text-sm font-medium`; card title `text-sm font-medium`; dialog title
-  `text-base font-semibold`; page title `text-title font-semibold`. Figures: `text-stat` in a
-  card, `text-display` for the one hero figure. Secondary information is
-  `text-muted-foreground`, meta `text-subtle-foreground`, never smaller. Weights are regular,
-  medium and semibold. To change the scale, change it in ft-toolkit.
+  (`ft check` fails on `text-[13px]`, `font-[510]`, `font-bold` and on Tailwind's in-between
+  steps `text-lg` to `text-9xl`). Each role carries its line height and tracking, and the heading
+  roles their weight. Interface roles are fixed: body `text-sm` (14px) for inputs, menu items,
+  detail values and person names; table cells `text-table` (13.5px), set by `Table`; column
+  headers `text-xs`, set by `TableHead`; a list row's title `text-item` (15px); reading text and a
+  page description `text-base` (16px); the card, dialog, sheet and section title `text-heading`
+  (16px semibold), set by `CardTitle`, `DialogTitle`, `SheetTitle` and `PageSection`; the
+  paragraph under a hero `text-lead` (18px); a secondary figure `text-stat-sm` (20px). Body
+  strong `text-sm font-medium`: a row's identifying cell, form labels, buttons, tabs. Caption
+  `text-xs` in `text-subtle-foreground`: meta lines, timestamps, hints. Tag `text-xs font-medium`:
+  pills and count badges. Overline `text-2xs` uppercase: nav group labels only, never above a
+  heading. Page roles are fluid between a 360px and a 1280px window: page title `text-title`
+  (28 to 36px), set by `PageHeader`, which takes `text-title-sm` (24 to 28px) on forms and
+  settings; a card figure `text-stat` (28 to 32px); the one hero figure or statement on a page
+  `text-display` (40 to 56px). Secondary information is `text-muted-foreground`, meta
+  `text-subtle-foreground`, never smaller. Weights are regular, medium and semibold. A brand
+  statement sets `font-serif` (Diplomat) on a heading or page role, never on an interface role
+  below `text-heading`. To change the scale, change it in ft-toolkit.
+- Control heights: anything that sits in a row with a control takes one of the
+  `--spacing-control-*` heights, never a number of its own: `control-xs` 32px, `control-sm`
+  36px, `control-default` 40px (forms and the page toolbar), `control-lg` 44px. The topbar row is
+  `control-sm`: nav pills, the account avatar, a count badge (`Badge size="lg"`) and any app pill
+  or avatar beside them (`h-control-sm`, `size-control-sm`, a Clerk avatar too).
 - Radix via `radix-ui`; animation via `motion` only.
 
 ### Simplicity

@@ -41,13 +41,26 @@ describe("uiRuleProblems", () => {
     ]);
   });
 
-  it("accepts the roles of the scale, display sizes included", () => {
+  it("accepts the roles of the scale", () => {
     const appDir = appWith({
       "src/page.tsx":
-        '<h1 className="text-xl font-semibold">Title</h1>\n<p className="text-sm text-[var(--brand)]">Body</p>\n<p className="text-3xl font-medium">Hero</p>\n<code className="text-[0.85em]">x</code>',
+        '<h1 className="text-title">Title</h1>\n<p className="text-sm text-[var(--brand)]">Body</p>\n<p className="text-display font-serif">Hero</p>\n<h2 className="text-heading">Card</h2>\n<code className="text-[0.85em]">x</code>\n<p className="text-lead text-left">Lead</p>',
     });
 
     expect(uiRuleProblems(appDir)).toEqual([]);
+  });
+
+  it("reports Tailwind's sizes between the roles, behind a variant too", () => {
+    const appDir = appWith({
+      "src/hero.tsx":
+        '<h1 className="text-xl md:text-3xl">Hero</h1>\n<p className="text-lg">Lead</p>',
+    });
+
+    expect(uiRuleProblems(appDir).sort()).toEqual([
+      "src/hero.tsx:1 text-3xl (size outside the type roles (heading, lead, stat-sm, title-sm, title, stat, display))",
+      "src/hero.tsx:1 text-xl (size outside the type roles (heading, lead, stat-sm, title-sm, title, stat, display))",
+      "src/hero.tsx:2 text-lg (size outside the type roles (heading, lead, stat-sm, title-sm, title, stat, display))",
+    ]);
   });
 
   it("reports each hand-set size and weight with its file and line", () => {

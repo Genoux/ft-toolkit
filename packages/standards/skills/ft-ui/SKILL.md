@@ -41,10 +41,17 @@ once a second app needs it.
   colors. Text has three levels: `text-foreground`, `text-muted-foreground` (secondary) and
   `text-subtle-foreground` (meta). Status is `success|warning|info|destructive`; `bg-highlight` is
   the one coloured surface a page may use (a hero figure's `Card`).
-- Type by role, never a pixel size: `text-3xs` initials and count dots, `text-2xs` overlines,
-  `text-xs` meta and captions, `text-table` table cells, `text-sm` body and controls,
-  `text-item` (15px) a list row's title (ItemTitle), `text-title` the page title (36px on list and dashboard pages; PageHeader switches to `text-title-sm`, 28px, on `narrow` and `medium` pages: forms and settings), `text-stat` a card figure, `text-display` the one hero figure (StatValue
-  picks them).
+- Type by role, never a pixel size; each role carries its line height and tracking, and the heading
+  roles their weight, so never add `font-semibold` or `leading-*` to them. Fixed: `text-3xs`
+  initials and count dots, `text-2xs` overlines, `text-xs` meta and captions, `text-table` table
+  cells, `text-sm` body and controls, `text-item` (15px) a list row's title (ItemTitle),
+  `text-base` reading text, `text-heading` (16px semibold) a card, dialog, sheet or section title,
+  `text-lead` (18px) the paragraph under a hero, `text-stat-sm` (20px) a secondary figure. Fluid
+  from a 360px to a 1280px window, each at most 2.5x its floor so browser zoom still reaches 200%:
+  `text-title-sm` (24 to 28px) and `text-title` (28 to 36px) the page title (PageHeader picks by
+  page size), `text-stat` (28 to 32px) a card figure, `text-display` (40 to 56px) the one hero
+  figure or statement (StatValue picks the figures). `text-lg` to `text-9xl` are off the scale and
+  `ft check` fails on them.
 - Radius by role: `rounded-sm` checkbox, `rounded-lg` menu item and every
   field in a form or dialog (Input, SearchInput, Select, Combobox, DatePicker, InputGroup, Textarea),
   `rounded-xl` menu, popover, card or table frame, `rounded-2xl` dialog or hero, `rounded-full`
@@ -72,9 +79,12 @@ once a second app needs it.
   `<AppShellTitle>Pool</AppShellTitle>` in `sidebarHeader` or `topbarBrand` (`asChild` to make it the
   link home). No logo tile, no version, no serif or brand wordmark; `AppShellWorkspace` and
   `AppShellLogo` are deprecated.
+- Control heights: a row lines up by sharing one `--spacing-control-*` height, never a number of
+  its own. The topbar row is `control-sm` (36px): nav pills, the account avatar, a count badge
+  (`Badge size="lg"`), and any app pill or avatar beside them (`h-control-sm`, `size-control-sm`).
 - Variants are only the ones an app uses. `Button`: default, secondary, outline, ghost, link,
-  dots, destructive (only the confirm of a delete); sizes xs (h-8), sm (h-9), default (h-10),
-  lg (h-11), icon*; always `rounded-full`. `Badge`: default, secondary, outline, and the status tones. `TabsList` is a segmented control (filters and view
+  dots, destructive (only the confirm of a delete); sizes xs, sm, default, lg (the
+  `control-*` heights: 32, 36, 40, 44px), icon*; always `rounded-full`. `Badge`: default, secondary, outline, and the status tones. `TabsList` is a segmented control (filters and view
   toggles too) or `variant="line"` underline tabs for page sections. No counts in tabs.
 - Tabs: `Tabs` + `TabsList tabs={[{ value, label, count? }]}` + `TabsContent`; drop
   `TabsContent` for a filter bar.
@@ -313,9 +323,10 @@ three; only tokens and signature surfaces change.
 - **Fieldtrip brand**: add `@import "@fieldtripagency/ui/fieldtrip.css";` after `theme.css`. It gives the
   brand palette as `--color-fieldtrip-<name>` and `-light` (ink, olive, orange, mauve, brown,
   green, spring, yellow, sky, pink, powder; utilities like `bg-fieldtrip-orange`) and maps
-  `font-sans` to SwissNow and `font-serif` to Diplomat. The font files are licensed and stay in
-  the app: load them with `next/font/local` and put `--font-swiss-now` and `--font-diplomat` on
-  `<html>`.
+  the faces: `font-serif` is Diplomat, for statements on a heading or page role, and `font-brand`
+  is SwissNow, for a wordmark or brand headline. Interface text stays Geist. The font files ship
+  with the package (`fonts.css`, which `fieldtrip.css` imports), so an app needs no font setup;
+  an app that loads them itself can set `--font-diplomat` and `--font-swiss-now` on `<html>`.
 - **Product-specific**: override tokens in the app's `globals.css` after the imports: colours and
   `--radius` in `:root` (and `.dark`), fonts as `--font-sans` in `@theme inline`, the way
   `fieldtrip.css` does. Every toolkit component follows, so the plumbing takes
