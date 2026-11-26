@@ -39,12 +39,12 @@ import {
   photoUrl,
 } from "./pool-fixtures";
 
-// The organism stories show Pool's real data: its navigation, and its closed collaborations. The data
-// lives in pool-fixtures, which the Pool screens read too, so both stay one source.
+// The organism stories show Pool's real data: its navigation, and its closed collaborations, from
+// pool-fixtures.
 
 export { COLLABORATION_TOTAL, COLLABORATIONS, POOL_USER } from "./pool-fixtures";
 
-export type StoryNavItem = { title: string; icon: LucideIcon; href: string };
+type StoryNavItem = { title: string; icon: LucideIcon; href: string };
 
 export const POOL_NAV: StoryNavItem[] = [
   { title: "Applicants", icon: UserPlus, href: "/applicants" },
@@ -184,7 +184,7 @@ export const collaborationRows = (copies: number) =>
 const slug = (title: string) => title.toLowerCase().replaceAll(" ", "-");
 
 /** Stands in for next/link: an anchor that marks the item active instead of navigating. */
-export function renderStoryLink<Item extends { title: string; href?: string; disabled?: boolean }>(
+function renderStoryLink<Item extends { title: string; href?: string; disabled?: boolean }>(
   onSelect: (item: Item) => void,
 ) {
   return (item: Item, content: ReactNode) => (

@@ -51,14 +51,7 @@ const preview: Preview = {
     a11y: { test: "todo" },
     options: {
       storySort: {
-        order: [
-          "Foundations",
-          "Atoms",
-          "Molecules",
-          "Organisms",
-          "Screens",
-          ["Pool", "Impact and Recognition", "Proof Agent", "Shared"],
-        ],
+        order: ["Foundations", "Atoms", "Molecules", "Organisms"],
       },
     },
   },

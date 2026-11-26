@@ -17,8 +17,7 @@ import {
   photoUrl,
 } from "./pool-fixtures";
 
-// Generic patterns built only from toolkit components, filled with real app data. Pattern and
-// component stories use these instead of the Screens/* copies, which go away as each app migrates.
+// Generic patterns built only from toolkit components, filled with real app data shapes.
 
 function TagList({ tags }: { tags: string[] }) {
   return (
@@ -131,7 +130,7 @@ const COLLABORATION_COLUMNS: ColumnDef<ClosedCollaboration>[] = [
 ];
 
 /** A record's related list: a titled section with a count over a data table. */
-export function CollaborationsSection({
+function CollaborationsSection({
   collaborations = CREATOR_PROFILE.closedCollaborations,
   loading = false,
 }: {

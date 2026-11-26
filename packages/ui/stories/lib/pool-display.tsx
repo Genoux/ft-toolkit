@@ -33,7 +33,7 @@ type DotTone = NonNullable<ComponentProps<typeof StatusDot>["tone"]>;
 
 // Rating tiers are Pool's own categories, so they take Pool's colours through `color`, not status tones.
 // Hex here because Storybook does not load Pool's globals.css, where these are tokens.
-export const RATING_COLOR: Record<OverallRating, string | undefined> = {
+const RATING_COLOR: Record<OverallRating, string | undefined> = {
   "top creator": "#7c3aed",
   standout: "#059669",
   good: "#0284c7",
@@ -57,7 +57,7 @@ export function RatingBadge({ rating }: { rating: OverallRating }) {
   );
 }
 
-export const DISCOVERY_STATUS_TONE: Record<DiscoveryStatus, DotTone> = {
+const DISCOVERY_STATUS_TONE: Record<DiscoveryStatus, DotTone> = {
   backlog: "neutral",
   todo: "warning",
   in_progress: "info",

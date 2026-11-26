@@ -45,16 +45,6 @@ export const DISCOVERY_STATUSES = [
 
 /** Pool's collaboration ratings: one toggle-pill group per quality. */
 export const COLLABORATION_RATINGS = ["standout", "good", "sufficient", "problematic", "untested"];
-
-/** Pool's collaboration wizard steps (close mode). */
-export const COLLABORATION_STEPS = [
-  { label: "Details" },
-  { label: "Rates" },
-  { label: "Ratings" },
-  { label: "Portfolio" },
-  { label: "Confirm" },
-];
-
 /** I&R's request type choice. */
 export const REQUEST_KINDS = [
   { value: "increase", label: "Increase", hint: "Same role, higher pay" },

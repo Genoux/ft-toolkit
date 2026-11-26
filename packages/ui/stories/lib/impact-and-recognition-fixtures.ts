@@ -49,11 +49,6 @@ export const HOLDER_COLOR: Record<Holder, string | undefined> = {
   requester: "var(--color-fieldtrip-mauve, #b398ad)",
   none: undefined,
 };
-
-/** The holder's light tint, for the head of a draft's summary panel. */
-export const REQUESTER_TINT =
-  "color-mix(in oklch, var(--color-fieldtrip-mauve-light, #e1d6de) 58%, var(--card))";
-
 export type Pay = { amount: number; currency: string; frequency: "annual" | "hourly" };
 
 const pay = (amount: number, currency = "USD", frequency: Pay["frequency"] = "annual"): Pay => ({
@@ -93,16 +88,6 @@ export const annualCost = ({
 });
 
 export const formatIncrease = (cost: Pay) => `+${formatMoney(cost)}`;
-
-/** What a yearly cost adds from its effective date to the end of that year, by the month. */
-export function effectiveYearCost(cost: Pay, effective: string): Pay {
-  const date = new Date(effective);
-  const month = date.getUTCMonth();
-  const daysInMonth = new Date(Date.UTC(date.getUTCFullYear(), month + 1, 0)).getUTCDate();
-  const monthsLeft = 12 - month - (date.getUTCDate() - 1) / daysInMonth;
-  return { ...cost, amount: Math.round((cost.amount * monthsLeft) / 12) };
-}
-
 const shortDate = new Intl.DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
@@ -118,9 +103,6 @@ const longDate = new Intl.DateTimeFormat("en-US", {
 export const formatShortDate = (iso: string) => shortDate.format(new Date(iso));
 export const formatDate = (iso: string) => longDate.format(new Date(iso));
 export const formatDays = (count: number) => `${count} ${count === 1 ? "day" : "days"}`;
-
-export const LONG_WAIT_DAYS = 7;
-
 export const ROUND = {
   name: "H1 2027 cycle",
   submitBy: "2027-04-30",
@@ -128,18 +110,18 @@ export const ROUND = {
   nextOpens: "2027-09-01",
 };
 
-export type PersonSummary = { name: string; title: string; level: string; department: string };
+type PersonSummary = { name: string; title: string; level: string; department: string };
 
-export type EligibilityResult = "met" | "not_met" | "needs_verification" | "exception";
+type EligibilityResult = "met" | "not_met" | "needs_verification" | "exception";
 
-export type EligibilityCheck = {
+type EligibilityCheck = {
   label: string;
   result: EligibilityResult;
   detail: string;
   requirement?: string;
 };
 
-export type CaseEvent = { id: string; at: string; actor: string; summary: string; note?: string };
+type CaseEvent = { id: string; at: string; actor: string; summary: string; note?: string };
 
 export type IrRequest = {
   id: string;
@@ -164,7 +146,7 @@ export type IrRequest = {
   events: CaseEvent[];
 };
 
-export const VIEWERS = {
+const VIEWERS = {
   manager: { name: "Maya Bennett", email: "maya.bennett@inbeat.agency" },
   head: { name: "Jordan Reed", email: "jordan.reed@inbeat.agency" },
   people: { name: "Priya Shah", email: "priya.shah@inbeat.agency" },
@@ -172,8 +154,6 @@ export const VIEWERS = {
 };
 
 const PRIYA = VIEWERS.people.name;
-const HARPER = VIEWERS.finance.name;
-
 const person = (name: string, title: string, level: string, department: string) => ({
   name,
   title,
@@ -187,35 +167,6 @@ const checks = (rating: string, tenure: string, lastRaise = "Jul 2025"): Eligibi
   { label: "Rating", result: "met", detail: rating, requirement: "Verified by People in Windmill" },
   { label: "Contract", result: "met", detail: "Employee" },
 ];
-
-const formatPercent = (value: number) => `${Number(value.toFixed(1))}%`;
-
-function bandCheck({ band, proposed }: IrRequest): EligibilityCheck {
-  const label = "Pay band";
-  if (!band) return { label, result: "needs_verification", detail: "No band" };
-  const position =
-    ((proposed.amount - band.min.amount) / (band.max.amount - band.min.amount)) * 100;
-  if (position < 0) return { label, result: "not_met", detail: `Below ${band.level} min` };
-  if (position > 100) return { label, result: "not_met", detail: `Above ${band.level} max` };
-  return { label, result: "met", detail: `Inside ${band.level}` };
-}
-
-/** The eligibility checks, then whether the change fits its guideline and the new pay its band. */
-export function policyChecks(request: IrRequest): EligibilityCheck[] {
-  const change = percentChange(request.current, request.proposed);
-  const { guidance } = request;
-  return [
-    ...request.checks,
-    {
-      label: request.kind === "promotion" ? "Promotion" : "Increase",
-      result: change > guidance.maxPercent ? "not_met" : "met",
-      detail: `${formatPercent(change)} of ${guidance.maxPercent}% max`,
-      requirement: `Guidelines: ${guidance.label}`,
-    },
-    bandCheck(request),
-  ];
-}
-
 const INCREASE_GUIDANCE = {
   3: { maxPercent: 7, label: "5–7% for Delivering Impact (3)" },
   4: { maxPercent: 10, label: "7–10% for Raising the Bar (4)" },
@@ -244,7 +195,7 @@ const request = (spec: RequestSpec): IrRequest => ({
 
 const MAYA = VIEWERS.manager.name;
 
-export const BEN_RETURN =
+const BEN_RETURN =
   "11% is above the 7–10% guidance for a 4. Bring it to 10%, or add what makes this exceptional; the calibration notes in Windmill would help.";
 
 export const ben = request({
@@ -288,7 +239,7 @@ const hugo = request({
     "Hugo wrote the Northwind launch campaign end to end and now leads copy reviews for the team.",
 });
 
-export const noor = request({
+const noor = request({
   id: "ir-090",
   reference: "IR-090",
   kind: "increase",
@@ -368,60 +319,6 @@ const theo = request({
 
 /** Maya's requests this round: the requester's inbox. */
 export const MY_REQUESTS: IrRequest[] = [ben, hugo, noor, mei, aisha, nina, theo];
-
-/** Requests from earlier rounds, for the "All rounds" count. */
-export const PAST_ROUND_REQUESTS = 8;
-
-export type CaseGroup = {
-  key: string;
-  title: string;
-  holder: Holder;
-  yours: boolean;
-  cases: IrRequest[];
-};
-
-const REQUESTER_GROUPS: { key: string; title: string; statuses: RequestStatus[] }[] = [
-  { key: "submit", title: "To submit", statuses: ["draft"] },
-  { key: "revise", title: "To revise", statuses: ["changes_requested"] },
-  { key: "share", title: "To share", statuses: ["released"] },
-  { key: "people", title: "With People", statuses: ["people_review", "approved", "communicated"] },
-  { key: "finance", title: "With Finance", statuses: ["finance_review"] },
-];
-
-export function requesterGroups(cases: IrRequest[]): CaseGroup[] {
-  return REQUESTER_GROUPS.map(({ statuses, ...group }) => {
-    const holder = REQUEST_HOLDER[statuses[0] ?? "draft"];
-    return {
-      ...group,
-      holder,
-      yours: holder === "requester",
-      cases: cases.filter((entry) => statuses.includes(entry.status)),
-    };
-  }).filter((group) => group.cases.length > 0);
-}
-
-export const closedCases = (cases: IrRequest[]) =>
-  cases.filter((entry) => REQUEST_HOLDER[entry.status] === "none");
-
-const CLOSED_WORD: Partial<Record<RequestStatus, string>> = {
-  applied: "Applied",
-  withdrawn: "Withdrawn",
-  closed: "Closed",
-};
-
-/** The row's right-hand text: on the viewer's turn the deadline or wait; otherwise who holds it. */
-export function requesterAside(entry: IrRequest) {
-  const holder = REQUEST_HOLDER[entry.status];
-  if (holder === "none")
-    return `${CLOSED_WORD[entry.status] ?? ""} ${formatShortDate(entry.closedOn ?? "")}`;
-  if (holder === "people") return PRIYA;
-  if (holder === "finance") return HARPER;
-  if (entry.status === "draft" || entry.status === "changes_requested") {
-    return `Due ${formatShortDate(ROUND.submitBy)}`;
-  }
-  return formatDays(entry.waitingDays ?? 0);
-}
-
 const luca = request({
   id: "ir-102",
   reference: "IR-102",
@@ -480,7 +377,7 @@ const felix = request({
     "Felix took over the quarterly market reports and turned them into a product two clients now pay for.",
 });
 
-export const nadia = request({
+const nadia = request({
   id: "ir-108",
   reference: "IR-108",
   kind: "increase",
@@ -523,15 +420,8 @@ const lena = request({
     "Lena now runs production for two client pods on her own and has cut our average turnaround by a week.",
 });
 
-export type Blocker = "own_request" | "over_budget" | "budget_not_set";
-
-export const BLOCKER_LABEL: Record<Blocker, string> = {
-  own_request: "Own request",
-  over_budget: "Needs exception",
-  budget_not_set: "No budget",
-};
-
-export type FinanceRow = { request: IrRequest; blocker?: Blocker; changed?: boolean };
+type Blocker = "own_request" | "over_budget" | "budget_not_set";
+type FinanceRow = { request: IrRequest; blocker?: Blocker; changed?: boolean };
 
 export const FINANCE_QUEUE: FinanceRow[] = [
   { request: aisha },
@@ -544,166 +434,9 @@ export const FINANCE_QUEUE: FinanceRow[] = [
 ];
 
 export const FINANCE_APPROVED: IrRequest[] = [lena];
-
-/** Finance approves per department budget, so its queue groups by department. */
-export function byDepartment(rows: FinanceRow[]) {
-  const departments = [...new Set(rows.map((row) => row.request.person.department))];
-  return departments.map((department) => ({
-    department,
-    rows: rows.filter((row) => row.request.person.department === department),
-  }));
-}
-
 export const AISHA_BUDGET = {
   department: "Creative",
   currency: "USD",
   yearly: pay(90_000),
   leftNow: pay(67_400),
-};
-
-export type QueueRow = {
-  id: string;
-  name: string;
-  department: string;
-  kind: "Increase" | "Promotion";
-  change: string;
-  requester: string;
-  waitingDays: number;
-};
-
-const row = (
-  id: string,
-  name: string,
-  department: string,
-  change: string,
-  requester: string,
-  waitingDays: number,
-  kind: QueueRow["kind"] = "Increase",
-): QueueRow => ({ id, name, department, kind, change, requester, waitingDays });
-
-export type QueueGroup = {
-  key: string;
-  title: string;
-  holder: Holder;
-  yours: boolean;
-  rows: QueueRow[];
-};
-
-export const PEOPLE_QUEUE: QueueGroup[] = [
-  {
-    key: "verify",
-    title: "To verify",
-    holder: "people",
-    yours: true,
-    rows: [
-      row("ir-097", "Sofia Reyes", "Strategy", "+8%", "Omar Haddad", 9),
-      row("ir-104", "Tomás Silva", "Creative", "+10%", "Jordan Reed", 3, "Promotion"),
-      row("ir-100", "Mei Tanaka", "Creative", "+6%", "Maya Bennett", 4),
-      row("ir-111", "Clara Moreau", "Production", "+7%", "Kai Brennan", 2),
-    ],
-  },
-  {
-    key: "release",
-    title: "To release",
-    holder: "people",
-    yours: true,
-    rows: [row("ir-088", "Lena Fischer", "Production", "+6%", "Kai Brennan", 6)],
-  },
-  {
-    key: "record",
-    title: "To record in Deel",
-    holder: "people",
-    yours: true,
-    rows: [row("ir-091", "Iris Novak", "Creative", "+9%", "Jordan Reed", 8)],
-  },
-  {
-    key: "finance",
-    title: "With Finance",
-    holder: "finance",
-    yours: false,
-    rows: [
-      row("ir-101", "Aisha Grant", "Creative", "+6%", "Maya Bennett", 2),
-      row("ir-102", "Luca Bianchi", "Creative", "+9%", "Jordan Reed", 1),
-      row("ir-105", "Marta Ruiz", "Strategy", "+8%", "Omar Haddad", 4),
-      row("ir-108", "Nadia Rahman", "Client Services", "+10%", "Rosa Delgado", 3),
-    ],
-  },
-  {
-    key: "requesters",
-    title: "With requesters",
-    holder: "requester",
-    yours: false,
-    rows: [
-      row("ir-099", "Ben Okafor", "Creative", "+11%", "Maya Bennett", 1),
-      row("ir-090", "Noor Malik", "Creative", "+8%", "Maya Bennett", 3),
-    ],
-  },
-];
-
-export type PersonInScope = {
-  name: string;
-  department: string;
-  manager: string;
-  eligibility: EligibilityResult;
-  request?: RequestStatus;
-};
-
-const inScope = (
-  name: string,
-  department: string,
-  manager: string,
-  eligibility: EligibilityResult,
-  status?: RequestStatus,
-): PersonInScope => ({ name, department, manager, eligibility, request: status });
-
-export const PEOPLE_IN_SCOPE: PersonInScope[] = [
-  inScope("Rafael Costa", "Creative", "Maya Bennett", "needs_verification"),
-  inScope("Grace Liu", "Production", "Kai Brennan", "needs_verification"),
-  inScope("Sofia Reyes", "Strategy", "Omar Haddad", "met", "people_review"),
-  inScope("Aisha Grant", "Creative", "Maya Bennett", "met", "finance_review"),
-  inScope("Hana Sato", "Strategy", "Omar Haddad", "met"),
-  inScope("Daniel Kim", "Client Services", "Rosa Delgado", "met"),
-  inScope("Zoe Adams", "Production", "Kai Brennan", "met"),
-  inScope("Lucas Brandt", "Creative", "Tomás Silva", "not_met"),
-  inScope("Mateo Vargas", "Creative", "Tomás Silva", "not_met"),
-];
-
-export const ELIGIBILITY_GROUPS: { key: string; title: string; states: EligibilityResult[] }[] = [
-  { key: "verify", title: "Needs verification", states: ["needs_verification"] },
-  { key: "eligible", title: "Eligible", states: ["met", "exception"] },
-  { key: "not", title: "Not eligible", states: ["not_met"] },
-];
-
-export const TOMAS = {
-  person: person("Tomás Silva", "Design Lead", "TL1", "Creative"),
-  current: pay(72_000),
-  proposed: pay(79_200),
-  justification:
-    "Tomás has run the design team since January: he hired two designers, owns the brand system rebuild and led the Northwind launch. The Head of Design role is already his in practice; this makes his title and pay match the work.",
-  jobDescription: "https://www.notion.so/fieldtrip/head-of-design",
-  band: { level: "TL2", min: pay(78_000), max: pay(100_000) },
-  /** The new pay lands in the TL2 band's first third. */
-  guidance: { maxPercent: 15, label: "up to 15% for a promotion in the first tercile" },
-};
-
-export const PROMOTION_LEVELS = ["TL2", "TL3"];
-
-export const RATINGS = [
-  { value: "1", label: "Off Track (1)" },
-  { value: "2", label: "Room for Improvement (2)" },
-  { value: "3", label: "Delivering Impact (3)" },
-  { value: "4", label: "Raising the Bar (4)" },
-];
-
-export const KIND_OPTIONS = [
-  { value: "increase", label: "Increase", hint: "Same role, higher pay" },
-  { value: "promotion", label: "Promotion", hint: "New level and title" },
-];
-
-export const REQUEST_ISSUES = {
-  proposedTitle: "Add the new title.",
-  jobDescriptionUrl: "Add a link to the job description.",
-  proposed: "Enter a pay increase.",
-  justification: "Add a reason.",
-  declared: "Confirm the reviews are complete in Windmill.",
 };

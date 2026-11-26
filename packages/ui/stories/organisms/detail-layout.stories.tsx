@@ -27,8 +27,7 @@ import {
 
 import { CreatorDetail } from "../lib/patterns";
 
-// I&R's approval of Aisha Grant's increase, composed from toolkit parts only; the screen story
-// "Screens/Impact and Recognition/Approvals" shows the app's own cards.
+// I&R's approval of Aisha Grant's increase, composed from toolkit parts only.
 
 const meta = {
   title: "Organisms/DetailLayout",

@@ -251,7 +251,7 @@ Focus is one indicator everywhere: a solid 2px ring with a 2px gap (`focus-ring`
 
 ## Components
 
-The catalog is `src/components`, shown in Storybook (atoms, molecules, organisms, layout, screens). The screen stories mirror real app pages and are the regression baseline. Which component, variant and pattern to use is decided in the ft-ui skill, not here.
+The catalog is `src/components`, shown in Storybook (atoms, molecules, organisms and the page patterns in Organisms/Page). The component and pattern stories are the regression baseline. Which component, variant and pattern to use is decided in the ft-ui skill, not here.
 
 - **Buttons:** fully rounded at the `control-*` heights; `default` (ink) is the one primary action, the rest `secondary`, `outline`, `ghost` or an icon. `destructive` only confirms a delete.
 - **Cards:** white on the canvas, `rounded-xl`, padded by `card-padding`. The container for any custom content. `CardTitle` is an `h2`; inside a titled `PageSection` it takes `level={3}`.

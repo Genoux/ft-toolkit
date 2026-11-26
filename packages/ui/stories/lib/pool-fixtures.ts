@@ -1,9 +1,9 @@
-/** The social platforms a creator links, each drawn by its logo in the Pool screens. */
+/** The social platforms a creator links. */
 export type Platform = "Instagram" | "TikTok" | "YouTube";
 
 export const photoUrl = (seed: number, size = 480) => `https://i.pravatar.cc/${size}?img=${seed}`;
 
-export type StaffMember = { id: string; name: string; email: string; imageUrl: string };
+type StaffMember = { id: string; name: string; email: string; imageUrl: string };
 
 export const STAFF = {
   maya: {
@@ -44,7 +44,7 @@ export const POOL_USER = {
   avatarUrl: STAFF.maya.imageUrl,
 };
 
-export const OVERALL_RATING_TIERS = [
+const OVERALL_RATING_TIERS = [
   "top creator",
   "standout",
   "good",
@@ -56,7 +56,7 @@ export const OVERALL_RATING_TIERS = [
 
 export type OverallRating = (typeof OVERALL_RATING_TIERS)[number];
 
-export type CreatorListItem = {
+type CreatorListItem = {
   id: string;
   fullName: string;
   country: string;
@@ -165,57 +165,6 @@ export const CREATORS: CreatorListItem[] = [
 ];
 
 export const CREATOR_TOTAL = 248;
-
-export const SORT_OPTIONS = [
-  { key: "rating", label: "Best performers" },
-  { key: "newest", label: "Newest" },
-  { key: "collaborations", label: "Most collabs" },
-  { key: "rate_low", label: "Rate: Low to High" },
-  { key: "rate_high", label: "Rate: High to Low" },
-] as const;
-
-export const DATABASE_FILTER_SECTIONS: { title: string; options: string[] }[] = [
-  { title: "Rating", options: [...OVERALL_RATING_TIERS] },
-  { title: "Channels", options: ["Instagram", "TikTok", "YouTube"] },
-  {
-    title: "UGC Categories",
-    options: [
-      "Sports & Outdoors",
-      "Lifestyle",
-      "Beauty",
-      "Selfcare & Wellness",
-      "Makeup",
-      "Tech",
-      "Food & Cooking",
-      "Fashion",
-    ],
-  },
-  {
-    title: "Content Formats",
-    options: [
-      "Aesthetic",
-      "ASMR",
-      "Humor & Skits",
-      "Product Demo",
-      "Unboxing",
-      "Testimonial / Review",
-      "Voiceover",
-      "Tutorial / How-to",
-    ],
-  },
-  { title: "Brand Interests", options: ["Skincare", "Supplements", "Fitness", "Beverages"] },
-  { title: "Brand Types", options: ["DTC", "Retail", "App", "Agency"] },
-  { title: "Worked on", options: ["Paid social", "Organic", "Whitelisting"] },
-  { title: "Gender", options: ["Woman", "Man", "Non-binary"] },
-  { title: "Age", options: ["18-24", "25-34", "35-44", "45+"] },
-  {
-    title: "Ethnicity",
-    options: ["Asian", "Black", "Hispanic / Latino", "White", "Middle Eastern"],
-  },
-  { title: "Languages", options: ["English", "French", "Spanish", "Portuguese"] },
-  { title: "Country", options: ["United States", "Canada", "United Kingdom", "France"] },
-];
-
 export type ClosedCollaboration = {
   id: string;
   projectName: string;
@@ -569,303 +518,6 @@ export const DISCOVERY_REQUESTS: DiscoveryRequest[] = [
     profilesToSource: 20,
   },
 ];
-
-const OVERDUE_IDS: Record<string, string> = {
-  "dr-03": "Nov 18, 2026",
-  "dr-05": "Nov 20, 2026",
-  "dr-04": "Nov 21, 2026",
-};
-
-export const DISCOVERY_REQUESTS_OVERDUE: DiscoveryRequest[] = DISCOVERY_REQUESTS.map((request) => {
-  const overdueDeadline = OVERDUE_IDS[request.id];
-  return overdueDeadline ? { ...request, deadline: overdueDeadline, overdue: true } : request;
-});
-
-export type DiscoveryApprovalStatus = "pending" | "approved" | "rejected";
-
-export const DISCOVERY_APPROVAL_STATUS_LABELS: Record<DiscoveryApprovalStatus, string> = {
-  pending: "Pending",
-  approved: "Approved",
-  rejected: "Rejected",
-};
-
-export type SourcedProfile = {
-  id: string;
-  fullName: string | null;
-  email: string | null;
-  channels: Platform[];
-  portfolioUrl: string | null;
-  sampleContentUrl: string | null;
-  location: string | null;
-  source: string | null;
-  discoveredBy: StaffMember | null;
-  createdAt: string;
-  approvalStatus: DiscoveryApprovalStatus;
-};
-
-export const SOURCED_PROFILES: SourcedProfile[] = [
-  {
-    id: "sp-01",
-    fullName: "Ava Bennett",
-    email: "ava.bennett@gmail.com",
-    channels: ["TikTok", "Instagram"],
-    portfolioUrl: "https://avabennett.co",
-    sampleContentUrl: "https://tiktok.com/@avabennett/video/7312",
-    location: "Austin, TX",
-    source: "Modash",
-    discoveredBy: STAFF.priya,
-    createdAt: "Nov 19, 2026",
-    approvalStatus: "approved",
-  },
-  {
-    id: "sp-02",
-    fullName: "Kofi Mensah",
-    email: "kofi@mensahmedia.com",
-    channels: ["YouTube"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://youtube.com/watch?v=Kq3x",
-    location: "Toronto, ON",
-    source: "UGC Hub/Pool",
-    discoveredBy: STAFF.lucas,
-    createdAt: "Nov 19, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-03",
-    fullName: "Mia Laurent",
-    email: null,
-    channels: ["Instagram"],
-    portfolioUrl: "https://mialaurent.fr",
-    sampleContentUrl: null,
-    location: "Montréal, QC",
-    source: "Instagram",
-    discoveredBy: STAFF.priya,
-    createdAt: "Nov 18, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-04",
-    fullName: "Jordan Price",
-    email: "jordan.price@outlook.com",
-    channels: ["TikTok"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://tiktok.com/@jprice/video/7290",
-    location: "Denver, CO",
-    source: "Collabstr",
-    discoveredBy: STAFF.lucas,
-    createdAt: "Nov 18, 2026",
-    approvalStatus: "rejected",
-  },
-  {
-    id: "sp-05",
-    fullName: "Elena Petrova",
-    email: "elena.p@gmail.com",
-    channels: ["Instagram", "TikTok", "YouTube"],
-    portfolioUrl: "https://elenapetrova.com",
-    sampleContentUrl: "https://instagram.com/reel/C9x",
-    location: "Miami, FL",
-    source: "Modash",
-    discoveredBy: STAFF.maya,
-    createdAt: "Nov 17, 2026",
-    approvalStatus: "approved",
-  },
-  {
-    id: "sp-06",
-    fullName: null,
-    email: "hello@sunnysideugc.com",
-    channels: ["TikTok"],
-    portfolioUrl: null,
-    sampleContentUrl: null,
-    location: null,
-    source: "Backstage",
-    discoveredBy: null,
-    createdAt: "Nov 17, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-07",
-    fullName: "Rafael Nunes",
-    email: "rafa.nunes@gmail.com",
-    channels: ["Instagram"],
-    portfolioUrl: "https://rafanunes.studio",
-    sampleContentUrl: "https://instagram.com/reel/D1k",
-    location: "Lisbon, PT",
-    source: "Joinbrands",
-    discoveredBy: STAFF.theo,
-    createdAt: "Nov 16, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-08",
-    fullName: "Grace Liu",
-    email: "grace@graceliu.tv",
-    channels: ["YouTube", "TikTok"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://youtube.com/watch?v=Gl9",
-    location: "Vancouver, BC",
-    source: "Fiverr",
-    discoveredBy: STAFF.priya,
-    createdAt: "Nov 15, 2026",
-    approvalStatus: "approved",
-  },
-  {
-    id: "sp-09",
-    fullName: "Noah Whitfield",
-    email: "noah@whitfieldcreates.com",
-    channels: ["Instagram"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://instagram.com/reel/E2m",
-    location: "Austin, TX",
-    source: "Modash",
-    discoveredBy: STAFF.camille,
-    createdAt: "Nov 14, 2026",
-    approvalStatus: "rejected",
-  },
-  {
-    id: "sp-10",
-    fullName: "Sofia Marchetti",
-    email: "sofia.marchetti@gmail.com",
-    channels: ["TikTok", "Instagram"],
-    portfolioUrl: "https://sofiamarchetti.it",
-    sampleContentUrl: "https://tiktok.com/@sofiam/video/7301",
-    location: "Toronto, ON",
-    source: "Modash",
-    discoveredBy: STAFF.camille,
-    createdAt: "Nov 14, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-11",
-    fullName: "Priscilla Owusu",
-    email: "hello@priscillaowusu.com",
-    channels: ["YouTube"],
-    portfolioUrl: "https://priscillaowusu.com",
-    sampleContentUrl: "https://youtube.com/watch?v=Po4",
-    location: "Atlanta, GA",
-    source: "Collabstr",
-    discoveredBy: STAFF.lucas,
-    createdAt: "Nov 13, 2026",
-    approvalStatus: "approved",
-  },
-  {
-    id: "sp-12",
-    fullName: "Liam Carter",
-    email: null,
-    channels: ["TikTok"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://tiktok.com/@liamcarter/video/7288",
-    location: "Portland, OR",
-    source: "Backstage",
-    discoveredBy: STAFF.priya,
-    createdAt: "Nov 13, 2026",
-    approvalStatus: "rejected",
-  },
-  {
-    id: "sp-13",
-    fullName: "Hana Sato",
-    email: "hana.sato@outlook.com",
-    channels: ["Instagram", "YouTube"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://instagram.com/reel/C7s",
-    location: "Seattle, WA",
-    source: "Modash",
-    discoveredBy: STAFF.theo,
-    createdAt: "Nov 12, 2026",
-    approvalStatus: "approved",
-  },
-  {
-    id: "sp-14",
-    fullName: "Marcus Reid",
-    email: "marcus@reidfilms.co",
-    channels: ["YouTube", "Instagram"],
-    portfolioUrl: "https://reidfilms.co",
-    sampleContentUrl: "https://youtube.com/watch?v=Mr2",
-    location: "Chicago, IL",
-    source: "UGC Hub/Pool",
-    discoveredBy: STAFF.maya,
-    createdAt: "Nov 12, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-15",
-    fullName: "Chloé Dubois",
-    email: "chloe.dubois@gmail.com",
-    channels: ["Instagram"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://instagram.com/reel/B8d",
-    location: "Montréal, QC",
-    source: "Instagram",
-    discoveredBy: STAFF.camille,
-    createdAt: "Nov 11, 2026",
-    approvalStatus: "rejected",
-  },
-  {
-    id: "sp-16",
-    fullName: "Daniel Okafor",
-    email: "daniel.okafor@gmail.com",
-    channels: ["TikTok"],
-    portfolioUrl: "https://danielokafor.me",
-    sampleContentUrl: "https://tiktok.com/@dokafor/video/7276",
-    location: "Houston, TX",
-    source: "Joinbrands",
-    discoveredBy: STAFF.lucas,
-    createdAt: "Nov 11, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-17",
-    fullName: "Isabel Romero",
-    email: "isabel@romerougc.com",
-    channels: ["Instagram", "TikTok"],
-    portfolioUrl: "https://romerougc.com",
-    sampleContentUrl: "https://instagram.com/reel/A3r",
-    location: "San Diego, CA",
-    source: "Modash",
-    discoveredBy: STAFF.priya,
-    createdAt: "Nov 10, 2026",
-    approvalStatus: "approved",
-  },
-  {
-    id: "sp-18",
-    fullName: null,
-    email: "team@pawsandpixels.co",
-    channels: ["Instagram"],
-    portfolioUrl: null,
-    sampleContentUrl: null,
-    location: null,
-    source: "Fiverr",
-    discoveredBy: null,
-    createdAt: "Nov 10, 2026",
-    approvalStatus: "pending",
-  },
-  {
-    id: "sp-19",
-    fullName: "Ethan Brooks",
-    email: "ethan.brooks@gmail.com",
-    channels: ["YouTube"],
-    portfolioUrl: null,
-    sampleContentUrl: "https://youtube.com/watch?v=Eb7",
-    location: "Nashville, TN",
-    source: "Collabstr",
-    discoveredBy: STAFF.theo,
-    createdAt: "Nov 9, 2026",
-    approvalStatus: "rejected",
-  },
-  {
-    id: "sp-20",
-    fullName: "Zoe Kim",
-    email: "zoe@zoekimcreative.com",
-    channels: ["TikTok", "YouTube"],
-    portfolioUrl: "https://zoekimcreative.com",
-    sampleContentUrl: "https://tiktok.com/@zoekim/video/7265",
-    location: "Vancouver, BC",
-    source: "Modash",
-    discoveredBy: STAFF.maya,
-    createdAt: "Nov 9, 2026",
-    approvalStatus: "approved",
-  },
-];
-
 export const DISCOVERY_REQUEST_DETAIL = {
   ...DISCOVERY_REQUESTS[4],
   createdAt: "Nov 12, 2026",

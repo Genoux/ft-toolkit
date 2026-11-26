@@ -5,7 +5,7 @@ import { cn } from "../../src/lib/utils";
 // A simulated hover or press is marked with a pointer, not with in-canvas words such as "hover":
 // those read as part of the UI being shown. Focus gets no marker: its ring already says it.
 
-export type AnnotatedState = "hover" | "pressed" | "focus-visible";
+type AnnotatedState = "hover" | "pressed" | "focus-visible";
 
 const ANNOTATED_STATE_BY_NAME: Record<string, AnnotatedState> = {
   hover: "hover",

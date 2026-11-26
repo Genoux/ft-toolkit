@@ -24,9 +24,10 @@ The kit is enforced, not suggested. It ships as source, the `ft` CLI (`ft check`
 ## Operating Context
 
 - Consumed by Next.js App Router apps created from `packages/standards/template` (`ft create`).
-- Reviewed in Storybook (`packages/ui/stories`): atoms, molecules, organisms, layout patterns and screen stories that mirror real app pages.
-- Changes to the kit are released as versions and picked up by the apps; the screen stories are the regression baseline.
-- Current apps: Pool (ugc-hub), Impact & Recognition, and The Album (guess-who) as an experiment.
+- Reviewed in Storybook (`packages/ui/stories`): atoms, molecules, organisms and generic page patterns (list, detail, form, settings, overview, with their loading, empty and error states), filled with the apps' real data shapes.
+- Changes to the kit are released as versions and picked up by the apps; the component and pattern stories are the regression baseline (`bun run visual`, `bun run align`), and a change is judged in the real apps through `bun run sync` before release.
+- Each app records its own UI decisions in its `AGENTS.md` ("This app"); the kit holds no copies of app pages.
+- Apps it serves: Pool (ugc-hub), Impact & Recognition and Proof. None runs on the kit yet; each migrates in its own repo.
 
 ## Capabilities and Constraints
 
@@ -46,7 +47,8 @@ The kit is enforced, not suggested. It ships as source, the `ft` CLI (`ft check`
 
 ## Evidence on Hand
 
-- Screen stories built on real app pages and real fields (Pool, Impact & Recognition, The Album) in `packages/ui/stories/screens`.
+- Real data shapes from Pool, Impact & Recognition and Proof in `packages/ui/stories/lib` (`*-fixtures.ts`), used by the component and pattern stories.
+- Former Storybook copies of the apps' pages (removed 2026-11-26): last version in commit `c50169a`, screenshots kept outside the repo.
 - README cover: `.github/assets/ui-cover.png`, from the `Showcase/Component Grid → Cover` story.
 - No user research, usage metrics or testimonials exist. Do not invent stats, records or columns in stories; use the apps' real data shapes.
 
