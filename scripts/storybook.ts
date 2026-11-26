@@ -43,12 +43,16 @@ export function storybook() {
   return { baseUrl: `http://localhost:${server.port}`, stop: () => server.stop() };
 }
 
+// Screens/* are temporary copies of each app's pages, removed as each app moves onto the kit; the
+// checks guard the kit on its own component and pattern stories instead.
+const isScreenCopy = (id: string) => id.startsWith("screens-");
+
 export async function storyIds(baseUrl: string, filter = argument("--filter") ?? "") {
   const index = (await (await fetch(`${baseUrl}/index.json`)).json()) as {
     entries: Record<string, { type: string }>;
   };
   return Object.entries(index.entries)
-    .filter(([id, entry]) => entry.type === "story" && id.includes(filter))
+    .filter(([id, entry]) => entry.type === "story" && !isScreenCopy(id) && id.includes(filter))
     .map(([id]) => id);
 }
 

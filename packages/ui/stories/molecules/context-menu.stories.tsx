@@ -8,7 +8,7 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "../../src/components/context-menu";
-import { HOLIDAY_VIDEO_RUN } from "../screens/proof-agent/fixtures";
+import { HOLIDAY_VIDEO_RUN } from "../lib/proof-agent-fixtures";
 
 const meta = {
   title: "Molecules/ContextMenu",

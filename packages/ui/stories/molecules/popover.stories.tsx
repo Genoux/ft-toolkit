@@ -7,7 +7,7 @@ import { MultiSelectOptionList } from "../../src/components/multi-select-popover
 import { Popover, PopoverContent, PopoverTrigger } from "../../src/components/popover";
 import { Separator } from "../../src/components/separator";
 import { cn } from "../../src/lib/utils";
-import { CLIENT_LANGUAGES, PRODUCTS } from "../screens/proof-agent/fixtures";
+import { CLIENT_LANGUAGES, PRODUCTS } from "../lib/proof-agent-fixtures";
 
 const meta = {
   title: "Molecules/Popover",

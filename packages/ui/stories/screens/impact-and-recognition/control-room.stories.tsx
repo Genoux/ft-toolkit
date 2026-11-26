@@ -19,6 +19,7 @@ import {
 } from "../../../src/components/table";
 import { Tabs, TabsContent, TabsList } from "../../../src/components/tabs";
 import { cn } from "../../../src/lib/utils";
+import { HolderStatus } from "../../lib/impact-and-recognition-display";
 import {
   ELIGIBILITY_GROUPS,
   type EligibilityResult,
@@ -31,12 +32,11 @@ import {
   type PersonInScope,
   type QueueRow,
   ROUND,
-} from "./fixtures";
+} from "../../lib/impact-and-recognition-fixtures";
 import {
   allOf,
   FilterSelect,
   GroupLabel,
-  HolderStatus,
   IrShell,
   KIND_FILTER,
   placeholderKeys,

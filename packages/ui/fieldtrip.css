@@ -33,8 +33,7 @@
   --color-fieldtrip-powder-light: #e4ecf9;
 }
 
-/* :not(.dark) because :root and .dark tie on specificity and this file loads after theme.css. */
-:root:not(.dark) {
+:root {
   --foreground: var(--color-fieldtrip-ink);
   --card-foreground: var(--color-fieldtrip-ink);
   --popover-foreground: var(--color-fieldtrip-ink);

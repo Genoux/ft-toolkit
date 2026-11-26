@@ -18,8 +18,8 @@ import { FieldError } from "../../src/components/field";
 import { POOL_CLIENTS } from "../lib/app-fixtures";
 import { CONTROL_STATES, SIMULATED_STATE_CLASS } from "../lib/control-states";
 import { CONTENT_FORMATS, PLATFORMS } from "../lib/form-fixtures";
+import { CLIENT_PROJECTS } from "../lib/pool-fixtures";
 import { VariantGrid } from "../lib/variant-grid";
-import { CLIENT_PROJECTS } from "../screens/pool/fixtures";
 
 function FormatList() {
   return (

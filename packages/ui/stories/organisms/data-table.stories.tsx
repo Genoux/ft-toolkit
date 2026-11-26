@@ -7,7 +7,7 @@ import {
   type RowSelectionState,
   type SortingState,
 } from "@tanstack/react-table";
-import { DownloadIcon, RotateCwIcon, SearchXIcon, TriangleAlertIcon } from "lucide-react";
+import { DownloadIcon } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../../src/components/button";
 import { Card } from "../../src/components/card";
@@ -15,21 +15,26 @@ import { DataTable, getSelectionColumn } from "../../src/components/data-table";
 import { DataTableSelectionBar } from "../../src/components/data-table-selection-bar";
 import { DataTableShell } from "../../src/components/data-table-shell";
 import { DataTableSortableHeader } from "../../src/components/data-table-sortable-header";
-import { EmptyState } from "../../src/components/empty-state";
 import { LoadMoreSentinel } from "../../src/components/load-more-sentinel";
 import { Pagination } from "../../src/components/pagination";
 import { SearchInput } from "../../src/components/search-input";
 import {
   CreatorEngagement,
-  CreatorIdentity,
-  CreatorRowActions,
-  CreatorStatus,
   CreatorTags,
   formatCompact,
   formatShortDate,
   formatUsd,
 } from "../lib/creator-cells";
 import { CREATORS, type Creator } from "../lib/creator-fixtures";
+import {
+  actionsColumn,
+  COMPACT_CREATOR_COLUMNS,
+  CreatorsNoResults,
+  followersColumn,
+  identityColumn,
+  LoadError,
+  statusColumn,
+} from "../lib/creator-table";
 import { AnnotationCaption } from "../lib/state-annotation";
 
 const meta = {
@@ -48,34 +53,6 @@ const LOAD_MORE_DELAY_MS = 700;
 const selectionColumn = getSelectionColumn<Creator>({
   getRowLabel: (row) => `Select ${row.original.name}`,
 });
-
-const identityColumn: ColumnDef<Creator> = {
-  id: "creator",
-  accessorKey: "name",
-  header: ({ column }) => <DataTableSortableHeader label="Creator" column={column} />,
-  cell: ({ row }) => <CreatorIdentity creator={row.original} />,
-  meta: { sticky: "start" },
-};
-
-const statusColumn: ColumnDef<Creator> = {
-  id: "status",
-  header: "Status",
-  cell: ({ row }) => <CreatorStatus status={row.original.status} />,
-};
-
-const followersColumn: ColumnDef<Creator> = {
-  accessorKey: "followers",
-  header: ({ column }) => <DataTableSortableHeader label="Followers" column={column} />,
-  cell: ({ row }) => formatCompact(row.original.followers),
-};
-
-const actionsColumn: ColumnDef<Creator> = {
-  id: "actions",
-  size: 48,
-  header: () => <span className="sr-only">Actions</span>,
-  cell: ({ row }) => <CreatorRowActions creator={row.original} />,
-  meta: { sticky: "end" },
-};
 
 const CREATOR_COLUMNS: ColumnDef<Creator>[] = [
   selectionColumn,
@@ -126,35 +103,6 @@ const CREATOR_COLUMNS: ColumnDef<Creator>[] = [
   actionsColumn,
 ];
 
-const COMPACT_COLUMNS: ColumnDef<Creator>[] = [
-  identityColumn,
-  statusColumn,
-  followersColumn,
-  actionsColumn,
-];
-
-function NoResults({ onClear }: { onClear: () => void }) {
-  return (
-    <EmptyState
-      icon={SearchXIcon}
-      title="No creators found"
-      description="Try adjusting your filters or search query."
-      action={{ label: "Clear filters", variant: "outline", onClick: onClear }}
-    />
-  );
-}
-
-function LoadError({ onRetry }: { onRetry: () => void }) {
-  return (
-    <EmptyState
-      tone="destructive"
-      icon={TriangleAlertIcon}
-      title="Something went wrong"
-      action={{ label: "Try again", icon: RotateCwIcon, onClick: onRetry }}
-    />
-  );
-}
-
 function StateFrame({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex min-w-0 flex-col gap-2">
@@ -169,7 +117,7 @@ function SortedSelectedTable() {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({ "creator-2": true });
   return (
     <DataTable
-      columns={[selectionColumn, ...COMPACT_COLUMNS]}
+      columns={[selectionColumn, ...COMPACT_CREATOR_COLUMNS]}
       data={CREATORS.slice(0, 4)}
       tableOptions={{
         getRowId: (creator) => creator.id,
@@ -189,13 +137,21 @@ export const AllStates: Story = {
         <SortedSelectedTable />
       </StateFrame>
       <StateFrame label="loading">
-        <DataTable columns={COMPACT_COLUMNS} data={[]} isLoading loadingRowCount={5} />
+        <DataTable columns={COMPACT_CREATOR_COLUMNS} data={[]} isLoading loadingRowCount={5} />
       </StateFrame>
       <StateFrame label="no results">
-        <DataTable columns={COMPACT_COLUMNS} data={[]} empty={<NoResults onClear={() => {}} />} />
+        <DataTable
+          columns={COMPACT_CREATOR_COLUMNS}
+          data={[]}
+          empty={<CreatorsNoResults onClear={() => {}} />}
+        />
       </StateFrame>
       <StateFrame label="error">
-        <DataTable columns={COMPACT_COLUMNS} data={[]} error={<LoadError onRetry={() => {}} />} />
+        <DataTable
+          columns={COMPACT_CREATOR_COLUMNS}
+          data={[]}
+          error={<LoadError onRetry={() => {}} />}
+        />
       </StateFrame>
     </div>
   ),
@@ -242,7 +198,7 @@ function CreatorsDatabasePreview() {
           data={creators}
           stickyHeader
           onRowClick={(row) => setOpenedCreator(row.original.name)}
-          empty={<NoResults onClear={() => changeSearch("")} />}
+          empty={<CreatorsNoResults onClear={() => changeSearch("")} />}
           tableOptions={{
             getRowId: (creator) => creator.id,
             state: { sorting, rowSelection, pagination },
@@ -284,7 +240,7 @@ function SelectionPreview() {
     <div className="max-w-3xl">
       <DataTableShell>
         <DataTable
-          columns={[selectionColumn, ...COMPACT_COLUMNS]}
+          columns={[selectionColumn, ...COMPACT_CREATOR_COLUMNS]}
           data={CREATORS.slice(0, 6)}
           tableOptions={{
             getRowId: (creator) => creator.id,
@@ -363,7 +319,7 @@ function InlineSelectionPreview() {
       </DataTableSelectionBar>
       <DataTableShell>
         <DataTable
-          columns={[rowSelectionColumn, ...COMPACT_COLUMNS]}
+          columns={[rowSelectionColumn, ...COMPACT_CREATOR_COLUMNS]}
           data={INLINE_CREATORS}
           tableOptions={{
             getRowId: (creator) => creator.id,
@@ -395,7 +351,7 @@ function SortablePreview() {
   return (
     <DataTableShell className="max-w-3xl">
       <DataTable
-        columns={COMPACT_COLUMNS}
+        columns={COMPACT_CREATOR_COLUMNS}
         data={CREATORS.slice(0, 6)}
         tableOptions={{
           state: { sorting },
@@ -412,7 +368,7 @@ export const Sortable: Story = { render: () => <SortablePreview /> };
 export const Loading: Story = {
   render: () => (
     <DataTableShell className="max-w-3xl">
-      <DataTable columns={[selectionColumn, ...COMPACT_COLUMNS]} data={[]} isLoading />
+      <DataTable columns={[selectionColumn, ...COMPACT_CREATOR_COLUMNS]} data={[]} isLoading />
     </DataTableShell>
   ),
 };
@@ -421,7 +377,11 @@ export const NoResultsState: Story = {
   name: "No results",
   render: () => (
     <DataTableShell className="max-w-3xl">
-      <DataTable columns={COMPACT_COLUMNS} data={[]} empty={<NoResults onClear={() => {}} />} />
+      <DataTable
+        columns={COMPACT_CREATOR_COLUMNS}
+        data={[]}
+        empty={<CreatorsNoResults onClear={() => {}} />}
+      />
     </DataTableShell>
   ),
 };
@@ -430,7 +390,11 @@ export const ErrorState: Story = {
   name: "Error",
   render: () => (
     <DataTableShell className="max-w-3xl">
-      <DataTable columns={COMPACT_COLUMNS} data={[]} error={<LoadError onRetry={() => {}} />} />
+      <DataTable
+        columns={COMPACT_CREATOR_COLUMNS}
+        data={[]}
+        error={<LoadError onRetry={() => {}} />}
+      />
     </DataTableShell>
   ),
 };
@@ -462,7 +426,11 @@ function LoadMorePreview() {
 
   return (
     <DataTableShell ref={shellRef} className="h-96 max-w-3xl">
-      <DataTable columns={COMPACT_COLUMNS} data={CREATORS.slice(0, loadedCount)} stickyHeader />
+      <DataTable
+        columns={COMPACT_CREATOR_COLUMNS}
+        data={CREATORS.slice(0, loadedCount)}
+        stickyHeader
+      />
       {hasMore ? <LoadMoreSentinel sentinelRef={sentinelRef} isLoading={isFetching} /> : null}
     </DataTableShell>
   );
@@ -478,7 +446,7 @@ export const InsideCard: Story = {
         <span className="text-xs text-muted-foreground">By engagement</span>
       </div>
       <DataTableShell>
-        <DataTable columns={COMPACT_COLUMNS} data={CREATORS.slice(0, 5)} />
+        <DataTable columns={COMPACT_CREATOR_COLUMNS} data={CREATORS.slice(0, 5)} />
       </DataTableShell>
     </Card>
   ),

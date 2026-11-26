@@ -147,7 +147,7 @@ function FieldLabel({
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:border-input has-[>[data-slot=field]]:bg-card has-[>[data-slot=field]]:shadow-hairline [&>*]:data-[slot=field]:px-4 [&>*]:data-[slot=field]:py-3",
         "has-[>[data-slot=field]]:transition-[background-color,border-color,box-shadow] has-[>[data-slot=field]]:duration-(--duration-fast) has-[>[data-slot=field]]:ease-out-expo has-[>[data-slot=field]]:hover:border-ring/60",
         "has-[>[data-slot=field]]:has-focus-visible:focus-ring",
-        "has-[>[data-slot=field]]:has-data-[state=checked]:border-primary has-[>[data-slot=field]]:has-data-[state=checked]:bg-muted/60 dark:has-[>[data-slot=field]]:has-data-[state=checked]:bg-input/30",
+        "has-[>[data-slot=field]]:has-data-[state=checked]:border-primary has-[>[data-slot=field]]:has-data-[state=checked]:bg-muted/60",
         className
       )}
       {...props}

@@ -54,12 +54,9 @@ import {
   LONG_WAIT_DAYS,
   type Pay,
   percentChange,
-  REQUEST_HOLDER,
-  type RequestStatus,
   ROUND,
-  STATUS_LABEL,
   VIEWERS,
-} from "./fixtures";
+} from "../../lib/impact-and-recognition-fixtures";
 
 type Role = keyof typeof VIEWERS;
 
@@ -125,27 +122,6 @@ export function IrShell({ viewer: role, active, children }: IrShellProps) {
     >
       {children}
     </AppShell>
-  );
-}
-
-/** The status in words after a mark in the colour of whoever holds the request. */
-export function HolderStatus({
-  status,
-  size,
-  className,
-}: {
-  status: RequestStatus;
-  size?: "default" | "lg";
-  className?: string;
-}) {
-  // signature-surface: I&R's holder colours, the same mark on every list, receipt and step.
-  return (
-    <StatusDot
-      color={HOLDER_COLOR[REQUEST_HOLDER[status]]}
-      label={STATUS_LABEL[status]}
-      size={size}
-      className={className}
-    />
   );
 }
 

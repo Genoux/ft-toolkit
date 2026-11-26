@@ -62,7 +62,7 @@ function DatePicker({
           className={cn(
             controlSurfaceClassName,
             fieldRadiusClassName,
-            "w-full justify-start gap-2 px-4 font-normal tabular-nums hover:bg-card has-[>svg]:pl-3.5 data-[state=open]:border-ring data-[state=open]:bg-card dark:hover:bg-input/30 dark:data-[state=open]:bg-input/30",
+            "w-full justify-start gap-2 px-4 font-normal tabular-nums hover:bg-card has-[>svg]:pl-3.5 data-[state=open]:border-ring data-[state=open]:bg-card",
             !selected && "text-muted-foreground",
             className,
           )}

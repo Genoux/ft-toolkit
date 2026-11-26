@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { useState } from "react";
+import { Badge } from "../../../src/components/badge";
 import { Button } from "../../../src/components/button";
 import { Card, CardSection } from "../../../src/components/card";
 import { Checkbox } from "../../../src/components/checkbox";
@@ -46,7 +47,7 @@ import {
   REQUESTER_TINT,
   ROUND,
   TOMAS,
-} from "./fixtures";
+} from "../../lib/impact-and-recognition-fixtures";
 import { BandScale, IrShell, PanelSection, PolicyChecks } from "./parts";
 
 const ELIGIBILITY: EligibilityCheck[] = [
@@ -140,16 +141,14 @@ function ProposalPanel({ filled, title }: { filled: boolean; title: string }) {
         {/* signature-surface: the draft's head in the requester's holder tint and mark. */}
         <header
           style={{ backgroundColor: REQUESTER_TINT }}
-          className="-mx-(--card-padding) -mt-(--card-padding) flex flex-col gap-1 px-(--card-padding) py-4"
+          className="-mx-(--card-padding) -mt-(--card-padding) flex px-(--card-padding) py-4"
         >
           <StatusDot
             color={HOLDER_COLOR.requester}
             label={`Promotion for ${FIRST_NAME}`}
+            description={`Effective ${formatDate(ROUND.effective)}`}
             className="text-base font-medium"
           />
-          <p className="text-sm text-muted-foreground">
-            Draft, effective {formatDate(ROUND.effective)}
-          </p>
         </header>
         <Statement filled={filled} title={title} />
         <PanelSection title="Band">
@@ -432,6 +431,11 @@ function NewRequest({ filled = true, issues = {} }: { filled?: boolean; issues?:
           <PageHeader
             back={<PageBackLink href="#list">My requests</PageBackLink>}
             title="New request"
+            actions={
+              <Badge variant="secondary" size="lg">
+                Draft
+              </Badge>
+            }
           />
           <DetailLayout aside={<ProposalPanel filled={filled} title={form.title} />}>
             <Card>

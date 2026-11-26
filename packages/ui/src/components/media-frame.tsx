@@ -5,8 +5,8 @@ import { type ComponentProps, type ReactNode, useState } from "react";
 import { cn } from "../lib/utils";
 import { Spinner } from "./spinner";
 
-// Black and white, not theme tokens: a photo is as dark or as light in either theme, so the scrim
-// and the text on it stay the same in dark mode.
+// Black and white, not theme tokens: the scrim answers the photo under it, so a brand layer that
+// retunes the tokens must not change it.
 const SCRIM_CLASS_NAME = {
   bottom: "bg-linear-to-t from-black/80 via-black/45 via-30% to-transparent to-60%",
   top: "bg-linear-to-b from-black/50 to-transparent to-35%",

@@ -6,8 +6,13 @@ import { IconButton } from "../../../src/components/icon-button";
 import { Grid, Inline, Stack } from "../../../src/components/layout";
 import { Page } from "../../../src/components/page";
 import { SectionSpinner } from "../../../src/components/spinner";
-import { CLIENT, CLIENT_PROJECTS, type ClientProject } from "./fixtures";
-import { CampaignCard, campaignCount, EditDeleteMenu } from "./pool-blocks";
+import { CampaignCard, EditDeleteMenu } from "../../lib/pool-display";
+import {
+  CLIENT,
+  CLIENT_PROJECTS,
+  type ClientProject,
+  campaignCount,
+} from "../../lib/pool-fixtures";
 import { breadcrumbLink, POOL_SCREEN_PARAMETERS, PoolShell } from "./pool-shell";
 
 function ClientOverview({

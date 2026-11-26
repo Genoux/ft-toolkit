@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AppNav } from "../../src/components/app-nav";
-import { AppShell, AppShellTitle } from "../../src/components/app-shell";
+import { AppShell, AppShellNav, AppShellTitle } from "../../src/components/app-shell";
 import { Avatar, AvatarFallback } from "../../src/components/avatar";
 import { Button } from "../../src/components/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "../../src/components/card";
@@ -23,9 +23,9 @@ import {
   formatPercentChange,
   percentChange,
   ROUND,
-} from "../screens/impact-and-recognition/fixtures";
-import { IrShell } from "../screens/impact-and-recognition/parts";
-import { CreatorProfileView } from "../screens/pool/pool-blocks";
+} from "../lib/impact-and-recognition-fixtures";
+
+import { CreatorDetail } from "../lib/patterns";
 
 // I&R's approval of Aisha Grant's increase, composed from toolkit parts only; the screen story
 // "Screens/Impact and Recognition/Approvals" shows the app's own cards.
@@ -149,12 +149,21 @@ function ApprovalPage() {
 /** The case on the left, a sticky column with where it stands, then the decision, from lg. Cards in either column sit 24px apart; sections with a heading keep the page's 40px. */
 export const AllStates: Story = { render: () => <ApprovalPage /> };
 
-/** Scrolled in I&R's top bar: the side column stays 24px under the bar, and on a short screen it scrolls on its own instead of riding up into the bar. */
+/** Scrolled in a top bar shell: the side column stays 24px under the bar, and on a short screen it scrolls on its own instead of riding up into the bar. */
 export const InTopbarShell: Story = {
   render: () => (
-    <IrShell viewer="finance" active="Approvals">
+    <AppShell
+      layout="topbar"
+      topbarBrand={<AppShellTitle>Impact & Recognition</AppShellTitle>}
+      topbarNav={
+        <AppShellNav
+          items={[{ title: "Home" }, { title: "Approvals", isActive: true }, { title: "Budget" }]}
+          renderLink={(_item, content) => <a href="#section">{content}</a>}
+        />
+      }
+    >
       <ApprovalPage />
-    </IrShell>
+    </AppShell>
   ),
 };
 
@@ -224,12 +233,12 @@ export const FormWithSummary: Story = {
   ),
 };
 
-/** `variant="ruled" asidePosition="start"` around a `Page`: Pool's creator profile, its 320px info
- * column full height and ruled off on the left, each side scrolling on its own. */
+/** `variant="ruled" asidePosition="start"` around a `Page`: a record's 320px info column full height
+ * and ruled off on the left, each side scrolling on its own. */
 export const RuledInfoColumn: Story = {
   render: () => (
     <div className="flex h-svh flex-col">
-      <CreatorProfileView />
+      <CreatorDetail />
     </div>
   ),
 };

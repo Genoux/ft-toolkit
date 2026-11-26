@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, ChevronsUpDown, LogOut, Monitor, Moon, Sun, SunMoon } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, LogOut } from "lucide-react";
 import type * as React from "react";
 import { getInitials } from "../lib/initials";
 import { cn } from "../lib/utils";
@@ -11,12 +11,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./sidebar";
@@ -30,10 +25,6 @@ type NavUserProfile = {
 type NavUserMenuProps = {
   /** Account items, such as a link to the profile; they open the menu under the user's name. */
   children?: React.ReactNode;
-  /** The current theme, `light`, `dark` or `system`; next-themes' `theme`. */
-  theme?: string;
-  /** Adds a Theme sub-menu; next-themes' `setTheme`. */
-  onThemeChange?: (theme: string) => void;
   /** Adds Sign out as the last item. */
   onSignOut?: () => void;
 };
@@ -45,12 +36,6 @@ type NavUserProps = NavUserProfile &
     /** With `avatar`, adds the name and a chevron beside the avatar from md, for a top bar with room. */
     showName?: boolean;
   };
-
-const THEMES = [
-  { value: "light", label: "Light", icon: Sun },
-  { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Monitor },
-] as const;
 
 function UserAvatar({ name, avatarUrl }: Pick<NavUserProfile, "name" | "avatarUrl">) {
   return (
@@ -73,41 +58,19 @@ function UserSummary({ name, email, avatarUrl }: NavUserProfile) {
   );
 }
 
-/** The account menu's items: the user's avatar, name and email, the account items, Theme and Sign out.
+/** The account menu's items: the user's avatar, name and email, the account items and Sign out.
  * NavUser renders it in its own menu; place it in a DropdownMenuContent to open it from another trigger. */
-function NavUserMenu({
-  children,
-  theme,
-  onThemeChange,
-  onSignOut,
-  ...profile
-}: NavUserProfile & NavUserMenuProps) {
-  const currentTheme = THEMES.find((option) => option.value === (theme ?? "system"));
+function NavUserMenu({ children, onSignOut, ...profile }: NavUserProfile & NavUserMenuProps) {
   return (
     <>
       <DropdownMenuLabel className="flex items-center gap-3 px-2.5 py-2">
         <UserSummary {...profile} />
       </DropdownMenuLabel>
-      {children || onThemeChange ? <DropdownMenuSeparator /> : null}
-      {children ? <DropdownMenuGroup>{children}</DropdownMenuGroup> : null}
-      {onThemeChange ? (
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <SunMoon />
-            Theme
-            <span className="ml-auto text-xs text-subtle-foreground">{currentTheme?.label}</span>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuSubContent className="min-w-36">
-            <DropdownMenuRadioGroup value={currentTheme?.value} onValueChange={onThemeChange}>
-              {THEMES.map((option) => (
-                <DropdownMenuRadioItem key={option.value} value={option.value}>
-                  <option.icon />
-                  {option.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
+      {children ? (
+        <>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>{children}</DropdownMenuGroup>
+        </>
       ) : null}
       {onSignOut ? (
         <>

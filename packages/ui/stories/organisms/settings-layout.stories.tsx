@@ -30,7 +30,7 @@ import {
 import { Page, PageHeader, PageSection } from "../../src/components/page";
 import { SettingsLayout } from "../../src/components/settings-layout";
 import { useActiveTitle } from "../lib/app-fixtures";
-import { CLIENT, PRODUCTS } from "../screens/proof-agent/fixtures";
+import { CLIENT, PRODUCTS } from "../lib/proof-agent-fixtures";
 
 const CLIENT_SECTIONS = [
   { title: "General", icon: Settings2 },

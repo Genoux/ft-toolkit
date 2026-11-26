@@ -8,6 +8,8 @@
  */
 @source "./src";
 
+/* The kit is light only. Tailwind's own dark variant follows the OS setting, which would switch on stray
+ * dark: utilities in apps; tied to a .dark class that no app sets, they stay inert. */
 @custom-variant dark (&:is(.dark *));
 
 /*
@@ -42,8 +44,9 @@
  * tracking, and the heading roles their weight, so a change of scale happens once, here.
  *
  * Interface roles stay fixed, because controls and dense rows must not grow with the window:
- *   3xs avatar initials and count dots, 2xs overlines, xs meta and captions, table table cells,
- *   sm body and controls, item a list row's title, base reading text and a page description,
+ *   3xs initials in an xs avatar, 2xs overlines and avatar overflow counts, xs meta and captions,
+ *   table table cells, sm body and controls, item a list row's title, base reading text and a page
+ *   description,
  *   heading a card, dialog, sheet or section title, lead the paragraph under a hero, stat-sm a
  *   secondary figure.
  * Page roles are fluid from a 360px to a 1280px window: title-sm a form or settings page title,
@@ -134,11 +137,11 @@
   --color-info-foreground: var(--info-foreground);
   /*
    * Toned surfaces (status badges, the badge Select, Alert, a warning IconButton) read `--tone`, set on
-   * the element, and keep its hue at a fixed lightness per theme, the way Pool's pastel status pills
+   * the element, and keep its hue at a fixed lightness, the way Pool's pastel status pills
    * (Tailwind's 100 fills and 800 text) do: a translucent tint of a mid-tone darkens toward grey instead.
    * The chroma cap keeps light tints inside sRGB, where a clipped blue drifts to cyan. Solid keeps the
    * tone's own colour once it is dark enough for the page colour on it (Fieldtrip's green is), else
-   * moves it to the theme's bound. theme.test.ts checks AA and the hue for every tone and theme.
+   * darkens it to --tone-solid-l-max. theme.test.ts checks AA and the hue for every tone.
    */
   --color-tone-tint: oklch(
     from var(--tone) var(--tone-tint-l)
@@ -252,51 +255,6 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 95);
   --sidebar-border: oklch(0.91 0.003 95);
   --sidebar-ring: oklch(0.6 0.01 95);
-}
-
-.dark {
-  --background: oklch(0.16 0.003 95);
-  --foreground: oklch(0.97 0.002 95);
-  --card: oklch(0.2 0.003 95);
-  --card-foreground: oklch(0.97 0.002 95);
-  --popover: oklch(0.22 0.003 95);
-  --popover-foreground: oklch(0.97 0.002 95);
-  --primary: oklch(0.97 0.002 95);
-  --primary-foreground: oklch(0.2 0.003 95);
-  --secondary: oklch(0.26 0.003 95);
-  --secondary-foreground: oklch(0.97 0.002 95);
-  --muted: oklch(0.26 0.003 95);
-  --muted-foreground: oklch(0.76 0.005 95);
-  --subtle-foreground: oklch(0.64 0.005 95);
-  --accent: oklch(0.27 0.003 95);
-  --accent-foreground: oklch(0.97 0.002 95);
-  --destructive: oklch(0.68 0.15 22);
-  --destructive-foreground: oklch(0.78 0.12 22);
-  --success: oklch(0.72 0.14 152);
-  --success-foreground: oklch(0.82 0.11 152);
-  --warning: oklch(0.8 0.14 75);
-  --warning-foreground: oklch(0.86 0.11 75);
-  --info: oklch(0.7 0.12 250);
-  --info-foreground: oklch(0.82 0.09 250);
-  --tone-tint-l: 0.3;
-  --tone-tint-chroma: 0.35;
-  --tone-tint-chroma-max: 0.06;
-  --tone-tint-step: 0.04;
-  --tone-ink-l: 0.86;
-  --tone-ink-chroma: 0.7;
-  --tone-solid-l-min: 0.72;
-  --tone-solid-l-max: 1;
-  --highlight: oklch(0.84 0.05 262);
-  --highlight-foreground: oklch(0.2 0.003 95);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.66 0.005 95);
-  --sidebar: oklch(0.185 0.003 95);
-  --sidebar-foreground: oklch(0.8 0.004 95);
-  --sidebar-accent: oklch(0.25 0.003 95);
-  --sidebar-accent-foreground: oklch(0.97 0.002 95);
-  --sidebar-border: oklch(1 0 0 / 8%);
-  --sidebar-ring: oklch(0.66 0.005 95);
 }
 
 @layer base {

@@ -30,18 +30,19 @@ import {
   TableRow,
   TableRowActions,
 } from "../../src/components/table";
+import { RatingBadge, TablePlaceholder } from "./pool-display";
 import {
   COLLABORATION_FILTER_OPTIONS,
   COLLABORATIONS,
   type CollaborationListItem,
+  formatMoney,
   photoUrl,
-} from "../screens/pool/fixtures";
-import { formatMoney, RatingBadge, TablePlaceholder } from "../screens/pool/pool-blocks";
+} from "./pool-fixtures";
 
-// The organism stories show Pool as it is: its navigation, and its Collaborations page, which lists
-// closed collaborations. The data comes from the Pool screen fixtures, so both stay one source.
+// The organism stories show Pool's real data: its navigation, and its closed collaborations. The data
+// lives in pool-fixtures, which the Pool screens read too, so both stay one source.
 
-export { COLLABORATION_TOTAL, COLLABORATIONS, POOL_USER } from "../screens/pool/fixtures";
+export { COLLABORATION_TOTAL, COLLABORATIONS, POOL_USER } from "./pool-fixtures";
 
 export type StoryNavItem = { title: string; icon: LucideIcon; href: string };
 

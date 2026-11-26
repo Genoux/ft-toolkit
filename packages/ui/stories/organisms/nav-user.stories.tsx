@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Settings, UserRound } from "lucide-react";
-import { type ComponentProps, type ReactNode, useState } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { DropdownMenuItem } from "../../src/components/dropdown-menu";
 import { NavUser } from "../../src/components/nav-user";
 import { Sidebar, SidebarFooter, SidebarProvider } from "../../src/components/sidebar";
@@ -22,15 +22,8 @@ function AccountItems() {
 }
 
 function FullNavUser(props: Partial<ComponentProps<typeof NavUser>>) {
-  const [theme, setTheme] = useState("system");
   return (
-    <NavUser
-      {...POOL_USER}
-      theme={theme}
-      onThemeChange={setTheme}
-      onSignOut={() => undefined}
-      {...props}
-    >
+    <NavUser {...POOL_USER} onSignOut={() => undefined} {...props}>
       <AccountItems />
     </NavUser>
   );
@@ -82,7 +75,7 @@ export const AllStates: Story = {
   ),
 };
 
-/** Account items as children, a Theme sub-menu from `theme` + `onThemeChange`, and Sign out from `onSignOut`. */
+/** Account items as children and Sign out from `onSignOut`. */
 export const MenuOpen: Story = {
   parameters: { layout: "padded" },
   render: () => (
@@ -123,7 +116,7 @@ export const AvatarWithNameMenuOpen: Story = {
   },
 };
 
-/** Only `children`: no theme or sign out unless the app passes them. */
+/** Only `children`: no sign out unless the app passes `onSignOut`. */
 export const ChildrenOnly: Story = {
   render: () => (
     <SidebarFooterFrame>

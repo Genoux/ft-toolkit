@@ -32,7 +32,7 @@ import {
   DATABASE_FILTER_SECTIONS,
   photoUrl,
   SORT_OPTIONS,
-} from "./fixtures";
+} from "../../lib/pool-fixtures";
 import { MediaRatingBadge, VerifiedMark } from "./pool-blocks";
 import { POOL_SCREEN_PARAMETERS, PoolShell } from "./pool-shell";
 

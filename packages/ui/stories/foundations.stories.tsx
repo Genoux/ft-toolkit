@@ -67,7 +67,7 @@ const TYPE_ROLES = [
   ["text-table", "Table cells", "13.5px. Rows in a table"],
   ["text-xs", "Meta, captions, badges, table head", "13px. Secondary"],
   ["text-2xs", "Workspace", "11px. Nav group overline (uppercase)"],
-  ["text-3xs", "AM", "9px. Avatar initials, count dots"],
+  ["text-3xs", "AM", "9px. Initials in an xs avatar"],
 ] as const;
 
 const GAPS = [

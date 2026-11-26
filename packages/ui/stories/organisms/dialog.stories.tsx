@@ -37,10 +37,10 @@ import {
   SelectValue,
 } from "../../src/components/select";
 import { Textarea } from "../../src/components/textarea";
+import { ApprovalDialog } from "../lib/impact-and-recognition-display";
+import { FINANCE_QUEUE } from "../lib/impact-and-recognition-fixtures";
 import { IR_ROLES, POOL_BRAND_INTERESTS, POOL_BRAND_TYPES } from "../lib/overlay-fixtures";
-import { ApprovalDialog } from "../screens/impact-and-recognition/approval-dialog";
-import { FINANCE_QUEUE } from "../screens/impact-and-recognition/fixtures";
-import { CREATORS, photoUrl } from "../screens/pool/fixtures";
+import { CREATORS, photoUrl } from "../lib/pool-fixtures";
 
 type DialogSize = NonNullable<ComponentProps<typeof DialogContent>["size"]>;
 

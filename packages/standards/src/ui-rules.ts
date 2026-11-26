@@ -41,6 +41,7 @@ const RULES = [
     reason: "hand-set colour in a style, use a token",
   },
   { pattern: /\btransition-all\b/g, reason: "transition-all, animate only what changes" },
+  { pattern: /(?<![\w-])dark:[^\s"'`]+/g, reason: "dark variant, Fieldtrip apps are light only" },
   {
     pattern:
       /from "(?:@mui\/|@chakra-ui\/|antd|@mantine\/|@headlessui\/|react-bootstrap|@nextui-org\/|@heroui\/|react-icons|@heroicons\/|@tabler\/icons|@phosphor-icons|framer-motion|@radix-ui\/)/g,

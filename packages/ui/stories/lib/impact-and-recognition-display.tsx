@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "../../../src/components/button";
+import { Button } from "../../src/components/button";
 import {
   Dialog,
   DialogClose,
@@ -8,10 +8,38 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../../../src/components/dialog";
-import { Field, FieldDescription, FieldLabel } from "../../../src/components/field";
-import { Textarea } from "../../../src/components/textarea";
-import type { IrRequest } from "./fixtures";
+} from "../../src/components/dialog";
+import { Field, FieldDescription, FieldLabel } from "../../src/components/field";
+import { StatusDot } from "../../src/components/status-dot";
+import { Textarea } from "../../src/components/textarea";
+import {
+  HOLDER_COLOR,
+  type IrRequest,
+  REQUEST_HOLDER,
+  type RequestStatus,
+  STATUS_LABEL,
+} from "./impact-and-recognition-fixtures";
+
+/** The status in words after a mark in the colour of whoever holds the request. */
+export function HolderStatus({
+  status,
+  size,
+  className,
+}: {
+  status: RequestStatus;
+  size?: "default" | "lg";
+  className?: string;
+}) {
+  // signature-surface: I&R's holder colours, the same mark on every list, receipt and step.
+  return (
+    <StatusDot
+      color={HOLDER_COLOR[REQUEST_HOLDER[status]]}
+      label={STATUS_LABEL[status]}
+      size={size}
+      className={className}
+    />
+  );
+}
 
 /** I&R, features/requests/components/approval-dialog.tsx: Finance confirms one request or a batch.
  * No per-request figures: the decision was made in the queue, and Finance settles the money. */

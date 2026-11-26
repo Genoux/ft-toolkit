@@ -13,8 +13,7 @@ import { Inline } from "../../../src/components/layout";
 import { Page, PageHeader } from "../../../src/components/page";
 import { PersonIdentity } from "../../../src/components/person-identity";
 import { Textarea } from "../../../src/components/textarea";
-import { ApprovalDialog } from "./approval-dialog";
-import { CaseDetail, CaseDetailLoading, PanelActions, PanelNotice } from "./case-detail";
+import { ApprovalDialog } from "../../lib/impact-and-recognition-display";
 import {
   AISHA_BUDGET,
   aisha,
@@ -34,7 +33,8 @@ import {
   nadia,
   type Pay,
   ROUND,
-} from "./fixtures";
+} from "../../lib/impact-and-recognition-fixtures";
+import { CaseDetail, CaseDetailLoading, PanelActions, PanelNotice } from "./case-detail";
 import {
   allOf,
   type CaseColumn,

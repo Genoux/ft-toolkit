@@ -18,9 +18,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../src/components/sheet";
-import { HolderStatus } from "../screens/impact-and-recognition/parts";
-import { CREATOR_PROFILE } from "../screens/pool/fixtures";
-import { CreatorProfileInfo, formatMoney, RatingBadge } from "../screens/pool/pool-blocks";
+import { HolderStatus } from "../lib/impact-and-recognition-display";
+import { CreatorInfo } from "../lib/patterns";
+import { RatingBadge } from "../lib/pool-display";
+import { CREATOR_PROFILE, formatMoney } from "../lib/pool-fixtures";
 
 type SheetSide = NonNullable<ComponentProps<typeof SheetContent>["side"]>;
 
@@ -168,7 +169,7 @@ function CreatorPreviewSheet() {
           <SheetDescription className="sr-only">Creator profile preview</SheetDescription>
         </SheetHeader>
         <SheetBody>
-          <CreatorProfileInfo creator={CREATOR_PROFILE} />
+          <CreatorInfo creator={CREATOR_PROFILE} />
         </SheetBody>
         <SheetFooter>
           <Button className="w-full">View full profile</Button>

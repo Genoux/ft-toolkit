@@ -112,7 +112,7 @@ type PageHeaderProps = {
   back?: ReactNode;
   /** A `PagePager` at the end of the row `back` sits on, to step through the list the page was opened from. */
   pager?: ReactNode;
-  /** An avatar or logo beside the title and description, on a person's or a company's page: `Avatar size="xl"` (56px), centred on the title and description together. */
+  /** An avatar or logo beside the title and description, on a person's or a company's page: `Avatar size="xl"` (56px), level with the top of the title. */
   media?: ReactNode;
   /** Badges and status on the description's line, or beside the title without a description. */
   meta?: ReactNode;
@@ -126,21 +126,23 @@ function PageHeader({ title, description, actions, back, pager, media, meta, cla
     </div>
   ) : null;
   return (
-    <header data-slot="page-header" className={cn("flex flex-col gap-3", className)}>
+    <header data-slot="page-header" className={cn("flex flex-col gap-(--gap-lg)", className)}>
       {back || pager ? (
-        <div className="flex items-center justify-between gap-(--gap-md)">
+        // One control tall with or without the pager, so the title sits the same distance below on every page.
+        <div className="flex min-h-control-sm items-center justify-between gap-(--gap-md)">
           {back ? <div className="flex">{back}</div> : null}
           {pager ? <div className="ml-auto flex">{pager}</div> : null}
         </div>
       ) : null}
       <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-(--gap-md)">
-        <div className="flex min-w-0 items-center gap-(--gap-md)">
+        <div className="flex min-w-0 items-start gap-(--gap-md)">
           {media ? (
             <div data-slot="page-header-media" className="flex shrink-0">
               {media}
             </div>
           ) : null}
-          <div className="flex min-w-0 flex-col gap-2">
+          {/* Beside an avatar the name and role are one identity, so they sit closer than a page title and its description. */}
+          <div className={cn("flex min-w-0 flex-col", media ? "gap-1" : "gap-2")}>
             <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
               <h1 className="text-title text-balance in-data-[size=medium]:text-title-sm in-data-[size=narrow]:text-title-sm">{title}</h1>
               {description ? null : metaElement}

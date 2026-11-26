@@ -53,4 +53,14 @@ export const CustomColor: Story = {
 
 export const Live: Story = { args: { tone: "info", label: "Rendering 3 of 12", pulse: true } };
 
+/** `description` adds a line that starts under the label, so the dot stands alone in its own column. */
+export const WithDescription: Story = {
+  args: {
+    color: "var(--color-fieldtrip-mauve, #b398ad)",
+    label: "Promotion for Tomás",
+    description: "Draft, effective Jul 1, 2027",
+    className: "text-base font-medium",
+  },
+};
+
 export const Playground: Story = {};

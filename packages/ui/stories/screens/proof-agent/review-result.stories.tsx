@@ -109,7 +109,7 @@ import {
   STATIC_IMAGE_RUN,
   type StagedAsset,
   TEAM_SESSIONS,
-} from "./fixtures";
+} from "../../lib/proof-agent-fixtures";
 
 const ASSET_ICON: Record<AssetType, typeof Film> = { video: Film, image: ImageIcon, text: Type };
 const ASSET_TYPE_LABEL: Record<AssetType, string> = {

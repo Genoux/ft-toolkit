@@ -12,7 +12,7 @@ import { AppNav } from "../../../src/components/app-nav";
 import { AppShell, AppShellTitle } from "../../../src/components/app-shell";
 import { IconButton } from "../../../src/components/icon-button";
 import { NavUser } from "../../../src/components/nav-user";
-import { POOL_USER } from "./fixtures";
+import { POOL_USER } from "../../lib/pool-fixtures";
 
 export type PoolSection = "Applicants" | "Database" | "Clients" | "Collaborations" | "Discovery";
 

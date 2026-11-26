@@ -32,6 +32,7 @@ import { Skeleton } from "../../../src/components/skeleton";
 import { Stat, StatLabel, StatValue } from "../../../src/components/stat";
 import { panelClassName } from "../../../src/lib/surface";
 import { cn } from "../../../src/lib/utils";
+import { HolderStatus } from "../../lib/impact-and-recognition-display";
 import {
   formatMoney,
   formatPercentChange,
@@ -43,15 +44,8 @@ import {
   policyChecks,
   REQUEST_HOLDER,
   ROUND,
-} from "./fixtures";
-import {
-  BandScale,
-  CasePager,
-  HolderStatus,
-  PanelSection,
-  PolicyChecks,
-  type ReceiptRow,
-} from "./parts";
+} from "../../lib/impact-and-recognition-fixtures";
+import { BandScale, CasePager, PanelSection, PolicyChecks, type ReceiptRow } from "./parts";
 
 const KIND_LABEL = { increase: "Pay increase", promotion: "Promotion" } as const;
 

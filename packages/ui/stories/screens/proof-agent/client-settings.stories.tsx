@@ -66,7 +66,7 @@ import {
   type CustomRule,
   NEVER_SAY_RULES,
   PRODUCTS,
-} from "./fixtures";
+} from "../../lib/proof-agent-fixtures";
 
 const COMPLIANCE_SECTIONS = [
   { title: "Say this (instead of)", icon: Megaphone },

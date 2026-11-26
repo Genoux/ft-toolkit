@@ -9,7 +9,6 @@ import { MemberAvatarStack } from "../../src/components/member-avatar-stack";
 import { PersonIdentity } from "../../src/components/person-identity";
 import { Stat, StatLabel, StatMeta, StatValue } from "../../src/components/stat";
 import { TextLink } from "../../src/components/text-link";
-import { AnnotationCaption } from "../lib/state-annotation";
 import {
   annualCost,
   FINANCE_APPROVED,
@@ -17,9 +16,10 @@ import {
   formatIncrease,
   formatMoney,
   ROUND,
-} from "../screens/impact-and-recognition/fixtures";
-import { CREATOR_PROFILE, DISCOVERY_REQUEST_DETAIL } from "../screens/pool/fixtures";
-import { PriorityBadge } from "../screens/pool/pool-blocks";
+} from "../lib/impact-and-recognition-fixtures";
+import { PriorityBadge } from "../lib/pool-display";
+import { CREATOR_PROFILE, DISCOVERY_REQUEST_DETAIL } from "../lib/pool-fixtures";
+import { AnnotationCaption } from "../lib/state-annotation";
 
 // Pool's discovery request for Nutramax, as its details sheet lists it.
 const request = DISCOVERY_REQUEST_DETAIL;

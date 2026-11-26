@@ -1,4 +1,5 @@
 import { type ComponentProps, useId } from "react";
+import type { Platform } from "../../lib/pool-fixtures";
 
 // Pool's own logo files (ugc-hub public/logos), inlined: the toolkit ships no brand assets, so the
 // screens carry the copies they show.
@@ -100,6 +101,4 @@ export const PLATFORM_LOGOS = {
   Instagram: InstagramLogo,
   TikTok: TikTokLogo,
   YouTube: YouTubeLogo,
-} as const;
-
-export type Platform = keyof typeof PLATFORM_LOGOS;
+} as const satisfies Record<Platform, unknown>;

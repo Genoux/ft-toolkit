@@ -10,6 +10,7 @@ import { Page } from "../../../src/components/page";
 import { Progress } from "../../../src/components/progress";
 import { SectionSpinner } from "../../../src/components/spinner";
 import { Tabs, TabsList } from "../../../src/components/tabs";
+import { DiscoveryStatusDot, PriorityBadge } from "../../lib/pool-display";
 import {
   DISCOVERY_REQUESTS,
   DISCOVERY_REQUESTS_OVERDUE,
@@ -17,8 +18,7 @@ import {
   DISCOVERY_STATUSES,
   type DiscoveryRequest,
   type DiscoveryStatus,
-} from "./fixtures";
-import { DiscoveryStatusDot, PriorityBadge } from "./pool-blocks";
+} from "../../lib/pool-fixtures";
 import { POOL_SCREEN_PARAMETERS, PoolShell } from "./pool-shell";
 
 const DISCOVERY_VIEW_TABS = [

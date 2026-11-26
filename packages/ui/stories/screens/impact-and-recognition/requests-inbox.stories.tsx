@@ -14,7 +14,7 @@ import {
   ROUND,
   requesterAside,
   requesterGroups,
-} from "./fixtures";
+} from "../../lib/impact-and-recognition-fixtures";
 import {
   type CaseColumn,
   CaseTable,

@@ -68,15 +68,8 @@ function AccountItems() {
 }
 
 function PoolNavUser({ variant }: { variant?: "sidebar" | "avatar" }) {
-  const [theme, setTheme] = useState("system");
   return (
-    <NavUser
-      {...POOL_USER}
-      variant={variant}
-      theme={theme}
-      onThemeChange={setTheme}
-      onSignOut={() => undefined}
-    >
+    <NavUser {...POOL_USER} variant={variant} onSignOut={() => undefined}>
       <AccountItems />
     </NavUser>
   );

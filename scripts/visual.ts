@@ -5,12 +5,13 @@ import { chromium } from "playwright";
 import { PNG } from "pngjs";
 import { openStory, ROOT, storybook, storyIds } from "./storybook";
 
-// Visual regression for @fieldtripagency/ui: screenshots every Storybook story at desktop and phone width and
-// compares them with the last approved run. Screenshots stay local in .visual/ (gitignored).
+// Visual regression for @fieldtripagency/ui: screenshots every component and pattern story (not the
+// Screens/* copies) at desktop and phone width and compares them with the last approved run.
+// Screenshots stay local in .visual/ (gitignored).
 //   bun run visual            build Storybook, snapshot, diff against .visual/baseline
 //   bun run visual:approve    accept the current snapshot as the new baseline
 //   --url http://localhost:6006   snapshot a running Storybook instead of building one
-//   --filter screens-pool      only stories whose id contains the text
+//   --filter organisms-page    only stories whose id contains the text
 
 const VISUAL = join(ROOT, ".visual");
 const BASELINE = join(VISUAL, "baseline");

@@ -13,8 +13,7 @@ import { MemberAvatarStack } from "../../../src/components/member-avatar-stack";
 import { Page } from "../../../src/components/page";
 import { RecordCardMark } from "../../../src/components/record-card";
 import { SectionSpinner } from "../../../src/components/spinner";
-import { STAFF, type StaffMember } from "./fixtures";
-import { campaignCount } from "./pool-blocks";
+import { campaignCount, STAFF, type StaffMember } from "../../lib/pool-fixtures";
 import { POOL_SCREEN_PARAMETERS, PoolShell } from "./pool-shell";
 
 // Pool's ClientListItem (src/features/clients/types); the list shows name, members and projectCount.

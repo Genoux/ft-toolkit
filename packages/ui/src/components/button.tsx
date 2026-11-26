@@ -16,7 +16,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-primary-foreground hover:bg-(--destructive-hover) disabled:opacity-60 data-popup-open:bg-(--destructive-hover) data-[state=open]:bg-(--destructive-hover) [--destructive-hover:color-mix(in_oklab,var(--color-destructive),var(--color-foreground)_15%)]",
         outline:
-          "border border-input bg-card text-foreground shadow-hairline hover:bg-muted data-popup-open:bg-muted data-[state=open]:bg-muted dark:bg-input/30 dark:hover:bg-input/50 dark:data-popup-open:bg-input/50 dark:data-[state=open]:bg-input/50",
+          "border border-input bg-card text-foreground shadow-hairline hover:bg-muted data-popup-open:bg-muted data-[state=open]:bg-muted",
         secondary:
           "bg-muted text-secondary-foreground hover:bg-accent data-popup-open:bg-accent data-[state=open]:bg-accent",
         ghost:

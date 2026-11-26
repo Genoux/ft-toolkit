@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Badge } from "../../src/components/badge";
 import { PageHeader } from "../../src/components/page";
 import { PersonAvatar, PersonIdentity } from "../../src/components/person-identity";
+import { RatingBadge } from "../lib/pool-display";
+import { CREATOR_PROFILE, photoUrl, STAFF } from "../lib/pool-fixtures";
 import { VariantGrid } from "../lib/variant-grid";
-import { CREATOR_PROFILE, photoUrl, STAFF } from "../screens/pool/fixtures";
-import { RatingBadge } from "../screens/pool/pool-blocks";
 
 const personWithImage = STAFF.maya;
 const personWithoutImage = { ...STAFF.lucas, imageUrl: null };

@@ -24,7 +24,7 @@ function InputGroup({
       data-size={size}
       role="group"
       className={cn(
-        "group/input-group relative flex w-full items-center border border-input bg-card shadow-hairline transition-[color,border-color,box-shadow] duration-(--duration-fast) ease-out-expo outline-none hover:border-ring/60 dark:bg-input/30",
+        "group/input-group relative flex w-full items-center border border-input bg-card shadow-hairline transition-[color,border-color,box-shadow] duration-(--duration-fast) ease-out-expo outline-none hover:border-ring/60",
         "has-[[data-slot=input-group-control]:disabled]:pointer-events-none has-[[data-slot=input-group-control]:disabled]:opacity-50",
         fieldRadiusClassName,
         controlHeightClassName[size],
@@ -142,7 +142,7 @@ function InputGroupInput({
     <Input
       data-slot="input-group-control"
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent read-only:not-disabled:bg-transparent shadow-none h-full group-data-[size=sm]/input-group:h-full focus-visible:outline-none disabled:opacity-100 dark:bg-transparent",
+        "flex-1 rounded-none border-0 bg-transparent read-only:not-disabled:bg-transparent shadow-none h-full group-data-[size=sm]/input-group:h-full focus-visible:outline-none disabled:opacity-100",
         className
       )}
       {...props}
@@ -158,7 +158,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent read-only:not-disabled:bg-transparent py-3 shadow-none focus-visible:outline-none disabled:opacity-100 dark:bg-transparent",
+        "flex-1 resize-none rounded-none border-0 bg-transparent read-only:not-disabled:bg-transparent py-3 shadow-none focus-visible:outline-none disabled:opacity-100",
         className
       )}
       {...props}

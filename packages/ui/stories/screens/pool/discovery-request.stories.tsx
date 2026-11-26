@@ -41,6 +41,12 @@ import {
 import { SectionSpinner } from "../../../src/components/spinner";
 import { Tooltip } from "../../../src/components/tooltip";
 import {
+  DISCOVERY_STATUS_TONE,
+  DiscoveryStatusDot,
+  PriorityBadge,
+  TablePlaceholder,
+} from "../../lib/pool-display";
+import {
   DISCOVERY_APPROVAL_STATUS_LABELS,
   DISCOVERY_REQUEST_DETAIL,
   DISCOVERY_STATUS_LABELS,
@@ -49,16 +55,8 @@ import {
   type DiscoveryStatus,
   SOURCED_PROFILES,
   type SourcedProfile,
-} from "./fixtures";
-import {
-  APPROVAL_TONE,
-  DISCOVERY_STATUS_TONE,
-  DiscoveryStatusDot,
-  LinkText,
-  PlatformLinks,
-  PriorityBadge,
-  TablePlaceholder,
-} from "./pool-blocks";
+} from "../../lib/pool-fixtures";
+import { APPROVAL_TONE, LinkText, PlatformLinks } from "./pool-blocks";
 import { breadcrumbLink, POOL_SCREEN_PARAMETERS, PoolShell } from "./pool-shell";
 
 type Request = typeof DISCOVERY_REQUEST_DETAIL;

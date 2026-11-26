@@ -12,7 +12,7 @@ import {
 import { IconButton } from "../../../src/components/icon-button";
 import { Inline } from "../../../src/components/layout";
 import { SectionSpinner } from "../../../src/components/spinner";
-import { type ClosedCollaboration, CREATOR_PROFILE } from "./fixtures";
+import { type ClosedCollaboration, CREATOR_PROFILE } from "../../lib/pool-fixtures";
 import { CreatorProfileView } from "./pool-blocks";
 import { breadcrumbLink, POOL_SCREEN_PARAMETERS, PoolShell } from "./pool-shell";
 

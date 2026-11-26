@@ -1,6 +1,5 @@
 import "./preview.css";
-import { withThemeByClassName } from "@storybook/addon-themes";
-import type { Decorator, Preview, ReactRenderer } from "@storybook/react-vite";
+import type { Decorator, Preview } from "@storybook/react-vite";
 import { Toaster } from "../src/components/sonner";
 import { TooltipProvider } from "../src/components/tooltip";
 import fieldtripCss from "./fieldtrip-preview.css?inline";
@@ -63,14 +62,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    withAppProviders,
-    withBrand,
-    withThemeByClassName<ReactRenderer>({
-      themes: { light: "", dark: "dark" },
-      defaultTheme: "light",
-    }),
-  ],
+  decorators: [withAppProviders, withBrand],
 };
 
 export default preview;

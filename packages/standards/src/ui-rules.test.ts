@@ -76,6 +76,16 @@ describe("uiRuleProblems", () => {
     ]);
   });
 
+  it("reports dark variants, since apps are light only", () => {
+    const appDir = appWith({
+      "src/panel.tsx": '<div className="bg-card dark:bg-input/30 hover:bg-muted" />',
+    });
+
+    expect(uiRuleProblems(appDir)).toEqual([
+      "src/panel.tsx:1 dark:bg-input/30 (dark variant, Fieldtrip apps are light only)",
+    ]);
+  });
+
   it("accepts the roles of the scale", () => {
     const appDir = appWith({
       "src/page.tsx":

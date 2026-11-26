@@ -1,8 +1,9 @@
 import { chromium } from "playwright";
 import { openStory, storybook, storyIds } from "./storybook";
 
-// Alignment check for @fieldtripagency/ui: opens every Storybook story at 1440 wide and measures the DOM for
-// the misalignments a reviewer otherwise catches by eye. Exits 1 when it finds one.
+// Alignment check for @fieldtripagency/ui: opens every component and pattern story (not the Screens/*
+// copies) at 1440 wide and measures the DOM for the misalignments a reviewer otherwise catches by
+// eye. Exits 1 when it finds one.
 //   bun run align                      build Storybook and check every story
 //   --url http://localhost:6006        check a running Storybook instead of building one
 //   --filter molecules-item            only stories whose id contains the text
@@ -29,23 +30,17 @@ const IGNORE: Ignore[] = [
     reason: "the required asterisk is set tight against its label, like a superscript",
   },
   {
+    story: "",
+    rule: "centre",
+    selector: "[data-slot=page-header-media]",
+    reason:
+      "the header avatar is level with the top of the title, not centred on title and description (owner, 2026-11-26)",
+  },
+  {
     story: "atoms-tooltip--open",
     rule: "gap",
     selector: "tooltip-trigger",
     reason: "story-only: triggers spread across the canvas to show each side, not a list",
-  },
-  {
-    story: "screens-impact-and-recognition-new-request",
-    rule: "centre",
-    selector: "[data-slot=card-section]:nth-of-type(1) > div > svg",
-    reason: "story-only: I&R's arrow placed with mt-7 sits 2px above the amounts; fix in the app",
-  },
-  {
-    story: "screens-pool-discovery-request",
-    rule: "centre",
-    selector: "[data-slot=table-cell]:nth-of-type(9)",
-    reason:
-      "story-only: Pool wraps the platform logo in an inline-flex span on the baseline; fix in the app",
   },
   {
     story: "atoms-infohint--all-states",

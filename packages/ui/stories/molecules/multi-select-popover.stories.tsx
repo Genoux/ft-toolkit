@@ -6,9 +6,9 @@ import {
 } from "../../src/components/multi-select-popover";
 import { listboxPanelClassName } from "../../src/internal/control-styles";
 import { POOL_BRAND_INTERESTS } from "../lib/overlay-fixtures";
+import { COLLABORATION_FILTER_OPTIONS, STAFF } from "../lib/pool-fixtures";
 import { AnnotationCaption } from "../lib/state-annotation";
 import { VariantGrid } from "../lib/variant-grid";
-import { COLLABORATION_FILTER_OPTIONS, STAFF } from "../screens/pool/fixtures";
 
 const CLIENTS = COLLABORATION_FILTER_OPTIONS.clients;
 const CLOSED_BY = COLLABORATION_FILTER_OPTIONS.closedBy;

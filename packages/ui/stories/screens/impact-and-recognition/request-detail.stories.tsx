@@ -5,8 +5,15 @@ import { DestructiveActionDialog } from "../../../src/components/destructive-act
 import { Field, FieldDescription, FieldLabel } from "../../../src/components/field";
 import { PersonIdentity } from "../../../src/components/person-identity";
 import { Textarea } from "../../../src/components/textarea";
+import {
+  BEN_RETURN,
+  ben,
+  formatDate,
+  MY_REQUESTS,
+  REQUEST_HOLDER,
+  ROUND,
+} from "../../lib/impact-and-recognition-fixtures";
 import { CaseDetail, CaseDetailLoading, PanelActions, PanelNote } from "./case-detail";
-import { BEN_RETURN, ben, formatDate, MY_REQUESTS, REQUEST_HOLDER, ROUND } from "./fixtures";
 import { IrShell } from "./parts";
 
 const RECEIPT = [

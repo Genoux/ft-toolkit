@@ -89,7 +89,7 @@ export function MemberAvatarStack({
         <PersonAvatar key={m.id} imageUrl={m.imageUrl} name={displayName(m) ?? ""} decorative />
       ))}
       {extra > 0 ? (
-        <AvatarGroupCount className="size-5 text-3xs">+{extra}</AvatarGroupCount>
+        <AvatarGroupCount className="size-5 text-2xs">+{extra}</AvatarGroupCount>
       ) : null}
     </AvatarGroup>
   );

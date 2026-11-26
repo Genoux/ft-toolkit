@@ -9,7 +9,6 @@ import { PersonIdentity } from "../../src/components/person-identity";
 import { Skeleton } from "../../src/components/skeleton";
 import { Stat, StatDelta, StatLabel, StatMeta, StatValue } from "../../src/components/stat";
 import { StatusDot } from "../../src/components/status-dot";
-import { VariantGrid } from "../lib/variant-grid";
 import {
   AISHA_BUDGET,
   aisha,
@@ -22,9 +21,13 @@ import {
   MY_REQUESTS,
   REQUEST_HOLDER,
   ROUND,
-} from "../screens/impact-and-recognition/fixtures";
-import { CREATOR_PROFILE, DISCOVERY_REQUESTS } from "../screens/pool/fixtures";
-import { formatMoney as formatDollars } from "../screens/pool/pool-blocks";
+} from "../lib/impact-and-recognition-fixtures";
+import {
+  CREATOR_PROFILE,
+  DISCOVERY_REQUESTS,
+  formatMoney as formatDollars,
+} from "../lib/pool-fixtures";
+import { VariantGrid } from "../lib/variant-grid";
 
 // OUR figures: Pool's closed collaboration and the Nutramax discovery request; I&R's cycle, the
 // requests by whose turn it is, and the Creative budget with Aisha Grant's increase.

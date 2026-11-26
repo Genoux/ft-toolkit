@@ -28,7 +28,7 @@ export const controlHeightBySizeAttributeClassName =
 export const fieldRadiusClassName = "rounded-lg in-data-[slot=page-toolbar]:rounded-full";
 
 export const controlSurfaceClassName = [
-  "border border-input bg-card shadow-hairline outline-none dark:bg-input/30",
+  "border border-input bg-card shadow-hairline outline-none",
   "transition-[color,background-color,border-color,box-shadow] duration-(--duration-fast) ease-out-expo",
   "hover:border-ring/60",
   "focus-visible:focus-ring",

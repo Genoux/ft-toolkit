@@ -22,8 +22,8 @@ type NavLinkItem = {
 const LOOKS = {
   pill: {
     list: "-mx-1 flex items-center gap-1 px-1 py-1.5",
-    link: "h-control-sm rounded-full px-3.5 font-medium hover:bg-muted dark:hover:bg-muted/50",
-    indicator: "inset-0 rounded-full bg-card shadow-raised dark:bg-muted",
+    link: "h-control-sm rounded-full px-3.5 font-medium hover:bg-muted",
+    indicator: "inset-0 rounded-full bg-card shadow-raised",
   },
   underline: {
     list: "flex items-stretch gap-6",
@@ -32,8 +32,8 @@ const LOOKS = {
   },
   vertical: {
     list: "flex flex-col gap-1",
-    link: "h-9 w-full rounded-lg px-3 hover:bg-muted aria-[current=page]:font-medium dark:hover:bg-muted/50",
-    indicator: "inset-0 rounded-lg bg-card shadow-raised dark:bg-muted",
+    link: "h-9 w-full rounded-lg px-3 hover:bg-muted aria-[current=page]:font-medium",
+    indicator: "inset-0 rounded-lg bg-card shadow-raised",
   },
 } as const;
 

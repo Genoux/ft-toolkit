@@ -17,8 +17,8 @@ type Rgb = [number, number, number];
 
 // Status tones are written as hex and as `color-mix(in oklab, #hex P%, var(--token))`; both resolve
 // to oklch here so every check below reads one shape.
-function tokens(selector: ":root" | ".dark") {
-  const start = THEME.indexOf(`${selector} {`);
+function tokens() {
+  const start = THEME.indexOf(":root {");
   const block = THEME.slice(start, THEME.indexOf("\n}", start));
   const resolved: Record<string, Oklch> = Object.fromEntries(
     [...block.matchAll(/--([a-z-]+):\s*oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)/g)].map(
@@ -138,9 +138,9 @@ const TONE_TOKENS = {
   solidMax: "tone-solid-l-max",
 } as const;
 
-/** The --tone-* numbers in one selector's block; a brand layer's block holds only what it overrides. */
-function toneLightness(css: string, selector: string): Record<keyof typeof TONE_TOKENS, number> {
-  const start = css.indexOf(`${selector} {`);
+/** The --tone-* numbers in a file's :root block; a brand layer's block holds only what it overrides. */
+function toneLightness(css: string): Record<keyof typeof TONE_TOKENS, number> {
+  const start = css.indexOf(":root {");
   const block = start < 0 ? "" : css.slice(start, css.indexOf("\n}", start));
   const values = Object.fromEntries(
     [...block.matchAll(/--(tone-[a-z-]+):\s*(-?[\d.]+);/g)].map(([, name, value]) => [
@@ -156,17 +156,14 @@ function toneLightness(css: string, selector: string): Record<keyof typeof TONE_
 }
 
 describe("theme tokens", () => {
-  it.each([":root", ".dark"] as const)(
-    "keeps the sidebar a separate tone from the content in %s",
-    (mode) => {
-      const theme = tokens(mode);
-      expect(theme.sidebar).toBeDefined();
-      expect(Math.abs(theme.sidebar[0] - theme.background[0])).toBeGreaterThanOrEqual(0.015);
-    },
-  );
+  it("keeps the sidebar a separate tone from the content", () => {
+    const theme = tokens();
+    expect(theme.sidebar).toBeDefined();
+    expect(Math.abs(theme.sidebar[0] - theme.background[0])).toBeGreaterThanOrEqual(0.015);
+  });
 
   it("keeps every light text level readable (WCAG AA 4.5:1) on cards, canvas and sidebar", () => {
-    const theme = tokens(":root");
+    const theme = tokens();
     const surfaces = {
       card: theme.card ?? [1, 0, 0],
       background: theme.background,
@@ -180,7 +177,7 @@ describe("theme tokens", () => {
   });
 
   it("keeps the focus ring at 3:1 or more on every light surface", () => {
-    const theme = tokens(":root");
+    const theme = tokens();
     for (const surface of ["card", "background", "sidebar", "muted"]) {
       const value = theme[surface] ?? [1, 0, 0];
       expect(contrast(theme.ring, value), `ring on ${surface}`).toBeGreaterThanOrEqual(3);
@@ -205,19 +202,15 @@ describe("theme tokens", () => {
     }
   });
 
-  it.each([
-    [":root", false],
-    [".dark", false],
-    [":root", true],
-  ] as const)(
-    "keeps every tone's text AA 4.5:1 on its tint, hover and pressed fills, the page colour AA on its solid, all in the tone's hue, in %s (Fieldtrip: %s)",
-    (mode, fieldtrip) => {
-      const theme = tokens(mode);
+  it.each([false, true])(
+    "keeps every tone's text AA 4.5:1 on its tint, hover and pressed fills, the page colour AA on its solid, all in the tone's hue (Fieldtrip: %s)",
+    (fieldtrip) => {
+      const theme = tokens();
       const brand = fieldtrip ? fieldtripTokens() : {};
       if (fieldtrip) expect(Object.keys(brand).length).toBeGreaterThan(0);
       const lightness = {
-        ...toneLightness(THEME, mode),
-        ...(fieldtrip ? toneLightness(FIELDTRIP, ":root:not(.dark)") : {}),
+        ...toneLightness(THEME),
+        ...(fieldtrip ? toneLightness(FIELDTRIP) : {}),
       };
       expect(Object.keys(lightness)).toHaveLength(Object.keys(TONE_TOKENS).length);
       const page = brand.background ?? linearRgb(theme.background);

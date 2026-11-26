@@ -1,17 +1,8 @@
-import {
-  BadgeCheck,
-  Copy,
-  Download,
-  ExternalLink,
-  FolderIcon,
-  FolderKanbanIcon,
-  MoreHorizontal,
-} from "lucide-react";
+import { BadgeCheck, Copy, Download, ExternalLink, FolderIcon } from "lucide-react";
 import type { ComponentProps, CSSProperties, ReactNode } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../../../src/components/alert";
 import { Badge } from "../../../src/components/badge";
 import { Button } from "../../../src/components/button";
-import { CardLink } from "../../../src/components/card";
 import {
   CollapsibleBody,
   CollapsibleHeader,
@@ -19,108 +10,40 @@ import {
 } from "../../../src/components/collapsible-section";
 import { DescriptionItem, DescriptionList } from "../../../src/components/description-list";
 import { DetailLayout } from "../../../src/components/detail-layout";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../../../src/components/dropdown-menu";
 import { EmptyState } from "../../../src/components/empty-state";
 import { IconButton } from "../../../src/components/icon-button";
 import { LabeledField } from "../../../src/components/labeled-field";
 import { Grid, Inline, Stack } from "../../../src/components/layout";
 import { MediaFrame, MediaFrameOverlay } from "../../../src/components/media-frame";
-import { MemberAvatarStack } from "../../../src/components/member-avatar-stack";
 import { Page, PageSection } from "../../../src/components/page";
 import { PersonIdentity } from "../../../src/components/person-identity";
-import {
-  RecordCard,
-  RecordCardFacts,
-  RecordCardHeader,
-  RecordCardMark,
-} from "../../../src/components/record-card";
 import { Separator } from "../../../src/components/separator";
-import { StatusDot } from "../../../src/components/status-dot";
 import { TextLink } from "../../../src/components/text-link";
 import { Tooltip } from "../../../src/components/tooltip";
 import { panelClassName } from "../../../src/lib/surface";
 import { cn } from "../../../src/lib/utils";
+import { capitalize, RATING_COLOR, RatingBadge, TablePlaceholder } from "../../lib/pool-display";
 import {
-  type ClientProject,
   type ClosedCollaboration,
   CREATOR_PROFILE,
-  DISCOVERY_PRIORITY_LABELS,
-  DISCOVERY_STATUS_LABELS,
+  type CreatorProfile,
   type DiscoveryApprovalStatus,
-  type DiscoveryPriority,
-  type DiscoveryStatus,
+  formatMoney,
   type OverallRating,
+  type Platform,
   photoUrl,
   STAFF,
-} from "./fixtures";
-import { PLATFORM_LOGOS, type Platform } from "./platform-logos";
+} from "../../lib/pool-fixtures";
+import { PLATFORM_LOGOS } from "./platform-logos";
 import { storyLink } from "./pool-shell";
 
 type BadgeVariant = NonNullable<ComponentProps<typeof Badge>["variant"]>;
-type DotTone = NonNullable<ComponentProps<typeof StatusDot>["tone"]>;
-
-// Rating tiers are Pool's own categories, so they take Pool's colours through `color`, not status tones.
-// Hex here because Storybook does not load Pool's globals.css, where these are tokens.
-const RATING_COLOR: Record<OverallRating, string | undefined> = {
-  "top creator": "#7c3aed",
-  standout: "#059669",
-  good: "#0284c7",
-  sufficient: "#71717a",
-  problematic: "#ea580c",
-  blacklisted: "#e11d48",
-  untested: undefined,
-};
-
-const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
-
-export function RatingBadge({ rating }: { rating: OverallRating }) {
-  return (
-    <Badge
-      variant={RATING_COLOR[rating] ? "secondary" : "outline"}
-      color={RATING_COLOR[rating]}
-      dot
-    >
-      {capitalize(rating)}
-    </Badge>
-  );
-}
-
-export const DISCOVERY_STATUS_TONE: Record<DiscoveryStatus, DotTone> = {
-  backlog: "neutral",
-  todo: "warning",
-  in_progress: "info",
-  done: "success",
-};
-
-export function DiscoveryStatusDot({ status }: { status: DiscoveryStatus }) {
-  return <StatusDot tone={DISCOVERY_STATUS_TONE[status]} label={DISCOVERY_STATUS_LABELS[status]} />;
-}
-
-const PRIORITY_VARIANT: Record<DiscoveryPriority, BadgeVariant> = {
-  urgent: "destructive",
-  high: "warning",
-  medium: "outline",
-  low: "secondary",
-};
-
-export function PriorityBadge({ priority }: { priority: DiscoveryPriority }) {
-  return <Badge variant={PRIORITY_VARIANT[priority]}>{DISCOVERY_PRIORITY_LABELS[priority]}</Badge>;
-}
 
 export const APPROVAL_TONE = {
   pending: "warning",
   approved: "success",
   rejected: "destructive",
 } as const satisfies Record<DiscoveryApprovalStatus, BadgeVariant>;
-
-export const formatMoney = (amount: number) =>
-  `$${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
 
 /** Pool's channel links: each platform's logo in a round chip, the platform named on hover. */
 export function PlatformLinks({
@@ -196,8 +119,6 @@ export function MediaRatingBadge({ rating }: { rating: OverallRating }) {
     </Badge>
   );
 }
-
-type CreatorProfile = typeof CREATOR_PROFILE;
 
 // signature-surface: Pool's hero photo, the name and rating laid on it over a scrim.
 function CreatorHeroPhoto({ creator }: { creator: CreatorProfile }) {
@@ -498,73 +419,3 @@ export function LinkText({ url }: { url: string | null }) {
     </Tooltip>
   );
 }
-
-export const TablePlaceholder = () => <span className="text-subtle-foreground">—</span>;
-
-/** Pool's dots menu on a client or a campaign: Edit, then Delete apart. */
-export function EditDeleteMenu({
-  editLabel = "Edit",
-  deleteLabel = "Delete",
-}: {
-  editLabel?: string;
-  deleteLabel?: string;
-}) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="dots" aria-label="Actions">
-          <MoreHorizontal />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem>{editLabel}</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">{deleteLabel}</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-export const campaignHref = (clientId: string, project: ClientProject) =>
-  `/clients/${clientId}/projects/${project.id}`;
-
-/** A campaign on its client's page (Pool's project-list FolderCard): name, menu, team and created date. Most SOWs have no description, so the card leaves it out. */
-export function CampaignCard({
-  project,
-  clientId,
-  className,
-}: {
-  project: ClientProject;
-  clientId: string;
-  className?: string;
-}) {
-  return (
-    <RecordCard className={className}>
-      <RecordCardHeader
-        media={
-          <RecordCardMark>
-            <FolderKanbanIcon />
-          </RecordCardMark>
-        }
-        title={
-          <CardLink
-            href={campaignHref(clientId, project)}
-            onClick={(event) => event.preventDefault()}
-          >
-            {project.name}
-          </CardLink>
-        }
-        action={<EditDeleteMenu />}
-      />
-      <RecordCardFacts>
-        <DescriptionItem label="Team">
-          <MemberAvatarStack members={project.members} emptyLabel="No team" />
-        </DescriptionItem>
-        <DescriptionItem label="Created">{project.createdAt}</DescriptionItem>
-      </RecordCardFacts>
-    </RecordCard>
-  );
-}
-
-export const campaignCount = (count: number) =>
-  `${count} ${count === 1 ? "campaign" : "campaigns"}`;

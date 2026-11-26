@@ -25,20 +25,20 @@ import {
 } from "../../src/components/table";
 import { Tabs, TabsContent, TabsList } from "../../src/components/tabs";
 import { SIMULATED_STATE_CLASS } from "../lib/control-states";
-import { AnnotationCaption, getAnnotatedState, StateMarker } from "../lib/state-annotation";
-import {
-  CLIENT,
-  CLIENT_PROJECTS,
-  DISCOVERY_REQUESTS,
-  type DiscoveryRequest,
-} from "../screens/pool/fixtures";
 import {
   CampaignCard,
-  campaignCount,
   DiscoveryStatusDot,
   EditDeleteMenu,
   PriorityBadge,
-} from "../screens/pool/pool-blocks";
+} from "../lib/pool-display";
+import {
+  CLIENT,
+  CLIENT_PROJECTS,
+  campaignCount,
+  DISCOVERY_REQUESTS,
+  type DiscoveryRequest,
+} from "../lib/pool-fixtures";
+import { AnnotationCaption, getAnnotatedState, StateMarker } from "../lib/state-annotation";
 
 const [holidayGifting, futuredew, perfumeSeeding] = CLIENT_PROJECTS;
 

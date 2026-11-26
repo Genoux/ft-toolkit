@@ -1,4 +1,5 @@
-import type { Platform } from "./platform-logos";
+/** The social platforms a creator links, each drawn by its logo in the Pool screens. */
+export type Platform = "Instagram" | "TikTok" | "YouTube";
 
 export const photoUrl = (seed: number, size = 480) => `https://i.pravatar.cc/${size}?img=${seed}`;
 
@@ -298,6 +299,8 @@ export const CREATOR_PROFILE = {
     },
   ] satisfies ClosedCollaboration[],
 };
+
+export type CreatorProfile = typeof CREATOR_PROFILE;
 
 export type CollaborationListItem = {
   id: string;
@@ -936,3 +939,9 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     members: [],
   },
 ];
+
+export const formatMoney = (amount: number) =>
+  `$${amount.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+
+export const campaignCount = (count: number) =>
+  `${count} ${count === 1 ? "campaign" : "campaigns"}`;

@@ -309,7 +309,7 @@ function ComboboxChips({
       data-size={size}
       className={cn(
         fieldRadiusClassName,
-        "flex min-h-10 data-[size=sm]:min-h-9 data-[size=sm]:py-px flex-wrap items-center gap-1 border border-input bg-card bg-clip-padding px-4 py-0.5 text-sm shadow-hairline transition-[color,border-color,box-shadow] duration-(--duration-fast) ease-out-expo hover:border-ring/60 has-[input:focus-visible]:focus-ring has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:pl-0.5 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
+        "flex min-h-10 data-[size=sm]:min-h-9 data-[size=sm]:py-px flex-wrap items-center gap-1 border border-input bg-card bg-clip-padding px-4 py-0.5 text-sm shadow-hairline transition-[color,border-color,box-shadow] duration-(--duration-fast) ease-out-expo hover:border-ring/60 has-[input:focus-visible]:focus-ring has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:pl-0.5",
         className
       )}
       {...props}

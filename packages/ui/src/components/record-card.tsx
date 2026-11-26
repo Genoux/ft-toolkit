@@ -52,6 +52,8 @@ type RecordCardHeaderProps = Omit<ComponentProps<"div">, "title"> & {
   media?: ReactNode;
   /** The record's name; a CardLink here makes the whole card open the record. */
   title: ReactNode;
+  /** The title's heading level: 3 when the grid of cards sits inside a titled PageSection. */
+  titleLevel?: ComponentProps<typeof CardTitle>["level"];
   /** Under the title, such as a description or an email; up to two lines, the record shows the rest. */
   description?: ReactNode;
   /** A `dots` menu, top-right; it stays clickable above the card's link. */
@@ -63,6 +65,7 @@ type RecordCardHeaderProps = Omit<ComponentProps<"div">, "title"> & {
 function RecordCardHeader({
   media,
   title,
+  titleLevel,
   description,
   action,
   className,
@@ -76,7 +79,9 @@ function RecordCardHeader({
     >
       {media}
       <div className="flex min-w-0 flex-1 flex-col">
-        <CardTitle className="truncate">{title}</CardTitle>
+        <CardTitle level={titleLevel} className="truncate">
+          {title}
+        </CardTitle>
         {description ? (
           <CardDescription className="line-clamp-2 wrap-anywhere">{description}</CardDescription>
         ) : null}

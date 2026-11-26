@@ -29,7 +29,7 @@ function RadioGroupItem({ className, ...props }: React.ComponentProps<typeof Rad
         toggleHitAreaClassName,
         choiceCardControlClassName,
         "group/radio flex aspect-square size-4 shrink-0 items-center justify-center rounded-full disabled:cursor-not-allowed disabled:opacity-50",
-        "data-[state=checked]:border-primary data-[state=checked]:bg-primary dark:data-[state=checked]:bg-primary",
+        "data-[state=checked]:border-primary data-[state=checked]:bg-primary",
         className,
       )}
       {...props}

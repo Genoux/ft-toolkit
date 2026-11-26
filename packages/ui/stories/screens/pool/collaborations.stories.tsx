@@ -31,15 +31,17 @@ import {
 import { SectionSpinner } from "../../../src/components/spinner";
 import { Tooltip } from "../../../src/components/tooltip";
 import { cn } from "../../../src/lib/utils";
+import { RatingBadge, TablePlaceholder } from "../../lib/pool-display";
 import {
   COLLABORATION_FILTER_OPTIONS,
   COLLABORATION_TOTAL,
   COLLABORATIONS,
   type CollaborationListItem,
   CREATOR_PROFILE,
+  formatMoney,
   photoUrl,
-} from "./fixtures";
-import { CreatorProfileInfo, formatMoney, RatingBadge, TablePlaceholder } from "./pool-blocks";
+} from "../../lib/pool-fixtures";
+import { CreatorProfileInfo } from "./pool-blocks";
 import { POOL_SCREEN_PARAMETERS, PoolShell, storyLink } from "./pool-shell";
 
 type CollaborationsState = "default" | "loading" | "empty" | "noResults";

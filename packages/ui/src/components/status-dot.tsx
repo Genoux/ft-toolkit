@@ -18,9 +18,15 @@ type StatusDotProps = Omit<ComponentProps<"span">, "children"> & {
   color?: string;
   /** `lg` is a headline status (a card's "Finance approval"): a 10px dot, and the label keeps the size around it. */
   size?: "default" | "lg";
+  /** A line under the label ("Draft, effective Jul 1"). It starts under the label, not under the dot, so never
+   * put a separate paragraph under a StatusDot. */
+  description?: ReactNode;
 };
 
-const DOT_SIZE = { default: "size-1.5", lg: "size-2.5" } as const;
+// In em, not px: the dot and its gap follow the label's size, so a 13px table cell and a 16px
+// headline status keep the same proportions (Polaris and Spark use 8 to 10px beside 13 to 14px text).
+const DOT_SIZE = { default: "size-[0.5em]", lg: "size-[0.75em]" } as const;
+const DOT_GAP = "gap-x-[0.75em]";
 
 function StatusDot({
   label,
@@ -28,6 +34,7 @@ function StatusDot({
   pulse = false,
   color,
   size = "default",
+  description,
   className,
   ...props
 }: StatusDotProps) {
@@ -40,7 +47,10 @@ function StatusDot({
       data-pulse={pulse || undefined}
       data-size={size}
       className={cn(
-        "inline-flex items-center gap-(--gap-sm) whitespace-nowrap",
+        description
+          ? "inline-grid grid-cols-[auto_minmax(0,1fr)] items-center"
+          : "inline-flex items-center whitespace-nowrap",
+        DOT_GAP,
         size === "default" && "text-table",
         tone === "neutral" && !color ? "text-muted-foreground" : "text-foreground",
         className,
@@ -59,7 +69,19 @@ function StatusDot({
         ) : null}
         <span className={cn("relative rounded-full", DOT_SIZE[size], dotClassName)} style={dotStyle} />
       </span>
-      {label}
+      {description ? (
+        <>
+          <span className="min-w-0">{label}</span>
+          <span
+            data-slot="status-dot-description"
+            className="col-start-2 min-w-0 text-xs font-normal text-muted-foreground"
+          >
+            {description}
+          </span>
+        </>
+      ) : (
+        label
+      )}
     </span>
   );
 }

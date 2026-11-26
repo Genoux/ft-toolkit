@@ -23,8 +23,8 @@ import { IconButton } from "../../src/components/icon-button";
 import { NavUserMenu } from "../../src/components/nav-user";
 import { PersonAvatar } from "../../src/components/person-identity";
 import { POOL_SORT_OPTIONS } from "../lib/overlay-fixtures";
-import { CLIENT_PROJECTS, POOL_USER } from "../screens/pool/fixtures";
-import { MY_SESSIONS } from "../screens/proof-agent/fixtures";
+import { CLIENT_PROJECTS, POOL_USER } from "../lib/pool-fixtures";
+import { MY_SESSIONS } from "../lib/proof-agent-fixtures";
 
 const meta = {
   title: "Molecules/DropdownMenu",
@@ -100,11 +100,10 @@ function BulkStatusItems() {
   );
 }
 
-/** The account menu every app shares (NavUserMenu): who is signed in, then Account, Settings, Theme and Sign out. */
+/** The account menu every app shares (NavUserMenu): who is signed in, then Account, Settings and Sign out. */
 function AccountMenuItems() {
-  const [theme, setTheme] = useState("system");
   return (
-    <NavUserMenu {...POOL_USER} theme={theme} onThemeChange={setTheme} onSignOut={() => undefined}>
+    <NavUserMenu {...POOL_USER} onSignOut={() => undefined}>
       <DropdownMenuItem>
         <UserRound />
         Account
@@ -122,7 +121,7 @@ export const AllStates: Story = {
     docs: {
       description: {
         story:
-          "Real menus side by side: Pool's creator profile actions (destructive item after a rule), Pool's bulk status menu (a disabled item), Pool's database sort (radio items) and the shared account menu (NavUserMenu: avatar, name and email, then account items, Theme and Sign out). Hover or arrow through them to see the highlighted state.",
+          "Real menus side by side: Pool's creator profile actions (destructive item after a rule), Pool's bulk status menu (a disabled item), Pool's database sort (radio items) and the shared account menu (NavUserMenu: avatar, name and email, then account items and Sign out). Hover or arrow through them to see the highlighted state.",
       },
     },
   },

@@ -62,9 +62,17 @@ function CardHeader({ className, ...props }: ComponentProps<"div">) {
   );
 }
 
-function CardTitle({ className, ...props }: ComponentProps<"div">) {
+type CardTitleProps = ComponentProps<"h2"> & {
+  /** Its level in the page outline: 2 for a card on the page, 3 for a card inside a titled PageSection. */
+  level?: 2 | 3 | 4;
+};
+
+// A prop, not a level read from context: context would make Card a client component, and apps render
+// it from Server Components. h2 by default because PageHeader's h1 is always above it, so it never skips.
+function CardTitle({ level = 2, className, ...props }: CardTitleProps) {
+  const Heading = `h${level}` as const;
   return (
-    <div
+    <Heading
       data-slot="card-title"
       className={cn("col-start-1 min-w-0 text-heading text-foreground", className)}
       {...props}

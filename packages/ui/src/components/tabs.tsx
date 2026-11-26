@@ -40,7 +40,7 @@ const triggerClassName: Record<TabsVariant, string> = {
 // A positioned pill paints over its trigger's outline; -z-10 inside the isolated trigger keeps the
 // focus ring on top. The line indicator stays above it so the active underline still shows.
 const indicatorClassName: Record<TabsVariant, string> = {
-  default: "absolute inset-0 -z-10 bg-card shadow-raised dark:bg-input",
+  default: "absolute inset-0 -z-10 bg-card shadow-raised",
   line: "absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-foreground",
 };
 

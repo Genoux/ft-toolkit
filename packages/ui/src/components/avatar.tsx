@@ -53,7 +53,10 @@ function AvatarFallback({
       data-slot="avatar-fallback"
       className={cn(
         // A foreground tint, not bg-muted: muted is as light as a selected row, where the initials' disc vanished.
+        // In a stack the discs overlap, so there the tint is mixed into the card colour and the avatar under it
+        // no longer shows through; the group's ring keeps it apart from a selected row.
         "flex size-full items-center justify-center rounded-full bg-foreground/8 font-medium text-muted-foreground",
+        "in-data-[slot=avatar-group]:bg-[color-mix(in_oklab,var(--foreground)_8%,var(--card))]",
         className,
       )}
       {...props}
@@ -79,7 +82,7 @@ function AvatarGroupCount({ className, ...props }: React.ComponentProps<"div">) 
     <div
       data-slot="avatar-group-count"
       className={cn(
-        "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-foreground/8 text-xs font-medium text-muted-foreground tabular-nums ring-2 ring-card group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 group-has-data-[size=sm]/avatar-group:text-2xs group-has-data-[size=xs]/avatar-group:size-5 group-has-data-[size=xs]/avatar-group:text-3xs [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3 group-has-data-[size=xs]/avatar-group:[&>svg]:size-3",
+        "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--foreground)_8%,var(--card))] text-xs font-medium text-muted-foreground tabular-nums ring-2 ring-card group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 group-has-data-[size=sm]/avatar-group:text-2xs group-has-data-[size=xs]/avatar-group:size-5 group-has-data-[size=xs]/avatar-group:text-2xs [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3 group-has-data-[size=xs]/avatar-group:[&>svg]:size-3",
         className,
       )}
       {...props}

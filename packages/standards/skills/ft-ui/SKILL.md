@@ -40,13 +40,15 @@ once a second app needs it.
 - Tokens only: `bg-background`, `text-muted-foreground`, `border-border`, `bg-primary`. No hex
   colors. Text has three levels: `text-foreground`, `text-muted-foreground` (secondary) and
   `text-subtle-foreground` (meta). Status is `success|warning|info|destructive`; `bg-highlight` is
-  the one coloured surface a page may use (a hero figure's `Card`).
+  the one coloured surface a page may use (a hero figure's `Card`). Apps are light only: no
+  `dark:` variants (`ft check` fails on them) and no theme switch.
 - Type by role, never a pixel size; each role carries its line height and tracking, and the heading
   roles their weight, so never add `font-semibold` or `leading-*` to them. Fixed: `text-3xs`
-  initials and count dots, `text-2xs` overlines, `text-xs` meta and captions, `text-table` table
-  cells, `text-sm` body and controls, `text-item` (15px) a list row's title (ItemTitle),
-  `text-base` reading text, `text-heading` (16px semibold) a card, dialog, sheet or section title,
-  `text-lead` (18px) the paragraph under a hero, `text-stat-sm` (20px) a secondary figure. Fluid
+  initials in an xs avatar, `text-2xs` overlines and avatar overflow counts, `text-xs` meta and
+  captions, `text-table` table cells, `text-sm` body and controls, `text-item` (15px) a list
+  row's title (ItemTitle), `text-base` reading text, `text-heading` (16px semibold) a card,
+  dialog, sheet or section title, `text-lead` (18px) the paragraph under a hero, `text-stat-sm`
+  (20px) a secondary figure. Fluid
   from a 360px to a 1280px window, each at most 2.5x its floor so browser zoom still reaches 200%:
   `text-title-sm` (24 to 28px) and `text-title` (28 to 36px) the page title (PageHeader picks by
   page size), `text-stat` (28 to 32px) a card figure, `text-display` (40 to 56px) the one hero
@@ -59,7 +61,8 @@ once a second app needs it.
   filters; automatic, no class needed). Shadows
   `shadow-hairline|raised|subtle|elevated`.
 - Card is the container for any custom content; Stat parts give a figure its look; there is no
-  stat card component.
+  stat card component. `CardTitle` is an `h2` so screen readers can jump between cards; inside a
+  titled `PageSection` give it `level={3}` (`RecordCardHeader titleLevel={3}`).
 - Spacing: never write `p-*`, `m-*`, `gap-*` or `space-*` yourself; `ft check` fails on them.
   Components own it: `Page`, `PageSection`, `Card` and `Item` pad themselves, and children are
   spaced by `Stack` (one under the other), `Inline` (side by side, wraps) or `Grid` (equal
@@ -82,6 +85,10 @@ once a second app needs it.
 - Control heights: a row lines up by sharing one `--spacing-control-*` height, never a number of
   its own. The topbar row is `control-sm` (36px): nav pills, the account avatar, a count badge
   (`Badge size="lg"`), and any app pill or avatar beside them (`h-control-sm`, `size-control-sm`).
+- Edges: a line under a dot, icon or avatar starts under the label, never under the dot, and
+  nothing sits in a container's padding (no negative margin or padding maths to pull content into
+  it). A status with a line under it is `StatusDot description`; a row with media is `Item` with
+  `ItemMedia`, `ItemContent` and `ItemDescription`. Never stack a `StatusDot` and a separate paragraph.
 - Copy: the Fieldtrip voice in its interface register. Outcome first, the specific thing,
   active voice and "you", sentence case, buttons as verbs ("Send request", never "Submit" or "OK"),
   errors that say what happened and what to do next. No em dashes, no exclamation marks, no
@@ -266,7 +273,7 @@ Every module of `@fieldtripagency/ui`, imported as `@fieldtripagency/ui/<path>`.
 ### Navigation
 - `components/app-nav`: sidebar navigation list driven by `items` and `renderLink`; `label` is the group overline, `count` on an item a right-aligned number, `items` on an item a collapsible sub-menu (`defaultOpen`), `trailing` a status (Spinner, StatusDot) and `actions` a row menu revealed on hover; on the group, `collapsible` + `defaultOpen` and `action` (a control beside the label). One AppNav per group.
 - `components/nav-links`: NavLinks, the top bar's links (`items`, `renderLink`, `variant` pill or underline, `orientation`); a sliding indicator marks the active link.
-- `components/nav-user`: user menu with name, email, avatar and dropdown; `theme` + `onThemeChange` add a Theme sub-menu, `onSignOut` the sign-out item; `variant` sidebar (collapses to the avatar) or avatar (top bar; `showName` adds the name and a chevron from md). The account menu holds account items only, never app content; NavUserMenu is its items, to open it from another trigger.
+- `components/nav-user`: user menu with name, email, avatar and dropdown; `onSignOut` adds the sign-out item; `variant` sidebar (collapses to the avatar) or avatar (top bar; `showName` adds the name and a chevron from md). The account menu holds account items only, never app content; NavUserMenu is its items, to open it from another trigger.
 - `components/breadcrumb`: Breadcrumb from `links` + `page` (pass `renderLink` for the router Link); renderLink must return an element that forwards props and ref, which `next/link` does. It truncates the page title and collapses links into a … menu below `lg` and when there are more than 2 links.
 - `components/tabs`: Tabs, TabsList (from a `tabs` array: a segmented control with a sliding thumb, or `variant="line"` underline tabs; tabs that do not fit collapse into a trailing "…" menu and the active tab always stays in the row; `wrap` for a second row instead; never put counts in tabs, show them in the section header) and TabsContent.
 - `components/sidebar`: Sidebar primitives that AppShell is built from; apps do not use them directly.
@@ -333,7 +340,7 @@ three; only tokens and signature surfaces change.
   with the package (`fonts.css`, which `fieldtrip.css` imports), so an app needs no font setup;
   an app that loads them itself can set `--font-diplomat` and `--font-swiss-now` on `<html>`.
 - **Product-specific**: override tokens in the app's `globals.css` after the imports: colours and
-  `--radius` in `:root` (and `.dark`), fonts as `--font-sans` in `@theme inline`, the way
+  `--radius` in `:root`, fonts as `--font-sans` in `@theme inline`, the way
   `fieldtrip.css` does. Every toolkit component follows, so the plumbing takes
   the product's look without a single override class. Colours the product adds get their own
   tokens there (`--color-board: ...` in `@theme`), never hex in components. Signature surfaces
@@ -344,8 +351,8 @@ three; only tokens and signature surfaces change.
 
 Look at what you built, the way a user will:
 
-1. Run the app (`bun dev`) and open each page you changed at 1440px and 390px wide, in light and
-   dark when the app has both. Use your browser tool, or a Playwright screenshot.
+1. Run the app (`bun dev`) and open each page you changed at 1440px and 390px wide. Use your
+   browser tool, or a Playwright screenshot.
 2. Compare it with its [page pattern](#page-patterns) and check: content never touches a border
    or edge; one gap step per level; one primary action per page; text takes the type roles;
    nothing overflows or wraps a title at 390px; empty, loading and error states render.

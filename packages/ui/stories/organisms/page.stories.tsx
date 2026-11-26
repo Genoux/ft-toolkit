@@ -5,6 +5,8 @@ import { AppShellTitle } from "../../src/components/app-shell";
 import { Avatar, AvatarFallback, AvatarImage } from "../../src/components/avatar";
 import { Button } from "../../src/components/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "../../src/components/card";
+import { DataTable } from "../../src/components/data-table";
+import { DataTableShell } from "../../src/components/data-table-shell";
 import { EmptyState } from "../../src/components/empty-state";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "../../src/components/field";
 import { Input } from "../../src/components/input";
@@ -28,8 +30,11 @@ import {
   CollaborationsToolbar,
   collaborationRows,
 } from "../lib/app-fixtures";
-import { CREATOR_PROFILE, CREATOR_TOTAL, photoUrl } from "../screens/pool/fixtures";
-import { CreatorProfileView, RatingBadge } from "../screens/pool/pool-blocks";
+import { CREATORS } from "../lib/creator-fixtures";
+import { COMPACT_CREATOR_COLUMNS, CreatorsNoResults, LoadError } from "../lib/creator-table";
+import { CreatorDetail } from "../lib/patterns";
+import { RatingBadge } from "../lib/pool-display";
+import { CREATOR_PROFILE, CREATOR_TOTAL, photoUrl } from "../lib/pool-fixtures";
 
 // The page patterns of the ft-ui skill, one story each. Apps copy the composition, not the data.
 
@@ -192,18 +197,67 @@ export const EmptyListPage: Story = {
   ),
 };
 
-/** Pool's creator profile as the app lays it out under the shell header (Breadcrumb and the "…" menu,
- * see Screens/Pool/Creator profile): `DetailLayout variant="ruled" asidePosition="start"`, a 320px
- * info column ruled off on the left with the photo, the name and rating, then the details as
- * `DescriptionList layout="stacked"`, a grid of short facts rather than one per line. Beside it a
- * `Page size="full"` holds a `PageSection` per group, portfolio first, then the closed collaborations. */
+/** A record's detail page: `DetailLayout variant="ruled" asidePosition="start"`, a 320px info column
+ * ruled off on the left with who it is, then the facts as `DescriptionList layout="stacked"`, a grid
+ * of short facts rather than one per line. Beside it a `Page size="full"` holds a `PageSection` per
+ * group of related records. */
 export const DetailPage: Story = {
   render: () => (
     <div className="flex h-svh flex-col">
-      <CreatorProfileView />
+      <CreatorDetail />
     </div>
   ),
 };
+
+/** The detail page while the record loads: skeletons at the loaded shape, the info column and the
+ * related table, so nothing shifts when the data lands. */
+export const DetailPageLoading: Story = {
+  render: () => (
+    <div className="flex h-svh flex-col">
+      <CreatorDetail loading />
+    </div>
+  ),
+};
+
+type ListState = "loading" | "noResults" | "error";
+
+/** A list page in one of its states: the header and toolbar stay, the table holds the state. */
+function CreatorsListPage({ state }: { state: ListState }) {
+  return (
+    <div className="flex h-svh flex-col">
+      <Page>
+        <PageHeader title="Creators" description={`${CREATORS.length} creators`} />
+        <PageToolbar>
+          <SearchInput
+            value={state === "noResults" ? "Glossier" : ""}
+            onChange={() => undefined}
+            placeholder="Search creators"
+            className="w-full sm:max-w-64"
+          />
+        </PageToolbar>
+        <DataTableShell>
+          <DataTable
+            columns={COMPACT_CREATOR_COLUMNS}
+            data={[]}
+            isLoading={state === "loading"}
+            empty={<CreatorsNoResults onClear={() => undefined} />}
+            error={state === "error" ? <LoadError onRetry={() => undefined} /> : undefined}
+          />
+        </DataTableShell>
+      </Page>
+    </div>
+  );
+}
+
+/** A list page loading: the header and toolbar render at once, skeleton rows in the table. */
+export const ListPageLoading: Story = { render: () => <CreatorsListPage state="loading" /> };
+
+/** A search that matches nothing: the message replaces the table, headers included, with a way to
+ * clear the filters, never a create action. */
+export const ListPageNoResults: Story = { render: () => <CreatorsListPage state="noResults" /> };
+
+/** A failed load: the message replaces the table with a way to retry. */
+export const ListPageError: Story = { render: () => <CreatorsListPage state="error" /> };
 
 export const FormPage: Story = {
   render: () => (
