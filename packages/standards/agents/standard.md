@@ -134,6 +134,18 @@ UI is in exactly one of three layers:
   36px, `control-default` 40px (forms and the page toolbar), `control-lg` 44px. The topbar row is
   `control-sm`: nav pills, the account avatar, a count badge (`Badge size="lg"`) and any app pill
   or avatar beside them (`h-control-sm`, `size-control-sm`, a Clerk avatar too).
+- Copy (the Fieldtrip voice, interface register): plain and specific, written for the person
+  doing the thing. Lead with the outcome ("Request sent", not "Your request has been successfully
+  submitted"). Say the specific thing ("Delete 3 requests?", not "Are you sure?"). Active voice,
+  "you", contractions allowed. Sentence case everywhere, titles and buttons too. A button is a verb
+  or verb phrase naming what happens ("Save", "Send request"), never "OK", "Submit" or "Yes". An
+  error says what happened and what to do next, never blames the person. An empty state says what
+  will appear and how to start. A title or empty state reads as a complete thought on its own.
+  Never: em dashes, exclamation marks, jargon standing in for the specific thing ("leverage",
+  "synergy", "solutions", "ecosystem", "seamless"), "It's not X, it's Y". `ft check` fails on em
+  dashes, exclamation marks and that jargon in interface text; tests and a file marked
+  `// not-interface-copy: <what>` (a model prompt) are skipped. Marketing copy uses the
+  `fieldtrip-voice` skill, not this register.
 - Radix via `radix-ui`; animation via `motion` only.
 
 ### Simplicity

@@ -82,6 +82,11 @@ once a second app needs it.
 - Control heights: a row lines up by sharing one `--spacing-control-*` height, never a number of
   its own. The topbar row is `control-sm` (36px): nav pills, the account avatar, a count badge
   (`Badge size="lg"`), and any app pill or avatar beside them (`h-control-sm`, `size-control-sm`).
+- Copy: the Fieldtrip voice in its interface register. Outcome first, the specific thing,
+  active voice and "you", sentence case, buttons as verbs ("Send request", never "Submit" or "OK"),
+  errors that say what happened and what to do next. No em dashes, no exclamation marks, no
+  "leverage", "synergy", "solutions", "ecosystem", "seamless" (`ft check` fails on them). A model
+  prompt file is marked `// not-interface-copy: <what>`. Marketing copy goes to `fieldtrip-voice`.
 - Variants are only the ones an app uses. `Button`: default, secondary, outline, ghost, link,
   dots, destructive (only the confirm of a delete); sizes xs, sm, default, lg (the
   `control-*` heights: 32, 36, 40, 44px), icon*; always `rounded-full`. `Badge`: default, secondary, outline, and the status tones. `TabsList` is a segmented control (filters and view

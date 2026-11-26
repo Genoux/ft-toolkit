@@ -26,6 +26,41 @@ afterEach(() => {
 });
 
 describe("uiRuleProblems", () => {
+  it("reports em dashes, exclamation marks and jargon in copy", () => {
+    const appDir = appWith({
+      "src/empty.tsx": [
+        '<EmptyState title="Nothing here — yet" description="Our seamless solution!" />',
+        "<p>You're all set!</p>",
+        "const toast = 'Leverage the data';",
+      ].join("\n"),
+    });
+
+    expect(uiRuleProblems(appDir).sort()).toEqual([
+      'src/empty.tsx:1 "Nothing here — yet" — (em dash in copy, use a comma, full stop or colon)',
+      'src/empty.tsx:1 "Our seamless solution!" ! (exclamation mark in copy, let the words carry it)',
+      'src/empty.tsx:1 "Our seamless solution!" seamless (jargon in copy, say the specific thing)',
+      'src/empty.tsx:1 "Our seamless solution!" solution (jargon in copy, say the specific thing)',
+      'src/empty.tsx:2 "You\'re all set!" ! (exclamation mark in copy, let the words carry it)',
+      'src/empty.tsx:3 "Leverage the data" Leverage (jargon in copy, say the specific thing)',
+    ]);
+  });
+
+  it("leaves comments, class names, code, tests, prompts and an empty-cell dash alone", () => {
+    const appDir = appWith({
+      "src/cell.tsx": [
+        "// Shown when the value is missing — a dash, not a blank.",
+        '<td className="hidden! md:flex">{value ?? "—"}</td>',
+        "if (!ready) return null;",
+        "<p>Request sent.</p>",
+      ].join("\n"),
+      "src/cell.test.tsx": 'expect(toast).toBe("Saved!");',
+      "src/prompt.ts":
+        '// not-interface-copy: the review prompt\nconst rule = "Quote the rule — never its id.";',
+    });
+
+    expect(uiRuleProblems(appDir)).toEqual([]);
+  });
+
   it("reports hand-set radius, shadows, style colours and transition-all", () => {
     const appDir = appWith({
       "src/tile.tsx":

@@ -48,6 +48,46 @@ const RULES = [
   },
 ];
 
+// Interface copy, the Fieldtrip voice a pattern can catch: no em dashes, no exclamation marks, no
+// jargon standing in for the specific thing. Only the text a person reads is checked (JSX text and
+// string literals, comments skipped), so class names and code never match. A lone dash is an
+// empty table cell, not punctuation, and passes.
+const COPY_RULES = [
+  { pattern: /—/g, reason: "em dash in copy, use a comma, full stop or colon" },
+  {
+    pattern: /(?<=[\p{L}\d)'’])!(?=\s|$)/gu,
+    reason: "exclamation mark in copy, let the words carry it",
+    copyOnly: true,
+  },
+  {
+    pattern:
+      /\b(?:leverag(?:e|es|ed|ing)|synerg(?:y|ies)|solutions?|ecosystems?|seamless(?:ly)?)\b/gi,
+    reason: "jargon in copy, say the specific thing",
+  },
+];
+
+const COPY_TEXT = /"([^"\n]*)"|'([^'\n]*)'|`([^`$\n]*)`|>([^<>{}\n]+)</g;
+// A test asserts copy it does not own, and a model prompt is read by a model, not a person: a file
+// marked `// not-interface-copy: <what>` (a prompt, a schema description) skips the copy rules.
+const NOT_INTERFACE_COPY = /not-interface-copy:/;
+const TEST_FILE = /\.test\.tsx?$/;
+const COMMENT_LINE = /^\s*(?:\/\/|\/\*|\*)/;
+// Copy is a sentence or a label: it starts with a capital and has a space or ends a JSX text. A class
+// string (`hidden!`, Tailwind's important suffix) starts lower case and never matches.
+const LOOKS_LIKE_COPY = /^\s*[\p{Lu}\d]/u;
+
+function copyProblems(line: string): string[] {
+  if (COMMENT_LINE.test(line)) return [];
+  return [...line.matchAll(COPY_TEXT)].flatMap((match) => {
+    const text = match.slice(1).find((group) => group !== undefined) ?? "";
+    if (text.trim() === "—") return [];
+    return COPY_RULES.filter(({ copyOnly }) => !copyOnly || LOOKS_LIKE_COPY.test(text)).flatMap(
+      ({ pattern, reason }) =>
+        [...text.matchAll(pattern)].map(([found]) => `"${text.trim()}" ${found} (${reason})`),
+    );
+  });
+}
+
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const path = join(dir, entry.name);
@@ -56,22 +96,25 @@ function sourceFiles(dir: string): string[] {
   });
 }
 
-/** `src/file.tsx:12 text-[13px] (hand-set font size)` for every match of a UI rule. */
+/** `src/file.tsx:12 text-[13px] (hand-set font size)` for every match of a UI or copy rule. */
 export function uiRuleProblems(appDir: string): string[] {
   const srcDir = join(appDir, "src");
   if (!existsSync(srcDir)) return [];
 
-  return sourceFiles(srcDir).flatMap((path) =>
-    readFileSync(path, "utf8")
+  return sourceFiles(srcDir).flatMap((path) => {
+    const source = readFileSync(path, "utf8");
+    const checksCopy = !TEST_FILE.test(path) && !NOT_INTERFACE_COPY.test(source);
+    return source
       .split("\n")
       .flatMap((line, index) =>
-        RULES.flatMap(({ pattern, reason }) =>
-          [...line.matchAll(pattern)].map(
-            ([match]) => `${relative(appDir, path)}:${index + 1} ${match} (${reason})`,
+        [
+          ...RULES.flatMap(({ pattern, reason }) =>
+            [...line.matchAll(pattern)].map(([match]) => `${match} (${reason})`),
           ),
-        ),
-      ),
-  );
+          ...(checksCopy ? copyProblems(line) : []),
+        ].map((problem) => `${relative(appDir, path)}:${index + 1} ${problem}`),
+      );
+  });
 }
 
 // Each padding, margin or gap an app picks by hand is a guess the next screen guesses differently.
