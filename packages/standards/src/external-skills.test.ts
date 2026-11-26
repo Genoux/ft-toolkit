@@ -148,6 +148,19 @@ describe("installExternalSkills", () => {
     expect(readdirSync(join(app, CLAUDE_SKILLS_DIR)).sort()).toEqual([".gitignore", "one"]);
   });
 
+  it("rewrites the links' .gitignore an app got before the ib-to-ft rename", () => {
+    const app = mkdtempSync(join(tmpdir(), "ft-app-"));
+    mkdirSync(join(app, CLAUDE_SKILLS_DIR), { recursive: true });
+    writeFileSync(
+      join(app, CLAUDE_SKILLS_DIR, ".gitignore"),
+      "# Written by ib sync: links to the shared skills in .agents/skills.\n.gitignore\nold\n",
+    );
+    installExternalSkills(app, list([`${repo} skills/one`]));
+    expect(readFileSync(join(app, CLAUDE_SKILLS_DIR, ".gitignore"), "utf8")).toBe(
+      "# Written by ft sync: links to the shared skills in .agents/skills.\n.gitignore\none\n",
+    );
+  });
+
   it("reports a failed download and deletes nothing", () => {
     const app = mkdtempSync(join(tmpdir(), "ft-app-"));
     installExternalSkills(app, list([`${repo} skills/*`]));

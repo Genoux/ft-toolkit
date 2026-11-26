@@ -27,6 +27,11 @@ export const CLAUDE_SKILLS_DIR = join(".claude", "skills");
 export const MARKER = ".toolkit-source";
 const BIOME_SKIP = { root: false, files: { includes: ["!**"] } };
 const CLAUDE_IGNORE_HEADER = "# Written by ft sync: links to the shared skills in .agents/skills.";
+// Apps synced before the ib-to-ft rename carry this header; their file is still ours to rewrite.
+const CLAUDE_IGNORE_HEADERS = [
+  CLAUDE_IGNORE_HEADER,
+  "# Written by ib sync: links to the shared skills in .agents/skills.",
+];
 
 export type ExternalSkill = { repo: string; path: string; name?: string };
 
@@ -139,7 +144,10 @@ function linkForClaude(appDir: string, name: string): boolean {
 /** Keeps the Claude links out of git; leaves a .gitignore the app wrote alone. */
 function ignoreClaudeLinks(appDir: string, names: string[]): void {
   const path = join(appDir, CLAUDE_SKILLS_DIR, ".gitignore");
-  if (existsSync(path) && !readFileSync(path, "utf8").startsWith(CLAUDE_IGNORE_HEADER)) return;
+  if (existsSync(path)) {
+    const written = readFileSync(path, "utf8");
+    if (!CLAUDE_IGNORE_HEADERS.some((header) => written.startsWith(header))) return;
+  }
   if (names.length === 0) {
     rmSync(path, { force: true });
     return;
