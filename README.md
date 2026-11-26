@@ -1,6 +1,11 @@
-# ft-toolkit
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/fieldtrip-logo-light.svg">
+  <img alt="Fieldtrip" src=".github/assets/fieldtrip-logo.svg">
+</picture>
 
-Shared packages for Fieldtrip apps: config, server building blocks, UI and agent standards. Every new project starts from here so the stack, structure and look stay the same across products.
+Shared packages for every Fieldtrip app: config, server building blocks, UI and agent standards.
+
+![Fieldtrip design system](.github/assets/ui-cover.png)
 
 ## Packages
 
